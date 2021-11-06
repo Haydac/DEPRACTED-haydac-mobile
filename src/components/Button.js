@@ -20,9 +20,11 @@ export default function Button({ mode, style, ...props }) {
 
 const styles = StyleSheet.create({
   button: {
-    width: '100%',
-    marginVertical: 10,
-    paddingVertical: 2,
+    position: 'absolute',
+    width: 336,
+    alignItems: 'center',
+    top: '20%',
+    justifyContent: 'center',
   },
   text: {
     fontWeight: 'bold',

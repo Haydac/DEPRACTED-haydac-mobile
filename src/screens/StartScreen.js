@@ -1,28 +1,58 @@
 import React from 'react'
-import Background from '../components/Background'
-import Logo from '../components/Logo'
-import Header from '../components/Header'
+import { StyleSheet, Text } from 'react-native'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
+// import {  fa-arrow-right } from '@fortawesome/free-solid-svg-icons'
 import Button from '../components/Button'
-import Paragraph from '../components/Paragraph'
+import Logo from '../components/Logo'
+import Background from '../components/Background'
 
 export default function StartScreen({ navigation }) {
   return (
     <Background>
-      <Logo />
-      <Header>This is Haydac</Header>
-      <Paragraph>A click away from Home...</Paragraph>
-      <Button
-        mode="contained"
-        onPress={() => navigation.navigate('LoginScreen')}
-      >
-        Login
-      </Button>
+      <Logo style={[styles.image]} />
+      <Text style={[styles.basetext]}>
+        Bring Home closer with a single click...
+      </Text>
       <Button
         mode="outlined"
-        onPress={() => navigation.navigate('RegisterScreen')}
+        onPress={() => navigation.navigate('LoginScreen')}
+        style={[styles.button]}
       >
-        Sign Up
+        Get Started
       </Button>
+      <FontAwesomeIcon icon={faArrowRight} style={[styles.iconPos]} />
     </Background>
   )
 }
+
+const styles = StyleSheet.create({
+  image: {
+    top: '-20%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  button: {
+    position: 'absolute',
+    width: 336,
+    alignItems: 'center',
+    top: '90%',
+    justifyContent: 'center',
+    height: '48',
+    borderRadius: 20,
+  },
+  text: {
+    fontWeight: 'bold',
+    fontSize: 15,
+    lineHeight: 26,
+  },
+  basetext: {
+    fontFamily: 'Nexa-Bold',
+    top: '-15%',
+  },
+  iconPos: {
+    position: 'absolute',
+    top: '91.5%',
+    right: '10%',
+  },
+})
