@@ -1,19 +1,60 @@
 import React from 'react'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, TouchableOpacity, Text } from 'react-native'
 import { Button as PaperButton } from 'react-native-paper'
 import { theme } from '../core/theme'
 
-export default function Button({ mode, style, ...props }) {
+const AppButton = ({ onPress, btnText, btnColor, btnTextColor }) => (
+  <TouchableOpacity
+    onPress={onPress}
+    style={{
+      position: 'absolute',
+      height: '5%',
+      backgroundColor: btnColor,
+      borderRadius: 50,
+      paddingVertical: 10,
+      paddingHorizontal: 12,
+      width: '80%',
+      top: '88%',
+    }}
+  >
+    <Text
+      style={{
+        fontSize: 18,
+        color: btnTextColor,
+        fontWeight: 'normal',
+        alignSelf: 'center',
+      }}
+    >
+      {btnText}
+    </Text>
+  </TouchableOpacity>
+)
+
+const oldFunction = ({ mode, style, ...props }) => (
+  <PaperButton
+    style={[
+      styles.button,
+      mode === 'outlined' && { backgroundColor: theme.colors.surface },
+      style,
+    ]}
+    labelStyle={styles.text}
+    mode={mode}
+    {...props}
+  />
+)
+
+export default function Button({
+  onPress,
+  btnText = 'btnText',
+  btnColor = '#FFFFFF',
+  btnTextColor = 'black',
+}) {
   return (
-    <PaperButton
-      style={[
-        styles.button,
-        mode === 'outlined' && { backgroundColor: theme.colors.surface },
-        style,
-      ]}
-      labelStyle={styles.text}
-      mode={mode}
-      {...props}
+    <AppButton
+      btnText={btnText}
+      onPress={onPress}
+      btnTextColor={btnTextColor}
+      btnColor={btnColor}
     />
   )
 }
@@ -21,14 +62,19 @@ export default function Button({ mode, style, ...props }) {
 const styles = StyleSheet.create({
   button: {
     position: 'absolute',
-    width: 336,
-    alignItems: 'center',
-    top: '20%',
+    height: '5%',
     justifyContent: 'center',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 50,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    width: '80%',
+    top: '88%',
   },
   text: {
-    fontWeight: 'bold',
-    fontSize: 15,
-    lineHeight: 26,
+    fontSize: 18,
+    color: 'black',
+    fontWeight: 'normal',
+    alignSelf: 'center',
   },
 })

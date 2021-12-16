@@ -1,45 +1,44 @@
 import React from 'react'
-import { StyleSheet, Text } from 'react-native'
+import { StyleSheet, Text, ImageBackground, View } from 'react-native'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
-// import {  fa-arrow-right } from '@fortawesome/free-solid-svg-icons'
 import Button from '../components/Button'
 import Logo from '../components/Logo'
-import Background from '../components/Background'
+import AntDesign from 'react-native-vector-icons/AntDesign'
 
 export default function StartScreen({ navigation }) {
   return (
-    <Background>
-      <Logo style={[styles.image]} />
-      <Text style={[styles.basetext]}>
-        Bring Home closer with a single click...
-      </Text>
-      <Button
-        mode="outlined"
-        onPress={() => navigation.navigate('LoginScreen')}
-        style={[styles.button]}
+    <View style={styles.container}>
+      <ImageBackground
+        source={require('../assets/background_dot.png')}
+        resizeMode="cover"
+        style={styles.image}
       >
-        Get Started
-      </Button>
-      <FontAwesomeIcon icon={faArrowRight} style={[styles.iconPos]} />
-    </Background>
+        <Logo />
+        <Text style={[styles.basetext]}>
+          Bring home closer with a {'\n\t\t'} single click...
+        </Text>
+        <Button
+          btnText="Get Started"
+          btnTextColor="black"
+          onPress={() => navigation.replace('LoginScreen')}
+        />
+
+        <FontAwesomeIcon icon={faArrowRight} style={[styles.iconPos]} />
+      </ImageBackground>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
   image: {
-    top: '-20%',
-    justifyContent: 'center',
+    flex: 1,
     alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
   },
-  button: {
-    position: 'absolute',
-    width: 336,
-    alignItems: 'center',
-    top: '90%',
-    justifyContent: 'center',
-    height: '48',
-    borderRadius: 20,
+  container: {
+    flex: 1,
   },
   text: {
     fontWeight: 'bold',
@@ -47,12 +46,13 @@ const styles = StyleSheet.create({
     lineHeight: 26,
   },
   basetext: {
-    fontFamily: 'Nexa-Bold',
-    top: '-15%',
+    // fontFamily: 'Nexa-Bold',
+    fontSize: 22,
+    top: '-11%',
   },
   iconPos: {
     position: 'absolute',
-    top: '91.5%',
-    right: '10%',
+    top: '89.5%',
+    right: '18%',
   },
 })

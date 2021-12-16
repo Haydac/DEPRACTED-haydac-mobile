@@ -9,7 +9,10 @@ module.exports = {
   },
   rules: {
     'jsx-a11y/href-no-hash': ['off'],
-    'react/jsx-filename-extension': ['warn', { extensions: ['.js', '.jsx'] }],
+    'react/jsx-filename-extension': [
+      'warn',
+      { extensions: ['.js', '.jsx', '.native.js'] },
+    ],
     // my customs
     'no-unused-vars': 'warn',
     'no-console': ['warn', { allow: ['error'] }],

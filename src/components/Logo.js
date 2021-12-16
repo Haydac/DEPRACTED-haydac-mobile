@@ -7,7 +7,7 @@ export default function Logo() {
 
 const styles = StyleSheet.create({
   image: {
-    top: '-20%',
+    top: '-15%',
     justifyContent: 'center',
     alignItems: 'center',
     // marginBottom: 50,
