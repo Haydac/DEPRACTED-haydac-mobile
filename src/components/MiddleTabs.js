@@ -9,7 +9,9 @@ export default function MiddleTabs() {
       style={{
         flexDirection: 'row',
         justifyContent: 'center',
-        marginTop: '100%',
+        alignItems: 'center',
+        marginTop: '2%',
+        marginBottom: '4%',
       }}
     >
       <MiddleButton
@@ -41,7 +43,7 @@ const MiddleButton = (props) => {
       <Text
         style={{
           color: activeTab === text ? 'white' : '#D0D0D0',
-          fontSize: 15,
+          fontSize: 13,
           fontWeight: '900',
         }}
       >

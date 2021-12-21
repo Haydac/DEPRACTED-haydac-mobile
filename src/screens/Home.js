@@ -14,6 +14,9 @@ import AddressBar from '../components/AddressBar'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import AntDesign from 'react-native-vector-icons/AntDesign'
+import Categories from '../components/Categories'
+import DemarcationLine from '../components/DemarcationLine'
+import BusinessAd from '../components/BusinessAd'
 
 export default function Home({ navigation }) {
   const CurrentLocationButton = (props) => {
@@ -24,7 +27,7 @@ export default function Home({ navigation }) {
         onPress={() => {
           navigation.reset({
             index: 0,
-            routes: [{ name: 'LoginScreen' }],
+            routes: [{ name: 'AddressPage' }],
           })
         }}
       >
@@ -57,7 +60,7 @@ export default function Home({ navigation }) {
               size={15}
               style={{
                 justifyContent: 'center',
-                marginRight: 5,
+                marginRight: 6,
                 marginLeft: 8,
               }}
             />
@@ -68,42 +71,38 @@ export default function Home({ navigation }) {
   }
 
   return (
-    <SafeAreaView style={{ backgroundColor: '#eee', flex: 1 }}>
-      <View style={{ backgroundColor: '#fff', padding: 15 }}>
-        {/* sidebar */}
+    <SafeAreaView style={{ backgroundColor: '#D9BAF1', flex: 1 }}>
+      {/* address bar/button? - clickable and will lead to search, also contains recent location */}
+      <CurrentLocationButton />
+      {/* sidebar */}
+      {/* globe to choose location */}
+      <View style={{ backgroundColor: '#fff', marginTop: '2%' }}>
+        {/* search bar */}
+        <SearchBar
+          title="Search stores, services or restaurants"
+          icon="search"
+          length="85%"
+        />
 
-        {/* address bar/button? - clickable and will lead to search, also contains recent location */}
-        <CurrentLocationButton />
-        {/* SearchBar */}
-        {/* <SearchBar /> */}
+        {/* Categories */}
+        <Categories />
+
+        {/* business advetisement in location */}
+        <BusinessAd />
 
         {/* middle tabs */}
         <MiddleTabs />
-
-        {/* delete this button */}
-        <Button
-          mode="contained"
-          style={[styles.button]}
-          onPress={() => {
-            navigation.reset({
-              index: 0,
-              routes: [{ name: 'LoginScreen' }],
-            })
-          }}
-        >
-          Logout
-        </Button>
       </View>
     </SafeAreaView>
   )
 }
 
-const styles = StyleSheet.create({
-  button: {
-    position: 'absolute',
-    justifyContent: 'center',
-    left: '5%',
-    right: '5%',
-    top: '170%',
-  },
-})
+// const styles = StyleSheet.create({
+//   button: {
+//     position: 'absolute',
+//     justifyContent: 'center',
+//     left: '5%',
+//     right: '5%',
+//     top: '170%',
+//   },
+// })
