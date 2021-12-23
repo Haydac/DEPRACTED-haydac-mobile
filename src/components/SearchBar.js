@@ -27,7 +27,7 @@ export default function SearchBar({
             fontWeight: '500',
             marginTop: 7,
             height: 30,
-            fontSize: '13',
+            fontSize: 13,
           },
           textInputContainer: {
             borderColor: '#fff',

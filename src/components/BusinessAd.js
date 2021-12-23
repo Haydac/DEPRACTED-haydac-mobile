@@ -8,8 +8,24 @@ export default function BusinessAd() {
   return (
     <View>
       <DemarcationLine />
-      <View>
-        <Image source={require('../assets/advertisement.png')} />
+      <View
+        style={{
+          //   backgroundColor: 'red',
+          width: '100%',
+          justifyContent: 'center',
+          alignSelf: 'center',
+          borderRadius: '20%',
+        }}
+      >
+        <Image
+          style={{
+            width: '98%',
+            justifyContent: 'center',
+            alignSelf: 'center',
+            borderRadius: 20,
+          }}
+          source={require('../assets/advertisement.png')}
+        />
       </View>
       <DemarcationLine />
     </View>

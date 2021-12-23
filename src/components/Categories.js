@@ -3,14 +3,17 @@ import { View, Text, Image, StyleSheet, ScrollView } from 'react-native'
 
 const items = [
   {
+    key: 1,
     image: require('../assets/categories/grocery.png'),
     text: 'Grocery Stores',
   },
   {
+    key: 2,
     image: require('../assets/categories/restaurant.png'),
     text: 'Restaurants',
   },
   {
+    key: 3,
     image: require('../assets/categories/services.png'),
     text: 'Services',
   },
@@ -23,7 +26,8 @@ export default function Categories() {
         {/* loop starts here */}
         {items.map((item, index) => (
           <View
-            style={{ alignItems: 'center', marginLeft: 20, marginRight: 30 }}
+            style={{ alignItems: 'center', marginLeft: 25, marginRight: 30 }}
+            key={item.key}
           >
             <View style={styles.item}>
               <Image source={item.image} style={styles.image} />

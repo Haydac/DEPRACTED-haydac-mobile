@@ -4,13 +4,14 @@ import {
   StyleSheet,
   View,
   ImageBackground,
+  TextInput,
 } from 'react-native'
 import { Text } from 'react-native-paper'
 // import Background from '../components/Background'
 // import Logo from '../components/Logo'
 import Header from '../components/Header'
 import Button from '../components/Button'
-import TextInput from '../components/TextInput'
+// import TextInput from '../components/TextInput'
 // import BackButton from '../components/BackButton'
 import { theme } from '../core/theme'
 import { emailValidator } from '../helpers/emailValidator'
@@ -52,10 +53,17 @@ export default function LoginScreen({ navigation }) {
             width: '85%',
             justifyContent: 'space-between',
             alignItems: 'flex-start',
-            bottom: '50%',
+            // bottom: '0%',
           }}
         >
-          <Header style={{ color: 'white', fontSize: 30, marginTop: '10%' }}>
+          <Header
+            style={{
+              color: 'white',
+              fontSize: 30,
+              marginTop: '10%',
+              fontWeight: '700',
+            }}
+          >
             Welcome{'\n'}Back!
           </Header>
           <TouchableOpacity onPress={() => navigation.replace('Home')}>
@@ -74,8 +82,7 @@ export default function LoginScreen({ navigation }) {
           </TouchableOpacity>
         </View>
 
-        {/* Email Input */}
-        <TextInput
+        {/* <TextInput
           label="Email"
           returnKeyType="next"
           value={email.value}
@@ -87,10 +94,10 @@ export default function LoginScreen({ navigation }) {
           textContentType="emailAddress"
           keyboardType="email-address"
           style={styles.body}
-        />
+        /> */}
 
         {/* Password Input */}
-        <TextInput
+        {/* <TextInput
           label="Password"
           returnKeyType="done"
           value={password.value}
@@ -99,41 +106,45 @@ export default function LoginScreen({ navigation }) {
           errorText={password.error}
           style={styles.body}
           secureTextEntry
+        /> */}
+
+        {/* Email Input */}
+        <TextInput
+          style={[styles.body, { marginBottom: 50, marginTop: 200 }]}
+          placeholder="Email Address or Phone Number"
+        />
+        <TextInput
+          style={[
+            styles.body,
+            // color should change from prev color to C89DD9 when highlighted
+            { marginBottom: 40 },
+          ]}
+          placeholder="Password"
         />
 
-        {/* Forgot password link */}
-        <View style={styles.forgotPassword}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('ResetPasswordScreen')}
-          >
-            <Text style={styles.forgot}>Forgot password?</Text>
-          </TouchableOpacity>
-        </View>
-
         {/* Login button */}
-        {/* <Button
-          mode="contained"
-          onPress={onLoginPressed}
-          style={[styles.button]}
-        >
-          Login
-        </Button> */}
         <Button
           btnText="Log in"
           btnColor="#BB6BD9"
           btnTextColor="white"
+          btnTop="7%"
           onPress={onLoginPressed}
         />
 
+        {/* Forgot password link */}
+        <View style={[styles.forgotPassword, styles.row, { marginTop: '30%' }]}>
+          <Text>Forgot your password, click </Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('ResetPasswordScreen')}
+          >
+            <Text style={[styles.link, { textDecorationLine: 'none' }]}>
+              reset password
+            </Text>
+          </TouchableOpacity>
+        </View>
+
         {/* Sign up link */}
-        <View
-          style={{
-            flexDirection: 'row',
-            marginTop: 4,
-            bottom: '-10%',
-            width: '100%',
-          }}
-        >
+        <View style={[styles.row]}>
           <Text>Don’t have an account? </Text>
           <TouchableOpacity
             onPress={() => navigation.replace('RegisterScreen')}
@@ -167,15 +178,22 @@ const styles = StyleSheet.create({
   },
   body: {
     position: 'relative',
-    top: '110%',
+    height: 30,
+    margin: 1,
+    borderWidth: 1,
+    // padding: 10,
+    borderColor: '#fff',
+    borderBottomColor: '#BB6BD9',
+    // position: 'relative',
+    width: '85%',
+    top: '2%',
     // borderColor: 'rgba(0, 0, 0, .5)',
   },
   forgotPassword: {
-    width: '100%',
-    alignItems: 'flex-end',
-    marginBottom: 24,
-    top: '9.5%',
-    right: '2%',
+    position: 'relative',
+    width: '85%',
+    // backgroundColor: 'red',
+    // alignItems: 'flex-start',
   },
 
   button: {
@@ -194,6 +212,15 @@ const styles = StyleSheet.create({
   },
   link: {
     fontWeight: 'bold',
-    color: theme.colors.primary,
+    color: '#0645AD',
+    fontStyle: 'italic',
+    textDecorationLine: 'underline',
+  },
+  row: {
+    position: 'relative',
+    flexDirection: 'row',
+    marginTop: '5%',
+    width: '85%',
+    justifyContent: 'center',
   },
 })

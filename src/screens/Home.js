@@ -17,6 +17,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import Categories from '../components/Categories'
 import DemarcationLine from '../components/DemarcationLine'
 import BusinessAd from '../components/BusinessAd'
+import Businesses from '../components/BusinessScreen'
 
 export default function Home({ navigation }) {
   const CurrentLocationButton = (props) => {
@@ -92,6 +93,11 @@ export default function Home({ navigation }) {
 
         {/* middle tabs */}
         <MiddleTabs />
+
+        {/* businesses pages */}
+        {/* <Businesses /> */}
+
+        {/* bottom navbar */}
       </View>
     </SafeAreaView>
   )

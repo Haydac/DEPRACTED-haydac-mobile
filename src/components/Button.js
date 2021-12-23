@@ -3,18 +3,18 @@ import { StyleSheet, TouchableOpacity, Text } from 'react-native'
 import { Button as PaperButton } from 'react-native-paper'
 import { theme } from '../core/theme'
 
-const AppButton = ({ onPress, btnText, btnColor, btnTextColor }) => (
+const AppButton = ({ onPress, btnText, btnColor, btnTextColor, btnTop }) => (
   <TouchableOpacity
     onPress={onPress}
     style={{
-      position: 'absolute',
+      position: 'relative',
       height: '5%',
       backgroundColor: btnColor,
-      borderRadius: 50,
+      borderRadius: 18,
       paddingVertical: 10,
       paddingHorizontal: 12,
       width: '80%',
-      top: '88%',
+      top: btnTop,
     }}
   >
     <Text
@@ -48,6 +48,7 @@ export default function Button({
   btnText = 'btnText',
   btnColor = '#FFFFFF',
   btnTextColor = 'black',
+  btnTop = '0%',
 }) {
   return (
     <AppButton
@@ -55,6 +56,7 @@ export default function Button({
       onPress={onPress}
       btnTextColor={btnTextColor}
       btnColor={btnColor}
+      btnTop={btnTop}
     />
   )
 }

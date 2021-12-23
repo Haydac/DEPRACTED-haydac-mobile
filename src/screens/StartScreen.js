@@ -21,6 +21,8 @@ export default function StartScreen({ navigation }) {
         <Button
           btnText="Get Started"
           btnTextColor="black"
+          btnColor="#fff"
+          btnTop="29.3%"
           onPress={() => navigation.replace('LoginScreen')}
         />
 
