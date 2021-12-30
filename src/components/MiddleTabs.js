@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
-import Businesses from '../components/BusinessScreen'
+import Businesses from './BusinessItem'
 
 export default function MiddleTabs() {
   // what is returned is dependent on what button is active

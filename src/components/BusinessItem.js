@@ -1,5 +1,13 @@
 import React from 'react'
-import { View, Text, Image, StyleSheet, ScrollView } from 'react-native'
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  ScrollView,
+  Pressable,
+} from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 import DemarcationLine from './DemarcationLine'
 
 const item = [
@@ -22,8 +30,15 @@ export default function Business({ businesses = item }) {
         {/* loop starts here */}
         {businesses.map((business, index) => (
           <View style={styles.card} key={business.key}>
-            <Image style={styles.image} source={business.image} />
-            <Text style={styles.text}>{business.text}</Text>
+            <Pressable>
+              <TouchableOpacity>
+                {/* Business Image */}
+                <Image style={styles.image} source={business.image} />
+                {/* <Image style={styles.image} source={business.image} /> */}
+                {/* Business Info */}
+                <Text style={styles.text}>{business.text}</Text>
+              </TouchableOpacity>
+            </Pressable>
             <DemarcationLine />
           </View>
         ))}
@@ -32,6 +47,8 @@ export default function Business({ businesses = item }) {
     </View>
   )
 }
+
+// creae businessImage component and add like button to it
 
 const styles = StyleSheet.create({
   card: {

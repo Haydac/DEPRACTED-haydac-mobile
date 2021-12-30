@@ -6,20 +6,24 @@ import {
   Pressable,
   Animated,
 } from 'react-native'
+
 import { Text } from 'react-native-paper'
-import MiddleTabs from '../components/MiddleTabs'
-import Button from '../components/Button'
-import SearchBar from '../components/SearchBar'
-import AddressBar from '../components/AddressBar'
-import Ionicons from 'react-native-vector-icons/Ionicons'
+
+// import AddressBar from '../components/AddressBar'
+import Icon from 'react-native-vector-icons/FontAwesome'
+
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import AntDesign from 'react-native-vector-icons/AntDesign'
+import MiddleTabs from '../components/MiddleTabs'
+// import Button from '../components/Button'
+import SearchBar from '../components/SearchBar'
 import Categories from '../components/Categories'
-import DemarcationLine from '../components/DemarcationLine'
+// import DemarcationLine from '../components/DemarcationLine'
 import BusinessAd from '../components/BusinessAd'
-import Businesses from '../components/BusinessScreen'
+// import Businesses from '../components/BusinessScreen'
 
 export default function Home({ navigation }) {
+  // This is the button for the current location of the user
   const CurrentLocationButton = (props) => {
     const { location } = props // this is the current location of user
     return (
@@ -34,37 +38,112 @@ export default function Home({ navigation }) {
       >
         <TouchableOpacity>
           <View
-            style={{
-              flexDirection: 'row',
-              // marginRight: 8,
-              backgroundColor: '#EAEAEA',
-              padding: 9,
-              borderRadius: 30,
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: '50%',
-              left: '250%',
-            }}
+            style={
+              {
+                // alignItems: 'center',
+                // backgroundColor: 'violet',
+              }
+            }
           >
-            {/* text should be dynamic */}
-            <Text
-              size={15}
+            <View
               style={{
-                fontSize: 12,
-                marginLeft: 12,
+                flexDirection: 'row',
+                backgroundColor: '#EAEAEA',
+                padding: 9,
+                borderRadius: 30,
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: 'auto',
+                height: 'auto',
               }}
             >
-              105 THE POND ROAD
-            </Text>
-            <AntDesign
-              name="down"
-              size={15}
+              {/* text should be dynamic */}
+              <Text
+                size={15}
+                style={{
+                  fontSize: 12,
+                  marginLeft: 12,
+                }}
+              >
+                105 THE POND ROAD
+              </Text>
+              <AntDesign
+                name="down"
+                size={15}
+                style={{
+                  justifyContent: 'center',
+                  marginRight: 6,
+                  marginLeft: 8,
+                }}
+              />
+            </View>
+          </View>
+        </TouchableOpacity>
+      </Pressable>
+    )
+  }
+
+  // menu icon - button to bring up slide par -> slide left
+  const MenuIcon = () => {
+    return (
+      <Pressable>
+        <TouchableOpacity>
+          <View
+            style={
+              {
+                // alignItems: 'flex-start',
+                // width: 95,
+                // backgroundColor: 'red',
+              }
+            }
+          >
+            <View
               style={{
+                // marginLeft: 30,
+                alignItems: 'center',
                 justifyContent: 'center',
-                marginRight: 6,
-                marginLeft: 8,
               }}
-            />
+            >
+              <Icon
+                name="bars"
+                size={16}
+                color="#000"
+                style={{
+                  position: 'absolute',
+                  alignItems: 'center',
+                  marginLeft: 50,
+                  zIndex: 20,
+                  width: '50%',
+                }}
+              />
+              <Icon name="circle" size={35} color="#F2F2F2" />
+            </View>
+          </View>
+        </TouchableOpacity>
+      </Pressable>
+    )
+  }
+
+  // button to change location
+  const GlobeIcon = () => {
+    return (
+      <Pressable>
+        {/* globe to choose location, wrap in a pressable */}
+        <TouchableOpacity>
+          <View
+            style={
+              {
+                // position: 'absolute',
+                // alignItems: 'flex-end',
+                // marginLeft: 50,
+                // bottom: '4.5%',
+                // marginRight: 30,
+                // flexBasis: '7%',
+                // backgroundColor: 'orange',
+              }
+            }
+          >
+            <Icon name="globe" size={30} color="#F2F2F2" />
           </View>
         </TouchableOpacity>
       </Pressable>
@@ -73,10 +152,28 @@ export default function Home({ navigation }) {
 
   return (
     <SafeAreaView style={{ backgroundColor: '#D9BAF1', flex: 1 }}>
-      {/* address bar/button? - clickable and will lead to search, also contains recent location */}
-      <CurrentLocationButton />
-      {/* sidebar */}
-      {/* globe to choose location */}
+      {/* header tab view */}
+      <View
+        style={{
+          // backgroundColor: 'blue',
+          flexDirection: 'row',
+          // width: '100%',
+          justifyContent: 'space-around',
+          alignItems: 'center',
+          // marginTop: '2%',
+          // marginBottom: '4%',
+        }}
+      >
+        <MenuIcon />
+
+        {/* address bar/button? - clickable and will lead to search, also contains recent location */}
+        <CurrentLocationButton />
+
+        <GlobeIcon />
+      </View>
+
+      {/* BODY OF THE PAGE */}
+
       <View style={{ backgroundColor: '#fff', marginTop: '2%' }}>
         {/* search bar */}
         <SearchBar

@@ -1,5 +1,6 @@
 // get all businesses that chooses to be advertised and store them in an object
 // display all the businesses in a card that slides
+// TODO: make this card a slideshow of businesses
 import React from 'react'
 import { View, Text, Image } from 'react-native'
 import DemarcationLine from './DemarcationLine'
@@ -22,7 +23,7 @@ export default function BusinessAd() {
             width: '98%',
             justifyContent: 'center',
             alignSelf: 'center',
-            borderRadius: 20,
+            // borderRadius: 20,
           }}
           source={require('../assets/advertisement.png')}
         />
