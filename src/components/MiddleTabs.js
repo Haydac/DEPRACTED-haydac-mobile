@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
-import Businesses from './BusinessItem'
+import BusinessItems from './BusinessItem'
 
 export default function MiddleTabs() {
   // what is returned is dependent on what button is active
   const DisplayBusinesses = ({ isActive = 'Near me' }) => {
-    if (isActive === 'Near me') return <Businesses />
+    if (isActive === 'Near me') return <BusinessItems />
     return (
       <Text style={{ alignSelf: 'center', marginTop: '10%' }}>
         Popular businesses should be displayed
@@ -20,8 +20,8 @@ export default function MiddleTabs() {
           flexDirection: 'row',
           justifyContent: 'center',
           alignItems: 'center',
-          marginTop: '2%',
-          marginBottom: '4%',
+          // marginTop: '2%',
+          // marginBottom: '4%',
         }}
       >
         <MiddleButton
@@ -54,7 +54,7 @@ const MiddleButton = (props) => {
     >
       <Text
         style={{
-          color: activeTab === text ? 'white' : '#D0D0D0',
+          color: activeTab === text ? 'white' : '#B8B8B8',
           fontSize: 13,
           fontWeight: '900',
         }}

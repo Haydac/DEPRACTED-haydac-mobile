@@ -7,12 +7,12 @@ import {
   Animated,
 } from 'react-native'
 
-import { Text } from 'react-native-paper'
+import { Divider, Text } from 'react-native-paper'
 
 // import AddressBar from '../components/AddressBar'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import MiddleTabs from '../components/MiddleTabs'
 // import Button from '../components/Button'
@@ -20,12 +20,13 @@ import SearchBar from '../components/SearchBar'
 import Categories from '../components/Categories'
 // import DemarcationLine from '../components/DemarcationLine'
 import BusinessAd from '../components/BusinessAd'
+import BottomTabs from '../components/BottomTabs'
 // import Businesses from '../components/BusinessScreen'
 
 export default function Home({ navigation }) {
   // This is the button for the current location of the user
   const CurrentLocationButton = (props) => {
-    const { location } = props // this is the current location of user
+    // get the current location of user and display it
     return (
       // eslint-disable-next-line react/jsx-no-bind
       <Pressable
@@ -130,19 +131,7 @@ export default function Home({ navigation }) {
       <Pressable>
         {/* globe to choose location, wrap in a pressable */}
         <TouchableOpacity>
-          <View
-            style={
-              {
-                // position: 'absolute',
-                // alignItems: 'flex-end',
-                // marginLeft: 50,
-                // bottom: '4.5%',
-                // marginRight: 30,
-                // flexBasis: '7%',
-                // backgroundColor: 'orange',
-              }
-            }
-          >
+          <View>
             <Icon name="globe" size={30} color="#F2F2F2" />
           </View>
         </TouchableOpacity>
@@ -182,19 +171,19 @@ export default function Home({ navigation }) {
           length="85%"
         />
 
-        {/* Categories */}
-        <Categories />
+        {/* Whole section is scrollable */}
+        <ScrollView vertical>
+          {/* Categories */}
+          <Categories />
 
-        {/* business advetisement in location */}
-        <BusinessAd />
+          {/* business advetisement in location */}
+          <BusinessAd />
 
-        {/* middle tabs */}
-        <MiddleTabs />
-
-        {/* businesses pages */}
-        {/* <Businesses /> */}
-
-        {/* bottom navbar */}
+          {/* middle tabs */}
+          <MiddleTabs />
+        </ScrollView>
+        <Divider width={1} />
+        <BottomTabs />
       </View>
     </SafeAreaView>
   )
