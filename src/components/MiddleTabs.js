@@ -8,7 +8,7 @@ export default function MiddleTabs() {
     if (isActive === 'Near me') return <BusinessItems />
     return (
       <Text style={{ alignSelf: 'center', marginTop: '10%' }}>
-        Popular businesses should be displayed
+        Popular businesses should be displayed based on location
       </Text>
     )
   }

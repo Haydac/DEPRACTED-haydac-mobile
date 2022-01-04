@@ -20,30 +20,30 @@ const item = [
     hours: '1:00pm - 9:00 pm',
     rating: '4.0',
   },
-  // {
-  //   key: 2,
-  //   image: require('../assets/businessesImages/tiplestoreImage.png'),
-  //   text: 'Tripplee African and Caribbean market',
-  //   distance: '120 km',
-  //   hours: '10:00am - 11:00 pm',
-  //   rating: '4.5',
-  // },
-  // {
-  //   key: 3,
-  //   image: require('../assets/businessesImages/tiplestoreImage.png'),
-  //   text: 'a business',
-  //   distance: 'some distance',
-  //   hours: 'time here',
-  //   rating: '3.0',
-  // },
-  // {
-  //   key: 4,
-  //   image: require('../assets/businessesImages/tiplestoreImage.png'),
-  //   text: 'another business',
-  //   distance: 'some distance',
-  //   hours: 'time here',
-  //   rating: '4.0',
-  // },
+  {
+    key: 2,
+    image: require('../assets/businessesImages/tiplestoreImage.png'),
+    text: 'Tripplee African and Caribbean market',
+    distance: '120 km',
+    hours: '10:00am - 11:00 pm',
+    rating: '4.5',
+  },
+  {
+    key: 3,
+    image: require('../assets/businessesImages/tiplestoreImage.png'),
+    text: 'a business',
+    distance: 'some distance',
+    hours: 'time here',
+    rating: '3.0',
+  },
+  {
+    key: 4,
+    image: require('../assets/businessesImages/tiplestoreImage.png'),
+    text: 'another business',
+    distance: 'some distance',
+    hours: 'time here',
+    rating: '4.0',
+  },
 ]
 
 export default function BusinessItems({ businesses = item }) {
@@ -76,7 +76,7 @@ export default function BusinessItems({ businesses = item }) {
 const BusinessImage = ({ image }) => {
   return (
     <View>
-      {/* like button */}
+      {/* bookmark button */}
       <Pressable>
         <TouchableOpacity
           style={{
@@ -88,7 +88,8 @@ const BusinessImage = ({ image }) => {
           }}
           activeOpacity={0.5}
         >
-          <Icon name="heart-outline" size={25} color="#fff" />
+          {/* color is dependent on if the user has bookmarked or not */}
+          <Icon name="bookmark-outline" size={25} color="#fff" />
         </TouchableOpacity>
       </Pressable>
       {/* Business image */}

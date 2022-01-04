@@ -60,7 +60,7 @@ export default function LoginScreen({ navigation }) {
             style={{
               color: 'white',
               fontSize: 30,
-              marginTop: '10%',
+              marginTop: '15%',
               fontWeight: '700',
             }}
           >
@@ -71,42 +71,15 @@ export default function LoginScreen({ navigation }) {
             <Header
               style={{
                 fontSize: 19,
-                marginTop: '20%',
                 color: 'white',
                 fontStyle: 'italic',
-                textDecorationLine: 'underline',
+                // textDecorationLine: 'underline',
               }}
             >
               Skip
             </Header>
           </TouchableOpacity>
         </View>
-
-        {/* <TextInput
-          label="Email"
-          returnKeyType="next"
-          value={email.value}
-          onChangeText={(text) => setEmail({ value: text, error: '' })}
-          error={!!email.error}
-          errorText={email.error}
-          autoCapitalize="none"
-          autoCompleteType="email"
-          textContentType="emailAddress"
-          keyboardType="email-address"
-          style={styles.body}
-        /> */}
-
-        {/* Password Input */}
-        {/* <TextInput
-          label="Password"
-          returnKeyType="done"
-          value={password.value}
-          onChangeText={(text) => setPassword({ value: text, error: '' })}
-          error={!!password.error}
-          errorText={password.error}
-          style={styles.body}
-          secureTextEntry
-        /> */}
 
         {/* Email Input */}
         <TextInput
@@ -224,3 +197,32 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 })
+
+// old text input
+
+/* <TextInput
+          label="Email"
+          returnKeyType="next"
+          value={email.value}
+          onChangeText={(text) => setEmail({ value: text, error: '' })}
+          error={!!email.error}
+          errorText={email.error}
+          autoCapitalize="none"
+          autoCompleteType="email"
+          textContentType="emailAddress"
+          keyboardType="email-address"
+          style={styles.body}
+        /> */
+
+/* Password Input */
+
+/* <TextInput
+          label="Password"
+          returnKeyType="done"
+          value={password.value}
+          onChangeText={(text) => setPassword({ value: text, error: '' })}
+          error={!!password.error}
+          errorText={password.error}
+          style={styles.body}
+          secureTextEntry
+        /> */

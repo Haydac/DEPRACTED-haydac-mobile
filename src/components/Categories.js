@@ -21,28 +21,26 @@ const items = [
 
 export default function Categories() {
   return (
-    <View style={styles.content}>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        {/* loop starts here */}
-        {items.map((item, index) => (
-          <View
-            style={{ alignItems: 'center', marginLeft: 25, marginRight: 30 }}
-            key={item.key}
-          >
-            <View style={styles.item}>
-              <Image source={item.image} style={styles.image} />
-            </View>
-            <Text style={styles.text}>{item.text}</Text>
+    <View style={[styles.content, { flexDirection: 'row' }]}>
+      {/* loop starts here */}
+      {items.map((item, index) => (
+        <View
+          style={{ alignItems: 'center', marginLeft: 25, marginRight: 30 }}
+          key={item.key}
+        >
+          <View style={styles.item}>
+            <Image source={item.image} style={styles.image} />
           </View>
-        ))}
-        {/* loop ends here */}
-      </ScrollView>
+          <Text style={styles.text}>{item.text}</Text>
+        </View>
+      ))}
+      {/* loop ends here */}
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  content: { position: 'relative', marginTop: 60 },
+  content: { position: 'relative', marginTop: '5%' },
   image: {
     width: 50,
     height: 40,
