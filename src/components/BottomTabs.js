@@ -12,7 +12,10 @@ export default function BottomTabs() {
         justifyContent: 'space-between',
       }}
     >
-      <Icon icon="home" text="Home" color="#D9BAF1" />
+      {/* reduce icon sizes */}
+      <View style={{ top: -5 }}>
+        <Icon icon="home" text="Home" color="#D9BAF1" size={25} />
+      </View>
       <Icon icon="tag" text="Deals" />
       <Icon icon="bookmark" text="Bookmark" />
       <Icon icon="cog" text="Settings" />
@@ -20,13 +23,13 @@ export default function BottomTabs() {
   )
 }
 
-const Icon = ({ icon, text, color }) => {
+const Icon = ({ icon, text, color, size = 19 }) => {
   return (
     <TouchableOpacity>
       <View>
         <FontAwesome
           name={icon}
-          size={25}
+          size={size}
           style={[styles.font, (color = { color })]}
         />
         <Text>{text}</Text>

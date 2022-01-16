@@ -9,6 +9,7 @@ import {
 import { Text } from 'react-native-paper'
 // import Background from '../components/Background'
 // import Logo from '../components/Logo'
+import Icon from 'react-native-vector-icons/FontAwesome'
 import Header from '../components/Header'
 import Button from '../components/Button'
 // import TextInput from '../components/TextInput'
@@ -67,13 +68,11 @@ export default function LoginScreen({ navigation }) {
             Welcome{'\n'}Back!
           </Header>
           <TouchableOpacity onPress={() => navigation.replace('Home')}>
-            {/* <Text>Skip</Text> */}
             <Header
               style={{
                 fontSize: 19,
                 color: 'white',
                 fontStyle: 'italic',
-                // textDecorationLine: 'underline',
               }}
             >
               Skip
@@ -82,30 +81,131 @@ export default function LoginScreen({ navigation }) {
         </View>
 
         {/* Email Input */}
+        <View
+          style={[
+            styles.row,
+            {
+              marginBottom: 40,
+              marginTop: 200,
+              // backgroundColor: 'red',
+              justifyContent: 'center',
+            },
+          ]}
+        >
+          <Icon
+            name="envelope"
+            color="#BB6BD9"
+            size={15}
+            style={{
+              top: '50%',
+              position: 'absolute',
+              justifyContent: 'flex-start',
+              // backgroundColor: 'blue',
+              width: '80%',
+            }}
+          />
+          {/* text container */}
+          <View
+            style={[
+              styles.body,
+              {
+                // backgroundColor: 'blue',
+                width: '80%',
+              },
+            ]}
+          >
+            <TextInput
+              style={[
+                {
+                  width: '94%',
+                  alignSelf: 'flex-start',
+                  // backgroundColor: 'red',
+                  left: '9%',
+                  top: '25%',
+                },
+              ]}
+              placeholder="Email Address/Phone Number"
+            />
+          </View>
+        </View>
+        {/* <Icon
+          name="envelope"
+          color="#BB6BD9"
+          size={18}
+          style={[
+            {
+              position: 'absolute',
+              justifyContent: 'flex-start',
+              // backgroundColor: 'blue',
+              width: '95%',
+              top: '50.5%',
+            },
+          ]}
+        />
         <TextInput
           style={[styles.body, { marginBottom: 50, marginTop: 200 }]}
           placeholder="Email Address or Phone Number"
-        />
-        <TextInput
-          style={[
-            styles.body,
-            // color should change from prev color to C89DD9 when highlighted
-            { marginBottom: 40 },
-          ]}
-          placeholder="Password"
-        />
+        /> */}
+
+        {/* Passowrd Input */}
+        <View
+          style={[styles.row, { marginBottom: 40, justifyContent: 'center' }]}
+        >
+          <Icon
+            name="lock"
+            color="#BB6BD9"
+            size={18}
+            style={{
+              top: '50%',
+              position: 'absolute',
+              justifyContent: 'flex-start',
+              // backgroundColor: 'blue',
+              zIndex: 2,
+              width: '80%',
+            }}
+          />
+          {/* text container */}
+          <View
+            style={[
+              styles.body,
+              {
+                // backgroundColor: 'blue',
+                width: '80%',
+              },
+            ]}
+          >
+            <TextInput
+              style={[
+                {
+                  width: '94%',
+                  alignSelf: 'flex-start',
+                  // backgroundColor: 'red',
+                  left: '9%',
+                  top: '25%',
+                },
+              ]}
+              placeholder="Password"
+            />
+          </View>
+        </View>
 
         {/* Login button */}
         <Button
-          btnText="Log in"
+          btnText="Login"
           btnColor="#BB6BD9"
           btnTextColor="white"
-          btnTop="7%"
+          btnTop="3%"
           onPress={onLoginPressed}
         />
 
         {/* Forgot password link */}
-        <View style={[styles.forgotPassword, styles.row, { marginTop: '30%' }]}>
+        <View
+          style={[
+            styles.forgotPassword,
+            styles.row,
+            { marginTop: '15%', justifyContent: 'center' },
+          ]}
+        >
           <Text>Forgot your password, click </Text>
           <TouchableOpacity
             onPress={() => navigation.navigate('ResetPasswordScreen')}
@@ -117,7 +217,7 @@ export default function LoginScreen({ navigation }) {
         </View>
 
         {/* Sign up link */}
-        <View style={[styles.row]}>
+        <View style={[styles.row, { justifyContent: 'center' }]}>
           <Text>Don’t have an account? </Text>
           <TouchableOpacity
             onPress={() => navigation.replace('RegisterScreen')}
@@ -158,7 +258,7 @@ const styles = StyleSheet.create({
     borderColor: '#fff',
     borderBottomColor: '#BB6BD9',
     // position: 'relative',
-    width: '85%',
+    width: '100%',
     top: '2%',
     // borderColor: 'rgba(0, 0, 0, .5)',
   },
@@ -187,14 +287,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#0645AD',
     fontStyle: 'italic',
-    textDecorationLine: 'underline',
+    // textDecorationLine: 'underline',
   },
   row: {
     position: 'relative',
     flexDirection: 'row',
     marginTop: '5%',
-    width: '85%',
-    justifyContent: 'center',
+    width: '90%',
+    justifyContent: 'flex-start',
   },
 })
 

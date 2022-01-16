@@ -1,13 +1,18 @@
 import React from 'react'
-import { View, Text, Pressable } from 'react-native'
+import { View, Pressable } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 export default function MenuIcon() {
   return (
-    <Pressable>
+    <Pressable
+      onPress={() => {
+        console.log('Menu icon pressed')
+        // navigation.navigate('LocationScreen')
+      }}
+    >
       <TouchableOpacity>
-        <View style={{}}>
+        <View>
           <View
             style={{
               alignItems: 'center',

@@ -1,6 +1,10 @@
 import React from 'react'
 import { View, Text, Image, StyleSheet, ScrollView } from 'react-native'
 
+// the api will have a key that will specify if it is a grocery store or not
+// depending on the button/icon that is pressed,
+// the content on the page will be determined based on the button pressed
+
 const items = [
   {
     key: 1,

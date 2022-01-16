@@ -10,7 +10,7 @@ const AppButton = ({ onPress, btnText, btnColor, btnTextColor, btnTop }) => (
       position: 'relative',
       height: '5%',
       backgroundColor: btnColor,
-      borderRadius: 18,
+      borderRadius: 14,
       paddingVertical: 10,
       paddingHorizontal: 12,
       width: '80%',

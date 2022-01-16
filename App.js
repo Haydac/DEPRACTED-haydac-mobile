@@ -11,12 +11,11 @@ import {
   LoginScreen,
   RegisterScreen,
   ResetPasswordScreen,
-  AddressPage,
 } from './src/screens'
 
 const Stack = createStackNavigator()
 
-// create a modal component for locationPage. Modal is a basic way to present content above an enclosing view
+// create a modal component for LocationScreen. Modal is a basic way to present content above an enclosing view
 export default function App() {
   return (
     <Provider theme={theme}>
@@ -30,8 +29,11 @@ export default function App() {
           <Stack.Screen name="StartScreen" component={StartScreen} />
           <Stack.Screen name="LoginScreen" component={LoginScreen} />
           <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
-          <Stack.Screen name="Home" component={Home} />
-          <Stack.Screen name="AddressPage" component={AddressPage} />
+          <Stack.Screen
+            name="Home"
+            component={Home}
+            options={{ title: 'Welcome' }}
+          />
           <Stack.Screen
             name="ResetPasswordScreen"
             component={ResetPasswordScreen}

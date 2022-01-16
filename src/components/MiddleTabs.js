@@ -3,6 +3,10 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import BusinessItems from './BusinessItem'
 
 export default function MiddleTabs() {
+  // Near me businesses should be displayed based on the current location of the user
+  // Popular businesses hsould display popular businesses in the city --> this would be passed from
+  // home component
+
   // what is returned is dependent on what button is active
   const DisplayBusinesses = ({ isActive = 'Near me' }) => {
     if (isActive === 'Near me') return <BusinessItems />

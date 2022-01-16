@@ -12,33 +12,44 @@ export default function SearchBar({
   return (
     <View
       style={{
-        justifyContent: 'center',
-        alignItems: 'center',
+        // justifyContent: 'center',
+        // alignItems: 'center',
         marginTop: 10,
+        // backgroundColor: 'blue',
+        flexDirection: 'row',
       }}
     >
       <GooglePlacesAutocomplete
+        query={{ key: 'AIzaSyABl1b0Ok2pzddo2jRqlNsZaEJzE_6lW6Y' }}
+        // you can use this function to filter what user searches for
+        onPress={(data, details = null) => {
+          // using it to ghet city/location
+          const city = data.description.split(',')[0]
+        }}
         placeholder={title}
         styles={{
           textInput: {
             backgroundColor: '#eee',
-            marginRight: 4,
+            // marginRight: 4,
             borderRadius: 20,
             fontWeight: '500',
             marginTop: 7,
             height: 30,
+            // alignItems: 'center',
             fontSize: 13,
           },
           textInputContainer: {
             borderColor: '#fff',
-            borderWidth: 1,
+            // borderWidth: 1,
             backgroundColor: '#eee',
-            height: 40,
+            // height: 40,
             width: length,
-            borderRadius: 15,
+            borderRadius: 50,
             flexDirection: 'row',
             alignItems: 'center',
-            marginRight: 10,
+            alignSelf: 'center',
+            // marginRight: 10,
+            // marginLeft: 20,
           },
         }}
         renderLeftButton={() => (
