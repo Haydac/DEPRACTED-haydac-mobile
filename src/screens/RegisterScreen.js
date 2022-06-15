@@ -38,7 +38,7 @@ export default function RegisterScreen({ navigation }) {
     }
     navigation.reset({
       index: 0,
-      routes: [{ name: 'Dashboard' }],
+      routes: [{ name: 'LoginScreen' }],
     })
   }
 
@@ -302,7 +302,7 @@ export default function RegisterScreen({ navigation }) {
           ]}
         >
           <Text>Already have an account? </Text>
-          <TouchableOpacity onPress={() => navigation.replace('LoginScreen')}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
             <Text style={styles.link}>Login</Text>
           </TouchableOpacity>
         </View>

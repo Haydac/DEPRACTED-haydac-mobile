@@ -30,6 +30,7 @@ export default function LoginScreen({ navigation }) {
       setPassword({ ...password, error: passwordError })
       return
     }
+    // this sets what page to go to
     navigation.reset({
       index: 0,
       routes: [{ name: 'Home' }],
