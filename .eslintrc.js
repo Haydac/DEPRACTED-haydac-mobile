@@ -53,6 +53,10 @@ module.exports = {
         ignoreTemplateLiterals: true,
         ignoreRegExpLiterals: true,
       },
+      // windows
+      {
+        endOfLine: 'auto',
+      },
     ],
   },
 }

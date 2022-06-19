@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
-import Background from '../components/Background'
+import { ImageBackground, Text, StyleSheet } from 'react-native'
 import BackButton from '../components/BackButton'
 import Logo from '../components/Logo'
 import Header from '../components/Header'
 import TextInput from '../components/TextInput'
-import Button from '../components/Button'
 import { emailValidator } from '../helpers/emailValidator'
 
 export default function ResetPasswordScreen({ navigation }) {
@@ -20,7 +19,11 @@ export default function ResetPasswordScreen({ navigation }) {
   }
 
   return (
-    <Background>
+    <ImageBackground
+      source={require('../assets/login.png')}
+      resizeMode="cover"
+      style={styles.image}
+    >
       <BackButton goBack={navigation.goBack} />
       <Logo />
       <Header>Restore Password</Header>
@@ -37,13 +40,16 @@ export default function ResetPasswordScreen({ navigation }) {
         keyboardType="email-address"
         description="You will receive email with password reset link."
       />
-      <Button
-        mode="contained"
-        onPress={sendResetPasswordEmail}
-        style={{ marginTop: 16 }}
-      >
-        Send Instructions
-      </Button>
-    </Background>
+      <Text>Reset password screen</Text>
+    </ImageBackground>
   )
 }
+
+const styles = StyleSheet.create({
+  image: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+  },
+})

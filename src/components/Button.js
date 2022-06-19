@@ -1,82 +1,59 @@
 import React from 'react'
-import { StyleSheet, TouchableOpacity, Text } from 'react-native'
-import { Button as PaperButton } from 'react-native-paper'
-import { theme } from '../core/theme'
+import { Text, StyleSheet, TouchableOpacity, View } from 'react-native'
 
-const AppButton = ({ onPress, btnText, btnColor, btnTextColor, btnTop }) => (
-  <TouchableOpacity
-    onPress={onPress}
-    style={{
-      position: 'relative',
-      height: '5%',
-      backgroundColor: btnColor,
-      borderRadius: 14,
-      paddingVertical: 10,
-      paddingHorizontal: 12,
-      width: '80%',
-      top: btnTop,
-    }}
-  >
-    <Text
-      style={{
-        fontSize: 18,
-        color: btnTextColor,
-        fontWeight: 'normal',
-        alignSelf: 'center',
-      }}
-    >
-      {btnText}
-    </Text>
-  </TouchableOpacity>
-)
-
-const oldFunction = ({ mode, style, ...props }) => (
-  <PaperButton
-    style={[
-      styles.button,
-      mode === 'outlined' && { backgroundColor: theme.colors.surface },
-      style,
-    ]}
-    labelStyle={styles.text}
-    mode={mode}
-    {...props}
-  />
-)
-
-export default function Button({
+const Button = ({
+  text,
+  width,
+  height,
+  borderRadius,
+  backgroundColor,
+  style,
+  textStyle,
+  icon,
   onPress,
-  btnText = 'btnText',
-  btnColor = '#FFFFFF',
-  btnTextColor = 'black',
-  btnTop = '0%',
-}) {
+}) => {
+  const iconDisplay = icon ? <View style={[styles.icon]}>{icon}</View> : null
+
   return (
-    <AppButton
-      btnText={btnText}
+    <TouchableOpacity
       onPress={onPress}
-      btnTextColor={btnTextColor}
-      btnColor={btnColor}
-      btnTop={btnTop}
-    />
+      activeOpacity={0.8}
+      style={[
+        styles.container,
+        {
+          width,
+          height,
+          borderRadius,
+          backgroundColor,
+        },
+        style,
+      ]}
+    >
+      <Text style={[styles.text, textStyle]}>{text}</Text>
+      {iconDisplay}
+    </TouchableOpacity>
   )
 }
 
 const styles = StyleSheet.create({
-  button: {
-    position: 'absolute',
-    height: '5%',
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#FFFFFF',
-    borderRadius: 50,
-    paddingVertical: 10,
-    paddingHorizontal: 12,
-    width: '80%',
-    top: '88%',
+    overflow: 'hidden',
   },
   text: {
+    letterSpacing: 1,
     fontSize: 18,
     color: 'black',
-    fontWeight: 'normal',
-    alignSelf: 'center',
+    fontWeight: 'bold',
+  },
+  icon: {
+    position: 'absolute',
+    right: 20,
+    width: 20,
+    height: 20,
   },
 })
+
+export default Button

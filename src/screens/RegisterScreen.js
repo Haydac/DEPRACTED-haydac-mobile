@@ -2,21 +2,15 @@ import React, { useState } from 'react'
 import {
   View,
   StyleSheet,
-  TouchableOpacity,
   ImageBackground,
-  ScrollView,
-  SafeAreaView,
-  StatusBar,
   TextInput,
+  Platform,
 } from 'react-native'
 import { Text } from 'react-native-paper'
 import Icon from 'react-native-vector-icons/FontAwesome'
-import Background from '../components/Background'
-import Logo from '../components/Logo'
+import Constants from 'expo-constants'
 import Header from '../components/Header'
 import Button from '../components/Button'
-import BackButton from '../components/BackButton'
-import { theme } from '../core/theme'
 import { emailValidator } from '../helpers/emailValidator'
 import { passwordValidator } from '../helpers/passwordValidator'
 import { nameValidator } from '../helpers/nameValidator'
@@ -49,262 +43,214 @@ export default function RegisterScreen({ navigation }) {
         resizeMode="cover"
         style={styles.image}
       >
-        {/* <BackButton goBack={navigation.goBack} /> */}
-        <View
-          style={{
-            // backgroundColor: 'red',
-            position: 'absolute',
-            flexDirection: 'row',
-            width: '85%',
-            justifyContent: 'space-between',
-            alignItems: 'flex-start',
-            bottom: '75%',
-          }}
-        >
-          <Header style={[styles.header]}>Create{'\n'}Account</Header>
-          <TouchableOpacity onPress={() => navigation.replace('Home')}>
-            <Header
+        {/* Sign up header */}
+        <View style={styles.header}>
+          <Header style={styles.welcomeMessage}>Create{'\n'}Account</Header>
+          <Button
+            width="6%"
+            height="5%"
+            text="Skip"
+            backgroundColor="transparent"
+            style={styles.skipBtn}
+            textStyle={styles.skipBtnText}
+            onPress={() => navigation.replace('Home')}
+          />
+        </View>
+        <View style={styles.signupFormContainer}>
+          {/* Email input */}
+          <View
+            style={[
+              {
+                marginBottom: 10,
+                marginTop: 140,
+                justifyContent: 'center',
+              },
+            ]}
+          >
+            <Icon
+              name="envelope"
+              color="#BB6BD9"
+              size={15}
               style={{
-                fontSize: 19,
-                color: 'white',
-                fontStyle: 'italic',
+                top: '50%',
+                position: 'absolute',
+                justifyContent: 'flex-start',
+                width: '10%',
               }}
+            />
+            {/* text container */}
+            <View
+              style={[
+                styles.inputField,
+                {
+                  width: '100%',
+                },
+              ]}
             >
-              Skip
-            </Header>
-          </TouchableOpacity>
-        </View>
-
-        {/* Email input */}
-        {/* <TextInput
-          style={[styles.body, { marginTop: 230 }]}
-          placeholder="Email Address or Phone Number"
-        /> */}
-        <View
-          style={[styles.row, { marginTop: 230, justifyContent: 'center' }]}
-        >
-          <Icon
-            name="envelope"
-            color="#BB6BD9"
-            size={15}
-            style={{
-              top: '30%',
-              position: 'absolute',
-              justifyContent: 'flex-start',
-              // backgroundColor: 'blue',
-              zIndex: 2,
-              width: '90%',
-            }}
-          />
-          {/* text container */}
-          <View
-            style={[
-              styles.body,
-              {
-                // backgroundColor: 'blue',
-                width: '90%',
-              },
-            ]}
-          >
-            <TextInput
+              <TextInput
+                style={[
+                  {
+                    width: '100%',
+                    alignSelf: 'flex-start',
+                    left: '9%',
+                    top: '25%',
+                  },
+                ]}
+                placeholder="Email address/Phone number"
+              />
+            </View>
+          </View>
+          {/* Address input */}
+          <View style={[{ marginBottom: 10, justifyContent: 'center' }]}>
+            <Icon
+              name="map-marker"
+              color="#BB6BD9"
+              size={18}
+              style={{
+                top: '50%',
+                position: 'absolute',
+                justifyContent: 'flex-start',
+                zIndex: 2,
+                width: '10%',
+              }}
+            />
+            {/* text container */}
+            <View
               style={[
+                styles.inputField,
                 {
-                  width: '94%',
-                  alignSelf: 'flex-start',
-                  // backgroundColor: 'red',
-                  left: '9%',
-                  top: '25%',
+                  width: '100%',
                 },
               ]}
-              placeholder="Email Address or Phone Number"
-            />
+            >
+              <TextInput
+                style={[
+                  {
+                    width: '100%',
+                    alignSelf: 'flex-start',
+                    left: '9%',
+                    top: '25%',
+                  },
+                ]}
+                placeholder="Enter address"
+              />
+            </View>
           </View>
-        </View>
-        {/* <TextInput
-          label="Email"
-          returnKeyType="next"
-          value={email.value}
-          onChangeText={(text) => setEmail({ value: text, error: '' })}
-          error={!!email.error}
-          errorText={email.error}
-          autoCapitalize="none"
-          autoCompleteType="email"
-          textContentType="emailAddress"
-          keyboardType="email-address"
-          style={styles.input}
-        /> */}
-
-        {/* Address input */}
-        <View style={[styles.row, { justifyContent: 'center' }]}>
-          <Icon
-            name="map-marker"
-            color="#BB6BD9"
-            size={18}
-            style={{
-              top: '30%',
-              position: 'absolute',
-              justifyContent: 'flex-start',
-              zIndex: 2,
-              // backgroundColor: 'blue',
-              width: '90%',
-            }}
-          />
-          {/* text container */}
-          <View
-            style={[
-              styles.body,
-              {
-                // backgroundColor: 'blue',
-                width: '90%',
-              },
-            ]}
-          >
-            <TextInput
+          {/* Password */}
+          <View style={[{ marginBottom: 10, justifyContent: 'center' }]}>
+            <Icon
+              name="lock"
+              color="#BB6BD9"
+              size={18}
+              style={{
+                top: '50%',
+                position: 'absolute',
+                justifyContent: 'flex-start',
+                zIndex: 2,
+                width: '10%',
+              }}
+            />
+            {/* text container */}
+            <View
               style={[
+                styles.inputField,
                 {
-                  width: '94%',
-                  alignSelf: 'flex-start',
-                  // backgroundColor: 'red',
-                  left: '9%',
-                  top: '25%',
+                  width: '100%',
                 },
               ]}
-              placeholder="Address"
-            />
+            >
+              <TextInput
+                style={[
+                  {
+                    width: '100%',
+                    alignSelf: 'flex-start',
+                    left: '9%',
+                    top: '25%',
+                  },
+                ]}
+                secureTextEntry
+                placeholder="Password"
+              />
+            </View>
           </View>
-        </View>
-        {/* <TextInput style={[styles.body]} placeholder="Address" /> */}
-        {/* <TextInput label="Address" style={styles.input} /> */}
-
-        {/* Password */}
-        <View style={[styles.row, { justifyContent: 'center' }]}>
-          <Icon
-            name="key"
-            color="#BB6BD9"
-            size={18}
-            style={{
-              top: '30%',
-              position: 'absolute',
-              justifyContent: 'flex-start',
-              zIndex: 2,
-              // backgroundColor: 'blue',
-              width: '90%',
-            }}
-          />
-          {/* text container */}
+          {/* Confirm password */}
           <View
-            style={[
-              styles.body,
-              {
-                // backgroundColor: 'blue',
-                width: '90%',
-              },
-            ]}
+            style={[styles.row, { marginBottom: 50, justifyContent: 'center' }]}
           >
-            <TextInput
+            <Icon
+              name="lock"
+              color="#BB6BD9"
+              size={18}
+              style={{
+                top: '50%',
+                position: 'absolute',
+                justifyContent: 'flex-start',
+                zIndex: 2,
+                width: '10%',
+              }}
+            />
+            {/* text container */}
+            <View
               style={[
+                styles.inputField,
                 {
-                  width: '94%',
-                  alignSelf: 'flex-start',
-                  // backgroundColor: 'red',
-                  left: '9%',
-                  top: '25%',
+                  width: '100%',
                 },
               ]}
-              placeholder="Password"
-            />
+            >
+              <TextInput
+                style={[
+                  {
+                    width: '100%',
+                    alignSelf: 'flex-start',
+                    left: '9%',
+                    top: '25%',
+                  },
+                ]}
+                secureTextEntry
+                placeholder="Confirm passowrd"
+              />
+            </View>
           </View>
-        </View>
-        {/* <TextInput style={[styles.body]} placeholder="Password" /> */}
-        {/* <TextInput
-          label="Password"
-          returnKeyType="done"
-          value={password.value}
-          onChangeText={(text) => setPassword({ value: text, error: '' })}
-          error={!!password.error}
-          errorText={password.error}
-          style={styles.input}
-          secureTextEntry
-        /> */}
+          {/* Sign up button */}
 
-        {/* Confirm password */}
-        <View style={[styles.row, { justifyContent: 'center' }]}>
-          <Icon
-            name="key"
-            color="#BB6BD9"
-            size={18}
-            style={{
-              top: '30%',
-              position: 'absolute',
-              justifyContent: 'flex-start',
-              zIndex: 2,
-              // backgroundColor: 'blue',
-              width: '90%',
-            }}
+          <Button
+            width="100%"
+            height="8%"
+            text="Sign up"
+            backgroundColor="#BB6BD9"
+            style={styles.signUpBtn}
+            textStyle={styles.signUpBtnText}
+            onPress={onSignUpPressed}
           />
-          {/* text container */}
+          {/** Separator */}
           <View
-            style={[
-              styles.body,
-              {
-                // backgroundColor: 'blue',
-                width: '90%',
-              },
-            ]}
+            style={{
+              marginTop: 12,
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}
           >
-            <TextInput
-              style={[
-                {
-                  width: '94%',
-                  alignSelf: 'flex-start',
-                  // backgroundColor: 'red',
-                  left: '9%',
-                  top: '25%',
-                },
-              ]}
-              placeholder="Confirm password"
-            />
+            <View style={{ flex: 1, height: 1, backgroundColor: '#A5A5A5' }} />
+            <View>
+              <Text
+                style={{ color: '#A5A5A5', width: 50, textAlign: 'center' }}
+              >
+                Or
+              </Text>
+            </View>
+            <View style={{ flex: 1, height: 1, backgroundColor: '#A5A5A5' }} />
           </View>
-        </View>
-        {/* <TextInput style={styles.body} placeholder="Confirm Password" /> */}
-        {/* <TextInput
-          label="Confirm password"
-          returnKeyType="done"
-          value={password.value}
-          onChangeText={(text) => setPassword({ value: text, error: '' })}
-          error={!!password.error}
-          errorText={password.error}
-          style={styles.input}
-          secureTextEntry
-        /> */}
-
-        {/* sign up button */}
-        <Button
-          btnText="Sign up"
-          btnColor="#BB6BD9"
-          btnTextColor="white"
-          btnTop="2.5%"
-          onPress={onSignUpPressed}
-        />
-        {/* <Button
-          onPress={onSignUpPressed}
-          btnTextColor="white"
-          btnColor="#BB6BD9"
-          btnText="Sign up"
-        >
-          Sign Up
-        </Button> */}
-
-        <View
-          style={[
-            styles.row,
-            { top: '12%', position: 'relative', width: '85%' },
-          ]}
-        >
-          <Text>Already have an account? </Text>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Text style={styles.link}>Login</Text>
-          </TouchableOpacity>
+          {/* Log in button */}
+          <Button
+            width="100%"
+            height="8%"
+            text="Log in"
+            backgroundColor="#fff"
+            style={styles.loginBtn}
+            textStyle={styles.loginBtnText}
+            onPress={() => navigation.replace('LoginScreen')}
+          />
         </View>
       </ImageBackground>
     </View>
@@ -312,11 +258,8 @@ export default function RegisterScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  header: {
-    color: 'white',
-    fontSize: 30,
-    marginTop: '15%',
-    fontWeight: '700',
+  container: {
+    flex: 1,
   },
   image: {
     flex: 1,
@@ -324,34 +267,64 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '100%',
   },
-  container: {
-    flex: 1,
-  },
-  row: {
+  header: {
+    width: '100%',
+    paddingVertical: Platform.OS === 'ios' ? 20 : Constants.statusBarHeight,
     flexDirection: 'row',
-    // justifyContent: 'space-between',
-    width: '96%',
-    marginTop: 2,
   },
-  input: {
-    // position: 'relative',
-    top: '30%',
+  welcomeMessage: {
+    color: 'white',
+    fontSize: 30,
+    marginTop: '10%',
+    marginLeft: '5%',
+    fontWeight: '700',
   },
-  link: {
-    fontWeight: 'bold',
-    color: theme.colors.primary,
+  skipBtn: {
+    margin: '4%',
+    position: 'absolute',
+    top: 10,
+    right: 0,
   },
-  body: {
+  skipBtnText: {
+    color: '#fff',
+    fontStyle: 'italic',
+    fontSize: 19,
+  },
+  signupFormContainer: {
+    width: '80%',
+    position: 'relative',
+    flex: 3,
+    flexDirection: 'column',
+  },
+  inputField: {
+    position: 'relative',
     height: 30,
     margin: 1,
-    borderWidth: 1,
-    // padding: 10,
-    borderColor: '#fff',
+    borderBottomWidth: 1,
     borderBottomColor: '#BB6BD9',
-    // position: 'relative',
-    width: '85%',
+    width: '100%',
     top: '2%',
-    marginBottom: 30,
-    // borderColor: 'rgba(0, 0, 0, .5)',
+  },
+  signUpBtn: {
+    marginTop: 12,
+    borderRadius: 7,
+  },
+  signUpBtnText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 15,
+    lineHeight: 26,
+  },
+  loginBtn: {
+    marginTop: 12,
+    borderRadius: 7,
+    borderWidth: 1,
+    borderColor: '#A5A5A5',
+  },
+  loginBtnText: {
+    color: '#A5A5A5',
+    fontWeight: 'bold',
+    fontSize: 15,
+    lineHeight: 26,
   },
 })
