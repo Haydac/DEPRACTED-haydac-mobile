@@ -4,7 +4,7 @@ To run the app:
 
 - `yarn start`
 
-## Contribution:
+## Contribution
 
 1 CREATE A NEW BRANCH FOR THE SOLUTION/TASK OFF OF DEVELOP
 2 PUSH CHANGES TO YOUR NEW BRANCH
