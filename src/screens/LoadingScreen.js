@@ -1,14 +1,24 @@
 import React from 'react'
-import Background from '../components/Background'
+import { ImageBackground, StyleSheet } from 'react-native'
 import Logo from '../components/Logo'
-import Header from '../components/Header'
-import Button from '../components/Button'
-import Paragraph from '../components/Paragraph'
 
-export default function StartScreen({ navigation }) {
+export default function StartScreen() {
   return (
-    <Background>
+    <ImageBackground
+      source={require('../assets/login.png')}
+      resizeMode="cover"
+      style={styles.image}
+    >
       <Logo />
-    </Background>
+    </ImageBackground>
   )
 }
+
+const styles = StyleSheet.create({
+  image: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+  },
+})

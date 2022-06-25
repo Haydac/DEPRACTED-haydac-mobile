@@ -1,10 +1,14 @@
 import React from 'react'
-import { StyleSheet, Text, ImageBackground, View } from 'react-native'
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import {
+  StyleSheet,
+  Text,
+  ImageBackground,
+  View,
+  Dimensions,
+} from 'react-native'
+import { FontAwesome5 } from '@expo/vector-icons'
 import Button from '../components/Button'
 import Logo from '../components/Logo'
-import AntDesign from 'react-native-vector-icons/AntDesign'
 
 export default function StartScreen({ navigation }) {
   return (
@@ -15,46 +19,60 @@ export default function StartScreen({ navigation }) {
         style={styles.image}
       >
         <Logo />
-        <Text style={[styles.basetext]}>
-          Bring home closer with a {'\n\t\t'} single click...
+        <Text style={[styles.welcomeText]}>
+          Bring home closer with a {'\n'} single click...
         </Text>
         <Button
-          btnText="Get Started"
-          btnTextColor="black"
-          btnColor="#fff"
-          btnTop="29.3%"
+          width="80%"
+          height="5%"
+          text="Get Started"
+          borderRadius={10}
+          backgroundColor="#fff"
+          style={styles.getStartedBtn}
+          textStyle={styles.getStartedBtnText}
+          icon={
+            <FontAwesome5
+              style={styles.iconStyle}
+              name="arrow-right"
+              size={20}
+            />
+          }
           onPress={() => navigation.replace('LoginScreen')}
         />
-
-        <FontAwesomeIcon icon={faArrowRight} style={[styles.iconPos]} />
       </ImageBackground>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   image: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
   },
-  container: {
-    flex: 1,
+  getStartedBtn: {
+    position: 'absolute',
+    top: Dimensions.get('window').height - 50,
+    bottom: 0,
   },
-  text: {
+  getStartedBtnText: {
+    color: '#000',
     fontWeight: 'bold',
     fontSize: 15,
     lineHeight: 26,
   },
-  basetext: {
-    // fontFamily: 'Nexa-Bold',
+  welcomeText: {
+    color: '#000',
+    textAlign: 'center',
+    fontWeight: '600',
     fontSize: 22,
     top: '-11%',
   },
-  iconPos: {
-    position: 'absolute',
-    top: '89.5%',
-    right: '18%',
+  iconStyle: {
+    color: 'black',
   },
 })
