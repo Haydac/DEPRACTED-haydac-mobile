@@ -16,7 +16,7 @@ const item = [
     key: 1,
     image: require('../assets/businessesImages/afrospiceImage.png'),
     text: 'Afro Spice Chophouse',
-    distance: 'Less than 800m',
+    distance: '800 m',
     hours: '1:00pm - 9:00 pm',
     rating: '4.0',
   },
@@ -24,7 +24,7 @@ const item = [
     key: 2,
     image: require('../assets/businessesImages/tiplestoreImage.png'),
     text: 'Tripplee African and Caribbean market',
-    distance: '120 km',
+    distance: '1 km',
     hours: '10:00am - 11:00 pm',
     rating: '4.5',
   },
@@ -32,7 +32,7 @@ const item = [
     key: 3,
     image: require('../assets/businessesImages/tiplestoreImage.png'),
     text: 'a business',
-    distance: 'some distance',
+    distance: '80 m',
     hours: 'time here',
     rating: '3.0',
   },
@@ -40,7 +40,7 @@ const item = [
     key: 4,
     image: require('../assets/businessesImages/tiplestoreImage.png'),
     text: 'another business',
-    distance: 'some distance',
+    distance: '200 m',
     hours: 'time here',
     rating: '4.0',
   },
@@ -128,13 +128,10 @@ const BusinessInfo = ({ text, distance, hours, rating }) => {
           },
         ]}
       >
-        <View style={{ flexDirection: 'row' }}>
-          <Icon name="map-marker" size={16} color="#D9BAF1" />
+        <View style={styles.distanceStyle}>
+          <Icon name="map-marker" size={16} color="#25AAE1" />
           <Text style={{ fontWeight: '300', color: 'gray' }}>{distance}</Text>
         </View>
-        <Text style={{ fontWeight: '300', color: 'black' }}>
-          Hours: {hours}
-        </Text>
       </View>
     </View>
   )
@@ -153,13 +150,19 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   text: {
-    fontWeight: '600',
+    fontWeight: '700',
     width: '90%',
     alignSelf: 'center',
   },
+  distanceStyle: {
+    paddingHorizontal: 5,
+    flexDirection: 'row',
+    borderRadius: 15,
+    backgroundColor: '#eee',
+  },
   rating: {
     fontSize: 12,
-    fontWeight: '400',
+    fontWeight: '700',
     width: 'auto',
   },
   ratingStyling: {

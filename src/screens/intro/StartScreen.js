@@ -7,18 +7,16 @@ import {
   Dimensions,
 } from 'react-native'
 import { FontAwesome5 } from '@expo/vector-icons'
-import Button from '../components/Button'
-import Logo from '../components/Logo'
+import Button from '../../components/buttons/Button'
+import Brand from '../../components/core/Brand'
+import Background from '../../components/core/Background'
+import { theme } from '../../core/theme'
 
 export default function StartScreen({ navigation }) {
   return (
-    <View style={styles.container}>
-      <ImageBackground
-        source={require('../assets/background_dot.png')}
-        resizeMode="cover"
-        style={styles.image}
-      >
-        <Logo />
+    <Background imageSource={require('../../assets/start_screen.png')}>
+      <View style={styles.container}>
+        <Brand logoStyle={styles.logoStyle} />
         <Text style={[styles.welcomeText]}>
           Bring home closer with a {'\n'} single click...
         </Text>
@@ -26,7 +24,7 @@ export default function StartScreen({ navigation }) {
           width="80%"
           height="5%"
           text="Get Started"
-          borderRadius={10}
+          borderRadius={20}
           backgroundColor="#fff"
           style={styles.getStartedBtn}
           textStyle={styles.getStartedBtnText}
@@ -37,16 +35,18 @@ export default function StartScreen({ navigation }) {
               size={20}
             />
           }
-          onPress={() => navigation.replace('LoginScreen')}
+          onPress={() => navigation.navigate('LoginScreen')}
         />
-      </ImageBackground>
-    </View>
+      </View>
+    </Background>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   image: {
     flex: 1,
@@ -61,18 +61,20 @@ const styles = StyleSheet.create({
   },
   getStartedBtnText: {
     color: '#000',
-    fontWeight: 'bold',
+    fontWeight: 'normal',
     fontSize: 15,
     lineHeight: 26,
   },
   welcomeText: {
+    marginTop: 30,
+    marginBottom: 100,
     color: '#000',
     textAlign: 'center',
     fontWeight: '600',
     fontSize: 22,
-    top: '-11%',
   },
   iconStyle: {
     color: 'black',
   },
+  logoStyle: {},
 })

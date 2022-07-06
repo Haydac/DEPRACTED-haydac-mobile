@@ -1,5 +1,13 @@
 import React from 'react'
-import { View, Text, Image, StyleSheet, ScrollView } from 'react-native'
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  ScrollView,
+  Pressable,
+} from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
 // the api will have a key that will specify if it is a grocery store or not
 // depending on the button/icon that is pressed,
@@ -10,33 +18,39 @@ const items = [
     key: 1,
     image: require('../assets/categories/grocery.png'),
     text: 'Grocery Stores',
+    drawer: 'GroceryStoresScreen',
   },
   {
     key: 2,
     image: require('../assets/categories/restaurant.png'),
     text: 'Restaurants',
+    drawer: 'RestaurantsScreen',
   },
   {
     key: 3,
     image: require('../assets/categories/services.png'),
     text: 'Services',
+    drawer: 'ServicesScreen',
   },
 ]
 
 export default function Categories() {
+  const navigation = useNavigation()
+
   return (
     <View style={[styles.content, { flexDirection: 'row' }]}>
       {/* loop starts here */}
       {items.map((item, index) => (
-        <View
+        <Pressable
           style={{ alignItems: 'center', marginLeft: 25, marginRight: 30 }}
           key={item.key}
+          onPress={() => navigation.navigate(item.drawer)}
         >
           <View style={styles.item}>
             <Image source={item.image} style={styles.image} />
           </View>
           <Text style={styles.text}>{item.text}</Text>
-        </View>
+        </Pressable>
       ))}
       {/* loop ends here */}
     </View>
@@ -44,7 +58,10 @@ export default function Categories() {
 }
 
 const styles = StyleSheet.create({
-  content: { position: 'relative', marginTop: '5%' },
+  content: {
+    position: 'relative',
+    justifyContent: 'space-around',
+  },
   image: {
     width: 50,
     height: 40,
