@@ -1,3 +1,8 @@
+/**
+ * Validates email
+ * @param {} email
+ * @returns
+ */
 export function emailValidator(email) {
   const re = /\S+@\S+\.\S+/
   if (!email) return "Email can't be empty."
