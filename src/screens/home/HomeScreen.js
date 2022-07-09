@@ -6,6 +6,8 @@ import {
   Pressable,
   useFonts,
   Animated,
+  StatusBar,
+  Platform,
 } from 'react-native'
 import { Divider, Text, Provider } from 'react-native-paper'
 import AntDesign from 'react-native-vector-icons/AntDesign'
@@ -15,18 +17,19 @@ import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
 import LocationScreen from './LocationScreen'
 
 /* Components Import */
-import MiddleTabs from '../components/MiddleTabs'
-import SearchBar from '../components/SearchBar'
-import Categories from '../components/Categories'
-import BusinessAd from '../components/BusinessAd'
-import BottomTabs from '../components/BottomTabs'
+import MiddleTabs from '../../components/MiddleTabs'
+import SearchBar from '../../components/SearchBar'
+import Categories from '../../components/Categories'
+import BusinessAd from '../../components/BusinessAd'
+
 // import LocationButton from '../components/LocationButton' COMMENT: replace built in function with this
-import MenuIcon from '../components/MenuIcon'
-import GlobeIcon from '../components/GlobeIcon'
+import MenuIcon from '../../components/MenuIcon'
+import GlobeIcon from '../../components/GlobeIcon'
+import DemarcationLine from '../../components/DemarcationLine'
 
 // const sheetRef = React.useRef(null)
 
-export default function Home() {
+export default function HomeScreen({ navigation }) {
   const [city, setCity] = useState('Toronto')
   const [visibility, setVisibility] = useState(false)
 
@@ -79,7 +82,7 @@ export default function Home() {
 
   return (
     <Provider>
-      <SafeAreaView style={{ backgroundColor: '#D9BAF1', flex: 1 }}>
+      <SafeAreaView style={[styles.container, { backgroundColor: '#D9BAF1' }]}>
         {/* header tab view */}
         <View
           style={{
@@ -113,11 +116,12 @@ export default function Home() {
               length="85%"
             />
 
-            {/* Categories */}
-            <Categories />
-
             {/* business advetisement in location */}
             <BusinessAd />
+
+            {/* Categories */}
+            <Categories />
+            <DemarcationLine />
 
             {/* middle tabs */}
             <MiddleTabs />
@@ -130,12 +134,15 @@ export default function Home() {
             setVisibility(false)
           }}
         />
-
-        <View style={{ backgroundColor: '#fff' }}>
-          <Divider width={1} />
-          <BottomTabs />
-        </View>
       </SafeAreaView>
     </Provider>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+  },
+})

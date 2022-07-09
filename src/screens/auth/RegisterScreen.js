@@ -9,11 +9,11 @@ import {
 import { Text } from 'react-native-paper'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Constants from 'expo-constants'
-import Header from '../components/Header'
-import Button from '../components/Button'
-import { emailValidator } from '../helpers/emailValidator'
-import { passwordValidator } from '../helpers/passwordValidator'
-import { nameValidator } from '../helpers/nameValidator'
+import Header from '../../components/Header'
+import Button from '../../components/buttons/Button'
+import { emailValidator } from '../../helpers/emailValidator'
+import { passwordValidator } from '../../helpers/passwordValidator'
+import { nameValidator } from '../../helpers/nameValidator'
 
 export default function RegisterScreen({ navigation }) {
   const [name, setName] = useState({ value: '', error: '' })
@@ -21,6 +21,7 @@ export default function RegisterScreen({ navigation }) {
   const [password, setPassword] = useState({ value: '', error: '' })
 
   const onSignUpPressed = () => {
+    // TODO: Anjola
     const nameError = nameValidator(name.value)
     const emailError = emailValidator(email.value)
     const passwordError = passwordValidator(password.value)
@@ -39,7 +40,7 @@ export default function RegisterScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require('../assets/login.png')}
+        source={require('../../assets/login.png')}
         resizeMode="cover"
         style={styles.image}
       >
@@ -249,7 +250,7 @@ export default function RegisterScreen({ navigation }) {
             backgroundColor="#fff"
             style={styles.loginBtn}
             textStyle={styles.loginBtnText}
-            onPress={() => navigation.replace('LoginScreen')}
+            onPress={() => navigation.navigate('LoginScreen')}
           />
         </View>
       </ImageBackground>

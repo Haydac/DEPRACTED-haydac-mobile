@@ -11,9 +11,9 @@ import {
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { Portal } from 'react-native-paper'
 import AntDesign from 'react-native-vector-icons/AntDesign'
-import BackButton from '../components/BackButton'
-import Header from '../components/Header'
-import SearchBar from '../components/SearchBar'
+import BackButton from '../../components/buttons/BackButton'
+import Header from '../../components/Header'
+import SearchBar from '../../components/SearchBar'
 
 export default function AddressPage({ show, onDismiss, children }) {
   const screenHeight = Dimensions.get('window').height - 40
