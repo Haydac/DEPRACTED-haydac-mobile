@@ -1,232 +1,211 @@
-import React, { useState } from 'react'
-import {
-  View,
-  StyleSheet,
-  ImageBackground,
-  TextInput,
-  Platform,
-} from 'react-native'
+import { useState, useEffect } from 'react'
+import { StyleSheet, View, Keyboard, Platform } from 'react-native'
 import { Text } from 'react-native-paper'
-import Icon from 'react-native-vector-icons/FontAwesome'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 import Constants from 'expo-constants'
-import Header from '../../components/Header'
-import Button from '../../components/buttons/Button'
+
 import { emailValidator } from '../../helpers/emailValidator'
 import { passwordValidator } from '../../helpers/passwordValidator'
 import { nameValidator } from '../../helpers/nameValidator'
 
+import Header from '../../components/Header'
+import Button from '../../components/buttons/Button'
+import InputField from '../../components/forms/InputField'
+import Background from '../../components/core/Background'
+import { theme } from '../../core/theme'
+
 export default function RegisterScreen({ navigation }) {
-  const [name, setName] = useState({ value: '', error: '' })
-  const [email, setEmail] = useState({ value: '', error: '' })
-  const [password, setPassword] = useState({ value: '', error: '' })
+  const [email, setEmail] = useState('')
+  const [address, setAddress] = useState('')
+  const [password, setPassword] = useState('')
+  const [passwordConfirm, setPasswordConfirm] = useState('')
+  const [activeField, setActiveField] = useState('')
+
+  const emailIcon = (
+    <Icon
+      name="email"
+      color={activeField == 'Email' ? '#BB6BD9' : '#A5A5A5'}
+      size={16}
+    />
+  )
+
+  const addressIcon = (
+    <Icon
+      name="location-pin"
+      color={activeField == 'Address' ? '#BB6BD9' : '#A5A5A5'}
+      size={20}
+    />
+  )
+
+  const passwordIcon = (
+    <Icon
+      name="lock"
+      color={activeField == 'Password' ? '#BB6BD9' : '#A5A5A5'}
+      size={20}
+    />
+  )
+
+  const passwordConfirmIcon = (
+    <Icon
+      name="lock"
+      color={activeField == 'PasswordConfirm' ? '#BB6BD9' : '#A5A5A5'}
+      size={20}
+    />
+  )
+
+  const formWidth = '100%'
+  const formItemHeight = 45
+  const formSpacing = 20
 
   const onSignUpPressed = () => {
     // TODO: Anjola
-    const nameError = nameValidator(name.value)
     const emailError = emailValidator(email.value)
     const passwordError = passwordValidator(password.value)
-    if (emailError || passwordError || nameError) {
-      setName({ ...name, error: nameError })
+    if (emailError || passwordError) {
       setEmail({ ...email, error: emailError })
       setPassword({ ...password, error: passwordError })
       return
     }
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'LoginScreen' }],
-    })
+    console.log('Sign up button pressed')
+    navigation.navigate('LoginScreen')
   }
 
+  // Keyboard listener
+  // TODO: maybe there is a way to refactor into a component
+
+  useEffect(() => {
+    const showObserver = Keyboard.addListener(
+      'keyboardDidShow',
+      _keyboardDidShow
+    )
+    const hideObserver = Keyboard.addListener(
+      'keyboardDidHide',
+      _keyboardDidHide
+    )
+
+    return () => {
+      if (showObserver.removeListener) {
+        showObserver.removeListener('keyboardDidShow', _keyboardDidShow)
+      }
+      if (hideObserver.removeListener) {
+        hideObserver.removeListener('keyboardDidHide', _keyboardDidHide)
+      }
+    }
+  }, [])
+
+  const [isKeyboardOpen, setIsKeyBoardOpen] = useState(false)
+  const _keyboardDidShow = () => setIsKeyBoardOpen(true)
+  const _keyboardDidHide = () => setIsKeyBoardOpen(false)
+
   return (
-    <View style={styles.container}>
-      <ImageBackground
-        source={require('../../assets/login.png')}
-        resizeMode="cover"
-        style={styles.image}
-      >
-        {/* Sign up header */}
+    <Background
+      imageSource={isKeyboardOpen ? null : require('../../assets/login.png')}
+    >
+      <View style={styles.content}>
+        {/* Login header :  */}
         <View style={styles.header}>
-          <Header style={styles.welcomeMessage}>Create{'\n'}Account</Header>
+          {isKeyboardOpen ? null : (
+            <Header style={styles.headerMessage}>Create{'\n'}Account</Header>
+          )}
           <Button
             width="6%"
             height="5%"
             text="Skip"
             backgroundColor="transparent"
             style={styles.skipBtn}
-            textStyle={styles.skipBtnText}
-            onPress={() => navigation.replace('Home')}
+            textStyle={[
+              styles.skipBtnText,
+              { color: isKeyboardOpen ? theme.colors.primary : '#fff' },
+            ]}
+            onPress={() => navigation.navigate('HomeTabs')}
           />
         </View>
-        <View style={styles.signupFormContainer}>
-          {/* Email input */}
-          <View
-            style={[
-              {
-                marginBottom: 10,
-                marginTop: 140,
-                justifyContent: 'center',
-              },
-            ]}
-          >
-            <Icon
-              name="envelope"
-              color="#BB6BD9"
-              size={15}
-              style={{
-                top: '50%',
-                position: 'absolute',
-                justifyContent: 'flex-start',
-                width: '10%',
-              }}
-            />
-            {/* text container */}
-            <View
-              style={[
-                styles.inputField,
-                {
-                  width: '100%',
-                },
-              ]}
-            >
-              <TextInput
-                style={[
-                  {
-                    width: '100%',
-                    alignSelf: 'flex-start',
-                    left: '9%',
-                    top: '25%',
-                  },
-                ]}
-                placeholder="Email address/Phone number"
-              />
-            </View>
-          </View>
-          {/* Address input */}
-          <View style={[{ marginBottom: 10, justifyContent: 'center' }]}>
-            <Icon
-              name="map-marker"
-              color="#BB6BD9"
-              size={18}
-              style={{
-                top: '50%',
-                position: 'absolute',
-                justifyContent: 'flex-start',
-                zIndex: 2,
-                width: '10%',
-              }}
-            />
-            {/* text container */}
-            <View
-              style={[
-                styles.inputField,
-                {
-                  width: '100%',
-                },
-              ]}
-            >
-              <TextInput
-                style={[
-                  {
-                    width: '100%',
-                    alignSelf: 'flex-start',
-                    left: '9%',
-                    top: '25%',
-                  },
-                ]}
-                placeholder="Enter address"
-              />
-            </View>
-          </View>
-          {/* Password */}
-          <View style={[{ marginBottom: 10, justifyContent: 'center' }]}>
-            <Icon
-              name="lock"
-              color="#BB6BD9"
-              size={18}
-              style={{
-                top: '50%',
-                position: 'absolute',
-                justifyContent: 'flex-start',
-                zIndex: 2,
-                width: '10%',
-              }}
-            />
-            {/* text container */}
-            <View
-              style={[
-                styles.inputField,
-                {
-                  width: '100%',
-                },
-              ]}
-            >
-              <TextInput
-                style={[
-                  {
-                    width: '100%',
-                    alignSelf: 'flex-start',
-                    left: '9%',
-                    top: '25%',
-                  },
-                ]}
-                secureTextEntry
-                placeholder="Password"
-              />
-            </View>
-          </View>
-          {/* Confirm password */}
-          <View
-            style={[styles.row, { marginBottom: 50, justifyContent: 'center' }]}
-          >
-            <Icon
-              name="lock"
-              color="#BB6BD9"
-              size={18}
-              style={{
-                top: '50%',
-                position: 'absolute',
-                justifyContent: 'flex-start',
-                zIndex: 2,
-                width: '10%',
-              }}
-            />
-            {/* text container */}
-            <View
-              style={[
-                styles.inputField,
-                {
-                  width: '100%',
-                },
-              ]}
-            >
-              <TextInput
-                style={[
-                  {
-                    width: '100%',
-                    alignSelf: 'flex-start',
-                    left: '9%',
-                    top: '25%',
-                  },
-                ]}
-                secureTextEntry
-                placeholder="Confirm passowrd"
-              />
-            </View>
-          </View>
-          {/* Sign up button */}
 
+        <View style={styles.loginFormContainer}>
+          {/* Email input */}
+          <InputField
+            id="Email"
+            placeHolder="Email"
+            icon={emailIcon}
+            inputFieldStyle={[
+              { marginBottom: formSpacing },
+              styles.inputFieldStyle,
+            ]}
+            text={email}
+            setText={setEmail}
+            activeField={activeField}
+            setActiveField={setActiveField}
+          />
+
+          {/* Address input */}
+          <InputField
+            id="Address"
+            placeHolder="Address"
+            icon={addressIcon}
+            inputFieldStyle={[
+              { marginBottom: formSpacing },
+              styles.inputFieldStyle,
+            ]}
+            text={address}
+            setText={setAddress}
+            activeField={activeField}
+            setActiveField={setActiveField}
+          />
+
+          {/* Passowrd input */}
+          <InputField
+            id="Password"
+            placeHolder="Password"
+            icon={passwordIcon}
+            inputFieldStyle={[
+              { marginBottom: formSpacing },
+              styles.inputFieldStyle,
+            ]}
+            text={password}
+            setText={setPassword}
+            secureTextEntry
+            activeField={activeField}
+            setActiveField={setActiveField}
+          />
+
+          {/* Passowrd confirmation input */}
+          <InputField
+            id="PasswordConfirm"
+            placeHolder="Confirm Password"
+            icon={passwordConfirmIcon}
+            inputFieldStyle={[{ marginBottom: 7 }, styles.inputFieldStyle]}
+            text={passwordConfirm}
+            setText={setPasswordConfirm}
+            secureTextEntry
+            activeField={activeField}
+            setActiveField={setActiveField}
+          />
+
+          {/* Forgot password button */}
           <Button
-            width="100%"
-            height="8%"
+            height={formItemHeight}
+            text="Forgot password?"
+            backgroundColor="transparent"
+            style={styles.forgotPasswordBtn}
+            textStyle={styles.forgotPasswordBtnText}
+            onPress={() => navigation.navigate('ResetPasswordScreen')}
+          />
+
+          {/* Sign up button */}
+          <Button
+            width={formWidth}
+            height={formItemHeight}
             text="Sign up"
             backgroundColor="#BB6BD9"
-            style={styles.signUpBtn}
-            textStyle={styles.signUpBtnText}
+            style={styles.loginBtn}
+            textStyle={styles.loginBtnText}
             onPress={onSignUpPressed}
           />
+
           {/** Separator */}
           <View
             style={{
+              width: formWidth,
               marginTop: 12,
               flexDirection: 'row',
               alignItems: 'center',
@@ -242,19 +221,20 @@ export default function RegisterScreen({ navigation }) {
             </View>
             <View style={{ flex: 1, height: 1, backgroundColor: '#A5A5A5' }} />
           </View>
-          {/* Log in button */}
+
+          {/* Sign up button */}
           <Button
-            width="100%"
-            height="8%"
+            width={formWidth}
+            height={formItemHeight}
             text="Log in"
             backgroundColor="#fff"
-            style={styles.loginBtn}
-            textStyle={styles.loginBtnText}
+            style={styles.signUpBtn}
+            textStyle={styles.signUpBtnText}
             onPress={() => navigation.navigate('LoginScreen')}
           />
         </View>
-      </ImageBackground>
-    </View>
+      </View>
+    </Background>
   )
 }
 
@@ -262,18 +242,27 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  image: {
+  content: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    width: '100%',
   },
   header: {
     width: '100%',
-    paddingVertical: Platform.OS === 'ios' ? 20 : Constants.statusBarHeight,
+    position: 'absolute',
+    top: 0,
+    flex: 1,
     flexDirection: 'row',
   },
-  welcomeMessage: {
+  loginFormContainer: {
+    width: '80%',
+    height: '50%',
+    position: 'absolute',
+    bottom: 60,
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+  headerMessage: {
     color: 'white',
     fontSize: 30,
     marginTop: '10%',
@@ -291,38 +280,39 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     fontSize: 19,
   },
-  signupFormContainer: {
-    width: '80%',
+  inputFieldStyle: {
+    height: '9%',
     position: 'relative',
-    flex: 3,
-    flexDirection: 'column',
-  },
-  inputField: {
-    position: 'relative',
-    height: 30,
-    margin: 1,
     borderBottomWidth: 1,
     borderBottomColor: '#BB6BD9',
-    width: '100%',
-    top: '2%',
   },
-  signUpBtn: {
+  forgotPasswordBtn: {
+    alignSelf: 'flex-end',
+  },
+  forgotPasswordBtnText: {
+    color: '#BB6BD9',
+    textDecorationLine: 'underline',
+    fontWeight: 'bold',
+    fontSize: 12,
+    lineHeight: 15,
+  },
+  loginBtn: {
     marginTop: 12,
     borderRadius: 7,
   },
-  signUpBtnText: {
+  loginBtnText: {
     color: '#fff',
     fontWeight: 'bold',
     fontSize: 15,
     lineHeight: 26,
   },
-  loginBtn: {
+  signUpBtn: {
     marginTop: 12,
     borderRadius: 7,
     borderWidth: 1,
     borderColor: '#A5A5A5',
   },
-  loginBtnText: {
+  signUpBtnText: {
     color: '#A5A5A5',
     fontWeight: 'bold',
     fontSize: 15,

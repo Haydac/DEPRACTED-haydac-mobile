@@ -1,20 +1,13 @@
-import React, { useState, useEffect } from 'react'
-import {
-  StyleSheet,
-  View,
-  ImageBackground,
-  TouchableWithoutFeedback,
-  KeyboardAvoidingView,
-  Keyboard,
-} from 'react-native'
+import { useState, useEffect } from 'react'
+import { StyleSheet, View, Keyboard } from 'react-native'
 import { Text } from 'react-native-paper'
-import Constants from 'expo-constants'
-
 import Icon from 'react-native-vector-icons/FontAwesome'
-import Header from '../../components/Header'
-import Button from '../../components/buttons/Button'
+
 import { emailValidator } from '../../helpers/emailValidator'
 import { passwordValidator } from '../../helpers/passwordValidator'
+
+import Header from '../../components/Header'
+import Button from '../../components/buttons/Button'
 import InputField from '../../components/forms/InputField'
 import Background from '../../components/core/Background'
 import { theme } from '../../core/theme'
@@ -84,7 +77,7 @@ export default function LoginScreen({ navigation }) {
         {/* Login header :  */}
         <View style={styles.header}>
           {isKeyboardOpen ? null : (
-            <Header style={styles.welcomeMessage}>Welcome{'\n'}Back!</Header>
+            <Header style={styles.headerMessage}>Welcome{'\n'}Back!</Header>
           )}
           <Button
             width="6%"
@@ -118,7 +111,7 @@ export default function LoginScreen({ navigation }) {
             id="Password"
             placeHolder="Password"
             icon={passwordIcon}
-            inputFieldStyle={styles.inputFieldStyle}
+            inputFieldStyle={[{ marginBottom: 7 }, styles.inputFieldStyle]}
             text={password}
             setText={setPassword}
             secureTextEntry
@@ -129,7 +122,7 @@ export default function LoginScreen({ navigation }) {
           {/* Forgot password button */}
           <Button
             height={formItemHeight}
-            text="Forgot password"
+            text="Forgot password?"
             backgroundColor="transparent"
             style={styles.forgotPasswordBtn}
             textStyle={styles.forgotPasswordBtnText}
@@ -207,7 +200,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-end',
   },
-  welcomeMessage: {
+  headerMessage: {
     color: 'white',
     fontSize: 30,
     marginTop: '10%',

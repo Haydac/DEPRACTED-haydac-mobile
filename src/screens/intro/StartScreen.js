@@ -56,8 +56,7 @@ const styles = StyleSheet.create({
   },
   getStartedBtn: {
     position: 'absolute',
-    top: Dimensions.get('window').height - 50,
-    bottom: 0,
+    bottom: 40,
   },
   getStartedBtnText: {
     color: '#000',
