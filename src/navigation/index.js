@@ -1,5 +1,4 @@
-import * as React from 'react'
-
+import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Foundation, FontAwesome5, MaterialIcons } from '@expo/vector-icons'
@@ -12,11 +11,13 @@ import {
   RegisterScreen,
   ResetPasswordScreen,
 } from '../screens/auth'
+
 import {
   HomeScreen,
   GroceryStoresScreen,
   RestaurantsScreen,
   ServicesScreen,
+  BusinessScreen,
 } from '../screens/home'
 
 import { FavoritesScreen } from '../screens/favorites'
@@ -26,13 +27,13 @@ import { theme } from '../core/theme'
 
 const Stack = createNativeStackNavigator()
 
-const RootNavigator = () => {
+export default function RootNavigator() {
   const { state } = useAuthContext()
-  console.log(state)
+
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {state.token != null ? (
-        <Stack.Screen name="HomeTabs" component={HomeTabs} />
+        <Stack.Screen name="HomeTabs" component={AppTabs} />
       ) : (
         <>
           <Stack.Screen name="StartScreen" component={StartScreen} />
@@ -41,8 +42,13 @@ const RootNavigator = () => {
           <Stack.Screen
             name="ResetPasswordScreen"
             component={ResetPasswordScreen}
+            options={{
+              headerShown: true,
+              title: 'Reset password',
+              headerTitleAlign: 'center',
+            }}
           />
-          <Stack.Screen name="HomeTabs" component={HomeTabs} />
+          <Stack.Screen name="HomeTabs" component={AppTabs} />
         </>
       )}
     </Stack.Navigator>
@@ -51,7 +57,7 @@ const RootNavigator = () => {
 
 const Tab = createBottomTabNavigator()
 
-const HomeTabs = () => {
+const AppTabs = () => {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -59,7 +65,6 @@ const HomeTabs = () => {
         tabBarInactiveTintColor: '#000',
         tabBarActiveTintColor: theme.colors.primary,
       }}
-      barStyle={{ backgroundColor: 'white' }}
     >
       <Tab.Screen
         name="Home"
@@ -72,7 +77,7 @@ const HomeTabs = () => {
       />
       <Tab.Screen
         name="Favorites"
-        component={FavoritesScreen}
+        component={FavoritesStackNavigator}
         options={{
           tabBarIcon: ({ color }) => (
             <MaterialIcons name="star" size={24} color={color} />
@@ -84,7 +89,7 @@ const HomeTabs = () => {
         component={ProfileScreen}
         options={{
           tabBarIcon: ({ color }) => (
-            <FontAwesome5 name="user-alt" size={24} color={color} />
+            <FontAwesome5 name="user-alt" size={20} color={color} />
           ),
         }}
       />
@@ -105,10 +110,61 @@ const HomeStackNavigator = () => {
       <Stack.Screen
         name="GroceryStoresScreen"
         component={GroceryStoresScreen}
+        options={{
+          title: 'Stores',
+          headerTitleAlign: 'center',
+        }}
       />
-      <Stack.Screen name="RestaurantsScreen" component={RestaurantsScreen} />
-      <Stack.Screen name="ServicesScreen" component={ServicesScreen} />
+      <Stack.Screen
+        name="RestaurantsScreen"
+        component={RestaurantsScreen}
+        options={{
+          title: 'Restaurants',
+          headerTitleAlign: 'center',
+        }}
+      />
+      <Stack.Screen
+        name="ServicesScreen"
+        component={ServicesScreen}
+        options={{
+          title: 'Services',
+          headerTitleAlign: 'center',
+        }}
+      />
+      <Stack.Screen
+        name="BusinessScreen"
+        component={BusinessScreen}
+        options={{
+          title: '',
+          headerTintColor: theme.colors.primary,
+          headerTransparent: true,
+        }}
+      />
     </HomeStack.Navigator>
   )
 }
-export default RootNavigator
+
+const FavoritesStackNavigator = () => {
+  return (
+    <HomeStack.Navigator>
+      <HomeStack.Screen
+        name="FavoritesScreen"
+        component={FavoritesScreen}
+        options={{
+          headerShown: true,
+          title: 'Favourites',
+          headerTitleAlign: 'center',
+        }}
+      />
+      <Stack.Screen
+        name="BusinessScreen"
+        component={BusinessScreen}
+        options={{
+          title: '',
+          headerTintColor: theme.colors.primary,
+          headerTransparent: true,
+        }}
+      />
+    </HomeStack.Navigator>
+  )
+}

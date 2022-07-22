@@ -1,24 +1,19 @@
 import React from 'react'
-import {
-  StyleSheet,
-  Text,
-  ImageBackground,
-  View,
-  Dimensions,
-} from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { FontAwesome5 } from '@expo/vector-icons'
 import Button from '../../components/buttons/Button'
 import Brand from '../../components/core/Brand'
 import Background from '../../components/core/Background'
-import { theme } from '../../core/theme'
 
 export default function StartScreen({ navigation }) {
   return (
-    <Background imageSource={require('../../assets/start_screen.png')}>
+    <Background
+      imageSource={require('../../assets/background/start-screen.png')}
+    >
       <View style={styles.container}>
         <Brand logoStyle={styles.logoStyle} />
         <Text style={[styles.welcomeText]}>
-          Bring home closer with a {'\n'} single click...
+          Bring home closer with a {'\n'} single click
         </Text>
         <Button
           width="80%"
@@ -28,6 +23,8 @@ export default function StartScreen({ navigation }) {
           backgroundColor="#fff"
           style={styles.getStartedBtn}
           textStyle={styles.getStartedBtnText}
+          textColor="#000"
+          textColorPressed="#000"
           icon={
             <FontAwesome5
               style={styles.iconStyle}
@@ -59,7 +56,6 @@ const styles = StyleSheet.create({
     bottom: 40,
   },
   getStartedBtnText: {
-    color: '#000',
     fontWeight: 'normal',
     fontSize: 15,
     lineHeight: 26,
