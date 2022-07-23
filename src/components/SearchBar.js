@@ -1,63 +1,79 @@
 import React from 'react'
-import { View, Text, SafeAreaView } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
-// eslint-disable-next-line import/no-unresolved
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import { theme } from '../core/theme'
 
 export default function SearchBar({
-  title = 'add text',
-  icon = 'location-sharp',
-  length = '100%',
+  width,
+  placeHolder,
+  searchBarOuterStyle,
+  searchBarColor,
+  iconLeft,
+  iconLeftColor,
 }) {
   return (
     <View
-      style={{
-        // justifyContent: 'center',
-        // alignItems: 'center',
-        marginTop: 10,
-        // backgroundColor: 'blue',
-        flexDirection: 'row',
-      }}
+      style={[
+        styles.container,
+        searchBarOuterStyle,
+        { width: width || '100%' },
+      ]}
     >
       <GooglePlacesAutocomplete
-        query={{ key: 'AIzaSyABl1b0Ok2pzddo2jRqlNsZaEJzE_6lW6Y' }}
-        // you can use this function to filter what user searches for
-        onPress={(data, details = null) => {
-          // using it to ghet city/location
-          const city = data.description.split(',')[0]
+        placeholder={placeHolder || 'Search'}
+        nearbyPlacesAPI="GooglePlacesSearch"
+        debounce={400}
+        onPress={(data) => setCity(data.structured_formatting.main_text)}
+        minLength={2}
+        fetchDetails={true}
+        returnKeyType={'search'}
+        onFail={(error) => console.error(error)}
+        query={{
+          key: 'AIzaSyABl1b0Ok2pzddo2jRqlNsZaEJzE_6lW6Y',
+          language: 'en',
         }}
-        placeholder={title}
         styles={{
+          container: {
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+          },
           textInput: {
-            backgroundColor: '#eee',
-            // marginRight: 4,
-            borderRadius: 20,
-            fontWeight: '500',
-            marginTop: 7,
-            height: 30,
-            // alignItems: 'center',
-            fontSize: 13,
+            marginTop: 4,
+            fontSize: 15,
+            fontWeight: '700',
+            backgroundColor: 'transparent',
           },
           textInputContainer: {
-            borderColor: '#fff',
-            // borderWidth: 1,
-            backgroundColor: '#eee',
-            // height: 40,
-            width: length,
-            borderRadius: 50,
-            flexDirection: 'row',
-            alignItems: 'center',
-            alignSelf: 'center',
-            // marginRight: 10,
-            // marginLeft: 20,
+            justifyContent: 'center',
+            borderRadius: 40,
+            backgroundColor: searchBarColor,
           },
         }}
-        renderLeftButton={() => (
-          <View style={{ marginLeft: 10 }}>
-            <Ionicons name={icon} size={18} />
-          </View>
-        )}
+        enablePoweredByContainer={false}
+        renderLeftButton={() =>
+          iconLeft || (
+            <View style={styles.leftIcon}>
+              <Ionicons
+                name="search"
+                size={24}
+                color={iconLeftColor || '#000'}
+              />
+            </View>
+          )
+        }
       />
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+  },
+  leftIcon: {
+    marginLeft: 9,
+    alignSelf: 'center',
+  },
+})

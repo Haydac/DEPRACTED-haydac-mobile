@@ -1,34 +1,28 @@
-// get all businesses that chooses to be advertised and store them in an object
-// display all the businesses in a card that slides
-// TODO: make this card a slideshow of businesses
 import React from 'react'
-import { View, Text, Image } from 'react-native'
-import DemarcationLine from './DemarcationLine'
+import { View, Image, StyleSheet } from 'react-native'
+import { theme } from '../core/theme'
 
-export default function BusinessAd() {
+// Use uri, data will be remote <Image source={{ uri: image_url }}/>
+export default function BusinessAd({ image_url }) {
   return (
     <View>
-      <DemarcationLine />
-      <View
-        style={{
-          //   backgroundColor: 'red',
-          width: '100%',
-          justifyContent: 'center',
-          alignSelf: 'center',
-          borderRadius: '20%',
-        }}
-      >
-        <Image
-          style={{
-            width: '98%',
-            justifyContent: 'center',
-            alignSelf: 'center',
-            // borderRadius: 20,
-          }}
-          source={require('../assets/advertisement.png')}
-        />
+      <View style={styles.container}>
+        {image_url && <Image style={styles.image} source={image_url} />}
       </View>
-      <DemarcationLine />
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    marginVertical: theme.constants.verticalCardMargin,
+  },
+  image: {
+    width: '100%',
+    justifyContent: 'center',
+    alignSelf: 'center',
+  },
+})
