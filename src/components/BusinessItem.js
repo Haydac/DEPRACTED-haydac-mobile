@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Image, Text, TouchableOpacity, View, StyleSheet } from 'react-native'
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import Ionicons from 'react-native-vector-icons/Ionicons'
+import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import { theme } from '../core/theme'
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { Foundation, FontAwesome5, MaterialIcons } from '@expo/vector-icons'
+import { FontAwesome5, MaterialIcons, FontAwesome } from '@expo/vector-icons'
 
 import { useAuthContext } from '../contexts/AuthContext'
 
@@ -20,6 +20,7 @@ import {
   BusinessScreen,
 } from '../screens/home'
 
+import { BrowseScreen } from '../screens/browse'
 import { FavoritesScreen } from '../screens/favorites'
 import { ProfileScreen } from '../screens/profile'
 
@@ -71,7 +72,16 @@ const AppTabs = () => {
         component={HomeStackNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <Foundation name="home" size={24} color={color} />
+            <FontAwesome name="home" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Browse"
+        component={BrowseScreen}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <FontAwesome name="search" size={22} color={color} />
           ),
         }}
       />
@@ -89,7 +99,7 @@ const AppTabs = () => {
         component={ProfileScreen}
         options={{
           tabBarIcon: ({ color }) => (
-            <FontAwesome5 name="user-alt" size={20} color={color} />
+            <FontAwesome name="user" size={20} color={color} />
           ),
         }}
       />

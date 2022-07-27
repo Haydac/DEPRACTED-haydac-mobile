@@ -17,7 +17,7 @@ export default function RestaurantsScreen({ navigation }) {
       {/* Header: menuButton  ---- search ---- regionButton */}
       <SearchBar
         width="90%"
-        placeHolder="Search stores, services or restaurants"
+        placeHolder="Search restaurants"
         searchBarOuterStyle={styles.searchBarOuterStyle}
         searchBarColor="#eee"
         iconLeftColor="gray"
