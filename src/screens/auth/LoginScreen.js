@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
-import { StyleSheet, View, Keyboard } from 'react-native'
-import { Text } from 'react-native-paper'
-import { FontAwesome } from '@expo/vector-icons'
+import { StyleSheet, View, Keyboard, Text } from 'react-native'
+import { FontAwesome, MaterialIcons } from '@expo/vector-icons'
 
 import { emailValidator } from '../../helpers/emailValidator'
 import { passwordValidator } from '../../helpers/passwordValidator'
@@ -26,10 +25,10 @@ export default function LoginScreen({ navigation }) {
     />
   )
   const passwordIcon = (
-    <FontAwesome
+    <MaterialIcons
       name="lock"
       color={activeField == 'Password' ? '#BB6BD9' : '#A5A5A5'}
-      size={22}
+      size={20}
     />
   )
 
