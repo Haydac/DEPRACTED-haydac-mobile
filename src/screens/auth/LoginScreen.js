@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
-import { StyleSheet, View, Keyboard } from 'react-native'
-import { Text } from 'react-native-paper'
-import Icon from 'react-native-vector-icons/FontAwesome'
+import { StyleSheet, View, Keyboard, Text } from 'react-native'
+import { FontAwesome, MaterialIcons } from '@expo/vector-icons'
 
 import { emailValidator } from '../../helpers/emailValidator'
 import { passwordValidator } from '../../helpers/passwordValidator'
@@ -19,17 +18,17 @@ export default function LoginScreen({ navigation }) {
   const [activeField, setActiveField] = useState('')
 
   const emailIcon = (
-    <Icon
+    <FontAwesome
       name="envelope"
       color={activeField == 'Email' ? '#BB6BD9' : '#A5A5A5'}
       size={15}
     />
   )
   const passwordIcon = (
-    <Icon
+    <MaterialIcons
       name="lock"
       color={activeField == 'Password' ? '#BB6BD9' : '#A5A5A5'}
-      size={22}
+      size={20}
     />
   )
 

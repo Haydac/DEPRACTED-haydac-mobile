@@ -1,5 +1,12 @@
 import React, { useRef, useState } from 'react'
-import { ScrollView, Alert, ActivityIndicator, StyleSheet } from 'react-native'
+import {
+  ScrollView,
+  ActivityIndicator,
+  StyleSheet,
+  View,
+  Text,
+} from 'react-native'
+import Constants from 'expo-constants'
 
 import Screen from '../../components/core/Screen'
 import MiddleTabs from '../../components/MiddleTabs'
@@ -12,6 +19,9 @@ import { theme } from '../../core/theme'
 import { demoStores } from '../../data/demoStores'
 import { demoRestaurants } from '../../data/demoRestaurants'
 import { demoServices } from '../../data/demoServices'
+import { TouchableOpacity } from 'react-native-gesture-handler'
+
+import { Fontisto, Ionicons, AntDesign, FontAwesome } from '@expo/vector-icons'
 
 export const demoBusinesses = [
   ...demoStores,
@@ -27,13 +37,30 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <Screen style={styles.container}>
-      {/* Header: menuButton  ---- search ---- regionButton */}
+      {/* Header: ---- search ---- regionButton */}
+      <View style={styles.header}>
+        <View style={styles.locationButton}>
+          <TouchableOpacity style={styles.locationButtonInner}>
+            <Text style={{ marginRight: 6 }}>95 The Pond Road</Text>
+            <AntDesign name="down" size={15} color="#000" />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.regionButton}>
+          <TouchableOpacity>
+            <Fontisto name="earth" size={40} color="#eee" />
+          </TouchableOpacity>
+        </View>
+      </View>
       <SearchBar
-        width="90%"
+        width="95%"
+        height={45}
         placeHolder="Search stores, services or restaurants"
         searchBarOuterStyle={styles.searchBarOuterStyle}
         searchBarColor="#eee"
-        iconLeftColor="gray"
+        iconRightColor="#4F4F4F"
+        iconRight={<FontAwesome name="search" size={20} color="#4F4F4F" />}
+        renderIconLeft={false}
+        renderIconRight={true}
       />
       <ScrollView
         style={styles.scrollView}
@@ -57,6 +84,8 @@ export default function HomeScreen({ navigation }) {
   )
 }
 
+const headerOffsetPadding = 10
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
@@ -64,9 +93,37 @@ const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: '#eee',
   },
+  header: {
+    height: 90,
+    marginTop: -Constants.statusBarHeight,
+    paddingTop: headerOffsetPadding,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#DECCEC',
+  },
+  locationButton: {
+    width: 188,
+    height: 35,
+    position: 'absolute',
+    bottom: headerOffsetPadding,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 30,
+    backgroundColor: '#eee',
+  },
+  locationButtonInner: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  regionButton: {
+    position: 'absolute',
+    right: 20,
+    bottom: headerOffsetPadding,
+  },
   searchBarOuterStyle: {
     marginVertical: theme.constants.verticalCardMargin,
-    paddingVertical: 10,
     alignSelf: 'center',
   },
   activityIndicator: {

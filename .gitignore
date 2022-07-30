@@ -1,16 +1,33 @@
-node_modules
-.env
-.expo/*
-npm-debug.*
-*.jks
-*.p8
-*.p12
-*.key
-*.mobileprovision
-*.orig.*
-web-build/
+# Expo
+.expo
+__generated__
+web-build
+bare-apps
 
 # macOS
 .DS_Store
+
+# Node
+node_modules
+npm-debug.log
+yarn-error.log
 yarn.lock
-.expo-shared
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# IDEA / Android Studio
+*.iml
+.idea
+
+# Eclipse
+.project
+.settings
+
+# Env
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local

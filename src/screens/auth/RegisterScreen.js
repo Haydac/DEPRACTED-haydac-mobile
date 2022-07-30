@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
-import { StyleSheet, View, Keyboard } from 'react-native'
-import { Text } from 'react-native-paper'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import { StyleSheet, View, Keyboard, Text } from 'react-native'
+import { MaterialIcons } from '@expo/vector-icons'
 
 import { emailValidator } from '../../helpers/emailValidator'
 import { passwordValidator } from '../../helpers/passwordValidator'

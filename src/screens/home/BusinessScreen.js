@@ -7,13 +7,11 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native'
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import Entypo from 'react-native-vector-icons/Entypo'
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import { Ionicons, Entypo, FontAwesome } from '@expo/vector-icons'
 import { theme } from '../../core/theme'
 
 export default function BusinessScreen({ route, navigation }) {
-  const [mapActive, setMapActive] = useState(false)
+  const [showMap, setShowMap] = useState(false)
 
   const { image_url, name, distance, rating } = route?.params?.business
   const { isFavourite } = route?.params?.state
@@ -21,7 +19,7 @@ export default function BusinessScreen({ route, navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.mapImageWrpper}>
-        {mapActive ? (
+        {showMap ? (
           {
             /* Show map */
           }
@@ -45,11 +43,11 @@ export default function BusinessScreen({ route, navigation }) {
         <View style={styles.content}>
           <View style={styles.header}>
             <Text style={styles.title}>{name}</Text>
-            <TouchableOpacity onPress={() => setMapActive((e) => !e)}>
+            <TouchableOpacity onPress={() => setShowMap((e) => !e)}>
               <Entypo
-                name="location"
+                name="map"
                 size={24}
-                color={`${mapActive ? theme.colors.primary : '#000'}`}
+                color={`${showMap ? theme.colors.primary : '#000'}`}
               />
             </TouchableOpacity>
           </View>
