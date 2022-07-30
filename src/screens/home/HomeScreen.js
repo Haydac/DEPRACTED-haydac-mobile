@@ -39,11 +39,12 @@ export default function HomeScreen({ navigation }) {
     <Screen style={styles.container}>
       {/* Header: ---- search ---- regionButton */}
       <View style={styles.header}>
-        <TouchableOpacity style={styles.locationButton}>
-          <Ionicons name="location" size={20} color={theme.colors.primary} />
-          <Text>Current location</Text>
-          <AntDesign name="down" size={15} color="#000" />
-        </TouchableOpacity>
+        <View style={styles.locationButton}>
+          <TouchableOpacity style={styles.locationButtonInner}>
+            <Text style={{ marginRight: 6 }}>95 The Pond Road</Text>
+            <AntDesign name="down" size={15} color="#000" />
+          </TouchableOpacity>
+        </View>
         <View style={styles.regionButton}>
           <TouchableOpacity>
             <Fontisto name="earth" size={40} color="#eee" />
@@ -52,10 +53,13 @@ export default function HomeScreen({ navigation }) {
       </View>
       <SearchBar
         width="90%"
+        height={40}
         placeHolder="Search stores, services or restaurants"
         searchBarOuterStyle={styles.searchBarOuterStyle}
         searchBarColor="#eee"
-        iconLeftColor="gray"
+        iconRightColor="#4F4F4F"
+        renderIconLeft={false}
+        renderIconRight={true}
       />
       <ScrollView
         style={styles.scrollView}
@@ -79,7 +83,7 @@ export default function HomeScreen({ navigation }) {
   )
 }
 
-const headerOffsetPadding = Constants.statusBarHeight + 6
+const headerOffsetPadding = 6
 
 const styles = StyleSheet.create({
   container: {
@@ -100,17 +104,22 @@ const styles = StyleSheet.create({
   locationButton: {
     width: 188,
     height: 35,
-    padding: 6,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    position: 'absolute',
+    bottom: headerOffsetPadding,
+    justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 30,
     backgroundColor: '#eee',
   },
+  locationButtonInner: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   regionButton: {
-    paddingTop: headerOffsetPadding,
     position: 'absolute',
     right: 20,
+    bottom: headerOffsetPadding,
   },
   searchBarOuterStyle: {
     marginVertical: theme.constants.verticalCardMargin,
