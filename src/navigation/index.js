@@ -121,7 +121,7 @@ const HomeStackNavigator = () => {
         name="GroceryStoresScreen"
         component={GroceryStoresScreen}
         options={{
-          title: 'Stores',
+          title: 'Grocery Stores',
           headerTitleAlign: 'center',
         }}
       />
