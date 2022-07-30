@@ -21,7 +21,7 @@ import { demoRestaurants } from '../../data/demoRestaurants'
 import { demoServices } from '../../data/demoServices'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
-import { Fontisto, Ionicons, AntDesign } from '@expo/vector-icons'
+import { Fontisto, Ionicons, AntDesign, FontAwesome } from '@expo/vector-icons'
 
 export const demoBusinesses = [
   ...demoStores,
@@ -52,12 +52,13 @@ export default function HomeScreen({ navigation }) {
         </View>
       </View>
       <SearchBar
-        width="90%"
-        height={40}
+        width="95%"
+        height={45}
         placeHolder="Search stores, services or restaurants"
         searchBarOuterStyle={styles.searchBarOuterStyle}
         searchBarColor="#eee"
         iconRightColor="#4F4F4F"
+        iconRight={<FontAwesome name="search" size={20} color="#4F4F4F" />}
         renderIconLeft={false}
         renderIconRight={true}
       />
@@ -83,7 +84,7 @@ export default function HomeScreen({ navigation }) {
   )
 }
 
-const headerOffsetPadding = 6
+const headerOffsetPadding = 10
 
 const styles = StyleSheet.create({
   container: {
@@ -93,7 +94,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#eee',
   },
   header: {
-    height: 86,
+    height: 90,
     marginTop: -Constants.statusBarHeight,
     paddingTop: headerOffsetPadding,
     flexDirection: 'row',

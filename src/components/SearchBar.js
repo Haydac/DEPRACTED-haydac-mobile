@@ -46,8 +46,8 @@ export default function SearchBar({
           },
           textInput: {
             marginTop: 4,
-            marginHorizontal: 10,
-            fontSize: 15,
+            paddingHorizontal: 25,
+            fontSize: 14,
             justifyContent: 'center',
             alignItems: 'center',
             fontWeight: '700',
@@ -63,28 +63,30 @@ export default function SearchBar({
         }}
         enablePoweredByContainer={false}
         renderLeftButton={() =>
-          renderIconLeft &&
-          (iconLeft || (
+          renderIconLeft && (
             <View style={styles.leftIcon}>
-              <Ionicons
-                name="search"
-                size={24}
-                color={iconLeftColor || '#000'}
-              />
+              {iconLeft || (
+                <Ionicons
+                  name="search"
+                  size={24}
+                  color={iconLeftColor || '#000'}
+                />
+              )}
             </View>
-          ))
+          )
         }
         renderRightButton={() =>
-          renderIconRight &&
-          (iconRight || (
+          renderIconRight && (
             <View style={styles.rightIcon}>
-              <Ionicons
-                name="search"
-                size={24}
-                color={iconRightColor || '#000'}
-              />
+              {iconRight || (
+                <Ionicons
+                  name="search"
+                  size={24}
+                  color={iconRightColor || '#000'}
+                />
+              )}
             </View>
-          ))
+          )
         }
       />
     </View>
@@ -96,11 +98,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   leftIcon: {
-    marginLeft: 9,
+    paddingLeft: 15,
     alignSelf: 'center',
   },
   rightIcon: {
-    marginRight: 10,
+    paddingRight: 15,
     alignSelf: 'center',
   },
 })
