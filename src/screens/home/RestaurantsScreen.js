@@ -1,12 +1,13 @@
 import React, { useRef, useState } from 'react'
 import { ScrollView, Alert, ActivityIndicator, StyleSheet } from 'react-native'
+import { FontAwesome } from '@expo/vector-icons'
 
 import Screen from '../../components/core/Screen'
 import SearchBar from '../../components/SearchBar'
 import BusinessItem from '../../components/BusinessItem'
-import { theme } from '../../core/theme'
-import { demoRestaurants } from '../../data/demoRestaurants'
 import BusinessAd from '../../components/BusinessAd'
+import { demoRestaurants } from '../../data/demoRestaurants'
+import { theme } from '../../core/theme'
 
 export default function RestaurantsScreen({ navigation }) {
   const [businessData, setBusinessData] = useState(demoRestaurants)
@@ -14,13 +15,17 @@ export default function RestaurantsScreen({ navigation }) {
 
   return (
     <Screen style={styles.container}>
-      {/* Header: menuButton  ---- search ---- regionButton */}
+      {/* Header: ---- search ---- filterButton */}
       <SearchBar
-        width="90%"
+        width="95%"
+        height={45}
         placeHolder="Search restaurants"
         searchBarOuterStyle={styles.searchBarOuterStyle}
         searchBarColor="#eee"
-        iconLeftColor="gray"
+        iconRightColor="#4F4F4F"
+        iconRight={<FontAwesome name="search" size={20} color="#4F4F4F" />}
+        renderIconLeft={false}
+        renderIconRight={true}
       />
       <ScrollView
         style={styles.scrollView}
@@ -52,7 +57,6 @@ const styles = StyleSheet.create({
   },
   searchBarOuterStyle: {
     marginVertical: theme.constants.verticalCardMargin,
-    paddingVertical: 10,
     alignSelf: 'center',
   },
   activityIndicator: {
