@@ -1,10 +1,6 @@
 import { useState, useEffect } from 'react'
 import { StyleSheet, View, Keyboard, Text } from 'react-native'
 import { FontAwesome, MaterialIcons } from '@expo/vector-icons'
-
-import { emailValidator } from '../../helpers/emailValidator'
-import { passwordValidator } from '../../helpers/passwordValidator'
-
 import Screen from '../../components/core/Screen'
 import Header from '../../components/text/Header'
 import Button from '../../components/buttons/Button'

@@ -2,6 +2,7 @@
 
 To run the app:
 
+- `yarn` to install packages
 - `yarn start`
 
 ## Contribution

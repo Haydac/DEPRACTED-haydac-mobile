@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { ImageBackground, Text, StyleSheet } from 'react-native'
-
-import { emailValidator } from '../../helpers/emailValidator'
+import { emailValidator } from '../../helpers/loginValidation'
 
 import Screen from '../../components/core/Screen'
 import Header from '../../components/text/Header'
