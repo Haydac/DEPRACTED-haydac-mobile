@@ -18,4 +18,16 @@ const login = async (formValues) => {
   }
 }
 
-export { login }
+const signup = async (formValues) => {
+  try {
+    const { data } = await axios.post(
+      'https://haydac-server.uc.r.appspot.com/user/signup',
+      formValues
+    )
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
+export { login, signup }
