@@ -1,173 +1,143 @@
-import React from 'react'
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  ScrollView,
-  Pressable,
-} from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import DemarcationLine from './DemarcationLine'
+import React, { useState } from 'react'
+import { Image, Text, TouchableOpacity, View, StyleSheet } from 'react-native'
+import { FontAwesome, Ionicons } from '@expo/vector-icons'
+import { useNavigation } from '@react-navigation/native'
+import { theme } from '../core/theme'
 
-const item = [
-  {
-    key: 1,
-    image: require('../assets/businessesImages/afrospiceImage.png'),
-    text: 'Afro Spice Chophouse',
-    distance: 'Less than 800m',
-    hours: '1:00pm - 9:00 pm',
-    rating: '4.0',
-  },
-  {
-    key: 2,
-    image: require('../assets/businessesImages/tiplestoreImage.png'),
-    text: 'Tripplee African and Caribbean market',
-    distance: '120 km',
-    hours: '10:00am - 11:00 pm',
-    rating: '4.5',
-  },
-  {
-    key: 3,
-    image: require('../assets/businessesImages/tiplestoreImage.png'),
-    text: 'a business',
-    distance: 'some distance',
-    hours: 'time here',
-    rating: '3.0',
-  },
-  {
-    key: 4,
-    image: require('../assets/businessesImages/tiplestoreImage.png'),
-    text: 'another business',
-    distance: 'some distance',
-    hours: 'time here',
-    rating: '4.0',
-  },
-]
+export default function BusinessItem({ businessData }) {
+  const navigation = useNavigation()
 
-export default function BusinessItems({ businesses = item }) {
   return (
     <View>
-      <ScrollView vertical>
-        {/* loop starts here */}
-        {businesses.map((business, index) => (
-          <View style={[styles.card, { marginTop: '4%' }]} key={business.key}>
-            <Pressable>
-              <TouchableOpacity activeOpacity={1}>
-                <BusinessImage image={business.image} />
-                <BusinessInfo
-                  text={business.text}
-                  distance={business.distance}
-                  hours={business.hours}
-                  rating={business.rating}
-                />
-              </TouchableOpacity>
-            </Pressable>
-            <DemarcationLine />
+      {businessData?.map((business, index) => (
+        <BusinessItemCard
+          key={index}
+          business={business}
+          navigation={navigation}
+        />
+      ))}
+    </View>
+  )
+}
+
+const BusinessItemCard = ({ business, navigation }) => {
+  const [isFavourite, setFavourite] = useState(false)
+
+  const handlePress = (business) => {
+    navigation.navigate('BusinessScreen', {
+      business: { ...business },
+      state: {
+        isFavourite: isFavourite,
+      },
+    })
+  }
+
+  return (
+    <TouchableOpacity
+      style={styles.businessItemCard}
+      onPress={() => handlePress(business)}
+    >
+      {/* Use uri, data will be remote <Image source={{ uri: business.image_url }} /> */}
+      <Image source={business.image_url} style={styles.image} />
+
+      <TouchableOpacity
+        style={styles.favouriteIcon}
+        onPress={() => setFavourite((e) => !e)}
+      >
+        <FontAwesome name={'star-o'} size={24} color={'#fff'} />
+        {isFavourite && (
+          <FontAwesome
+            style={{ position: 'absolute' }}
+            name={'star'}
+            size={20}
+            color={theme.colors.primary}
+          />
+        )}
+      </TouchableOpacity>
+      <View style={styles.businessInfoContainer}>
+        <View style={styles.businessInfo}>
+          <Text style={styles.businessNameText} numberOfLines={1}>
+            {business.name}
+          </Text>
+          <View style={styles.businessDistance}>
+            <Ionicons
+              name="location-sharp"
+              size={13}
+              color={theme.colors.primary}
+            />
+            <Text style={styles.businessDistanceText}>
+              {' '}
+              {business.distance}
+            </Text>
           </View>
-        ))}
-        {/* loop ends here */}
-      </ScrollView>
-    </View>
-  )
-}
-
-const BusinessImage = ({ image }) => {
-  return (
-    <View>
-      {/* bookmark button */}
-      <Pressable>
-        <TouchableOpacity
-          style={{
-            marginTop: '2%',
-            position: 'absolute',
-            zIndex: 10,
-            width: '95%',
-            alignItems: 'flex-end',
-          }}
-          activeOpacity={0.5}
-        >
-          {/* color is dependent on if the user has bookmarked or not */}
-          <Icon name="bookmark-outline" size={25} color="#fff" />
-        </TouchableOpacity>
-      </Pressable>
-      {/* Business image */}
-      <Image style={[styles.image, { zIndex: -1 }]} source={image} />
-    </View>
-  )
-}
-
-const BusinessInfo = ({ text, distance, hours, rating }) => {
-  return (
-    <View style={{ marginTop: '2%' }}>
-      <View
-        style={{
-          flexDirection: 'row',
-          width: '90%',
-          alignSelf: 'center',
-          justifyContent: 'space-between',
-        }}
-      >
-        {/* business name */}
-        <Text style={styles.text}>{text}</Text>
-        {/* rating */}
-        <View style={styles.ratingStyling}>
-          <Text style={[styles.text, styles.rating]}>{rating}</Text>
+        </View>
+        <View style={styles.businessRating}>
+          <Text style={styles.businessRatingText}>{business.rating}</Text>
         </View>
       </View>
-
-      {/* row for additioncal information */}
-      <View
-        style={[
-          styles.text,
-          {
-            marginTop: '2%',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-          },
-        ]}
-      >
-        <View style={{ flexDirection: 'row' }}>
-          <Icon name="map-marker" size={16} color="#D9BAF1" />
-          <Text style={{ fontWeight: '300', color: 'gray' }}>{distance}</Text>
-        </View>
-        <Text style={{ fontWeight: '300', color: 'black' }}>
-          Hours: {hours}
-        </Text>
-      </View>
-    </View>
+    </TouchableOpacity>
   )
 }
 
 const styles = StyleSheet.create({
-  card: {
+  businessItemCard: {
     width: '100%',
+    marginVertical: theme.constants.verticalCardMargin,
     alignSelf: 'center',
     borderRadius: 20,
-    marginBottom: '2%',
+    backgroundColor: '#fff',
   },
   image: {
     width: '98%',
     alignSelf: 'center',
     borderRadius: 20,
   },
-  text: {
-    fontWeight: '600',
-    width: '90%',
-    alignSelf: 'center',
-  },
-  rating: {
-    fontSize: 12,
-    fontWeight: '400',
-    width: 'auto',
-  },
-  ratingStyling: {
-    backgroundColor: '#eee',
-    height: 27,
-    width: 28,
+  favouriteIcon: {
+    position: 'absolute',
+    top: 9,
+    right: 13,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  businessInfoContainer: {
+    width: '98%',
+    padding: 8,
+    alignSelf: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+  },
+  businessInfo: {},
+  businessNameText: {
+    fontWeight: '700',
+  },
+  businessDistance: {
+    height: 20,
+    paddingHorizontal: 16,
+    marginTop: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    alignSelf: 'flex-start',
     borderRadius: 15,
+    backgroundColor: '#eee',
+  },
+  businessDistanceText: {
+    fontSize: 12,
+    fontWeight: '700',
+  },
+  businessRating: {
+    width: 23,
+    height: 23,
+    position: 'absolute',
+    top: 9,
+    right: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 50,
+    backgroundColor: '#eee',
+  },
+  businessRatingText: {
+    fontSize: 12,
+    fontWeight: '700',
   },
 })

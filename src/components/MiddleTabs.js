@@ -1,70 +1,56 @@
-import React, { useState } from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
-import BusinessItems from './BusinessItem'
+import React from 'react'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { theme } from '../core/theme'
 
-export default function MiddleTabs() {
-  // Near me businesses should be displayed based on the current location of the user
-  // Popular businesses hsould display popular businesses in the city --> this would be passed from
-  // home component
-
-  // what is returned is dependent on what button is active
-  const DisplayBusinesses = ({ isActive = 'Near me' }) => {
-    if (isActive === 'Near me') return <BusinessItems />
-    return (
-      <Text style={{ alignSelf: 'center', marginTop: '10%' }}>
-        Popular businesses should be displayed based on location
-      </Text>
-    )
-  }
-  const [activeTab, setActiveTab] = useState('Near me')
+export default function MiddleTabs({ activeTab, setActiveTab }) {
   return (
-    <View>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'center',
-          alignItems: 'center',
-          // marginTop: '2%',
-          // marginBottom: '4%',
-        }}
-      >
-        <MiddleButton
-          text="Near me"
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-        />
-        <MiddleButton
-          text="Popular"
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-        />
-      </View>
-      <DisplayBusinesses isActive={activeTab} />
+    <View style={styles.container}>
+      <TabButton
+        text="Near me"
+        active={activeTab === 'Near me'}
+        onPress={() => setActiveTab('Near me')}
+      />
+      <TabButton
+        text="Popular"
+        active={activeTab === 'Popular'}
+        onPress={() => setActiveTab('Popular')}
+      />
     </View>
   )
 }
 
-const MiddleButton = (props) => {
-  const { text, activeTab } = props
+const TabButton = ({ text, active, onPress }) => {
   return (
     <TouchableOpacity
-      style={{
-        backgroundColor: activeTab === text ? '#BB6BD9' : 'white',
-        paddingVertical: 6,
-        paddingHorizontal: 16,
-        borderRadius: 30,
-      }}
-      onPress={() => props.setActiveTab(text)}
+      style={[
+        styles.tabButton,
+        { backgroundColor: active ? theme.colors.primary : '#fff' },
+      ]}
+      onPress={onPress}
     >
-      <Text
-        style={{
-          color: activeTab === text ? 'white' : '#B8B8B8',
-          fontSize: 13,
-          fontWeight: '900',
-        }}
-      >
+      <Text style={[styles.tabText, { color: active ? '#fff' : '#B8B8B8' }]}>
         {text}
       </Text>
     </TouchableOpacity>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    paddingVertical: 10,
+    marginVertical: theme.constants.verticalCardMargin,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+  },
+  tabButton: {
+    paddingVertical: 6,
+    paddingHorizontal: 16,
+    borderRadius: 30,
+  },
+  tabText: {
+    fontSize: 13,
+    fontWeight: 'bold',
+  },
+})
