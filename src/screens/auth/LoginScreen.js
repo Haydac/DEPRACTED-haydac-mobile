@@ -1,16 +1,13 @@
 import { useState, useEffect } from 'react'
 import { StyleSheet, View, Keyboard, Text } from 'react-native'
 import { FontAwesome, MaterialIcons } from '@expo/vector-icons'
-
-import { emailValidator } from '../../helpers/emailValidator'
-import { passwordValidator } from '../../helpers/passwordValidator'
-
 import Screen from '../../components/core/Screen'
 import Header from '../../components/text/Header'
 import Button from '../../components/buttons/Button'
 import InputField from '../../components/forms/InputField'
 import Background from '../../components/core/Background'
 import { theme } from '../../core/theme'
+import { login } from '../../api/AuthProvider'
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('')
@@ -35,10 +32,11 @@ export default function LoginScreen({ navigation }) {
   const formWidth = '100%'
   const formItemHeight = 45
 
-  const onLoginPressed = () => {
-    // TODO: Anjola
-    console.log('Log in button pressed')
-    navigation.navigate('HomeTabs')
+  const onLoginPressed = async () => {
+    const user = await login({ email: email, password: password })
+    if (user.success) {
+      navigation.navigate('HomeTabs')
+    }
   }
 
   // Keyboard listener
