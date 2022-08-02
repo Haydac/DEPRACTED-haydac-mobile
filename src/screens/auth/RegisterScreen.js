@@ -5,7 +5,7 @@ import {
   emailValidator,
   passwordValidator,
   nameValidator,
-} from '../../helpers/loginValidation'
+} from '../../helpers/login'
 
 import Screen from '../../components/core/Screen'
 import Header from '../../components/text/Header'
@@ -66,7 +66,6 @@ export default function RegisterScreen({ navigation }) {
       setPassword({ ...password, error: passwordError })
       return
     }
-    console.log('Sign up button pressed')
     navigation.navigate('LoginScreen')
   }
 

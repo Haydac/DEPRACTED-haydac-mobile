@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { ImageBackground, Text, StyleSheet } from 'react-native'
-import { emailValidator } from '../../helpers/loginValidation'
+import { emailValidator } from '../../helpers/login'
 
 import Screen from '../../components/core/Screen'
 import Header from '../../components/text/Header'
@@ -11,7 +11,7 @@ export default function ResetPasswordScreen({ navigation }) {
   const [email, setEmail] = useState('')
 
   const handleResetPassword = () => {
-    console.log('handle reset password')
+    // call reset API
   }
 
   return (
