@@ -39,15 +39,13 @@ export default function LoginScreen({ navigation }) {
     let emailinput = email.toLowerCase()
     const formValues = { phone: phone, email: emailinput, password: password }
     if (loginValidator(formValues)) {
-      // passes formvalues to server
+      // passes formvalues to api
       const user = await login(formValues)
       if (user.success) {
         navigation.navigate('HomeTabs')
       }
     }
   }
-
-  // Keyboard listener
 
   useEffect(() => {
     const showObserver = Keyboard.addListener(

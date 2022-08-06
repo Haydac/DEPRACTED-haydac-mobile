@@ -1,7 +1,7 @@
 import validator from 'validator'
 
 /**
- *
+ * This checks if the phone or email and password is of valid format.
  * @param {*} formValues - object containing user data
  * @return {message, data} - an object conatining a message as response from the api
  * and data - as stored user data in DB
@@ -15,8 +15,8 @@ const loginValidator = (formValues) => {
     return true
   }
   if (
-    formValues.password &&
-    validator.isEmail(formValues.password) &&
+    formValues.phone &&
+    validator.isMobilePhone(formValues.phone) &&
     validator.isAlphanumeric(formValues.password)
   ) {
     return true
