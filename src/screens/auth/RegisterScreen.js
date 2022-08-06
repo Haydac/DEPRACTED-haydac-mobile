@@ -1,11 +1,6 @@
 import { useState, useEffect } from 'react'
 import { StyleSheet, View, Keyboard, Text } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
-import {
-  emailValidator,
-  passwordValidator,
-  nameValidator,
-} from '../../helpers/login'
 
 import Screen from '../../components/core/Screen'
 import Header from '../../components/text/Header'
@@ -58,14 +53,6 @@ export default function RegisterScreen({ navigation }) {
   const formSpacing = 20
 
   const onSignUpPressed = () => {
-    // TODO: Anjola
-    const emailError = emailValidator(email.value)
-    const passwordError = passwordValidator(password.value)
-    if (emailError || passwordError) {
-      setEmail({ ...email, error: emailError })
-      setPassword({ ...password, error: passwordError })
-      return
-    }
     navigation.navigate('LoginScreen')
   }
 
