@@ -24,11 +24,12 @@ const signupValidator = async (formValues) => {
     confirmPassword = formValues.confirmPassword
   if (passwordValidator(password) && password == confirmPassword) {
     return (
-      validator.isAlphanumeric(formValues.name) &&
+      validator.isAlpha(formValues.name) &&
       (emailValidator(formValues.email) || phoneValidator(formValues.phone)) &&
       validator.isAlphanumeric(formValues.address)
     )
   }
+  return false
 }
 
 /**
