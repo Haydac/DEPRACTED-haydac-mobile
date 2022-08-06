@@ -8,8 +8,10 @@ import InputField from '../../components/forms/InputField'
 import Background from '../../components/core/Background'
 import { theme } from '../../core/theme'
 import { login } from '../../api/AuthProvider'
+import { loginValidator } from '../../helpers/validation'
 
 export default function LoginScreen({ navigation }) {
+  const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [activeField, setActiveField] = useState('')
@@ -33,13 +35,17 @@ export default function LoginScreen({ navigation }) {
   const formItemHeight = 45
 
   const onLoginPressed = async () => {
-    const user = await login({ email: email, password: password })
-    if (user.success) {
-      navigation.navigate('HomeTabs')
+    // could be email or phone
+    let emailinput = email.toLowerCase()
+    const formValues = { phone: phone, email: emailinput, password: password }
+    if (loginValidator(formValues)) {
+      // passes formvalues to api
+      const user = await login(formValues)
+      if (user.success) {
+        navigation.navigate('HomeTabs')
+      }
     }
   }
-
-  // Keyboard listener
 
   useEffect(() => {
     const showObserver = Keyboard.addListener(
