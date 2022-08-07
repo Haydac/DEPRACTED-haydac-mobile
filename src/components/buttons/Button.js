@@ -1,35 +1,25 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Text, StyleSheet, TouchableOpacity, View } from 'react-native'
 
-const Button = ({
+export default function Button({
   text,
   width,
   height,
   borderRadius,
   backgroundColor,
-  backgroundColorPressed,
   style,
   textStyle,
   textColor,
-  icon,
+  rightIcon,
   onPress,
-}) => {
-  const [pressColor, setPressColor] = useState(backgroundColor)
-  const [pressTextColor, setPressTextColor] = useState(textColor || '#000')
-
-  const iconDisplay = icon ? <View style={[styles.icon]}>{icon}</View> : null
-
+  onPressIn,
+  onPressOut,
+}) {
   return (
     <TouchableOpacity
-      onPressIn={() => {
-        setPressColor(backgroundColorPressed || 'transparent')
-        setPressTextColor(backgroundColor || textColor)
-      }}
-      onPressOut={() => {
-        setPressColor(backgroundColor)
-        setPressTextColor(textColor)
-      }}
       onPress={onPress}
+      onPressIn={onPressIn}
+      onPressOut={onPressOut}
       activeOpacity={0.8}
       style={[
         styles.container,
@@ -37,15 +27,15 @@ const Button = ({
           width,
           height,
           borderRadius,
-          backgroundColor: pressColor,
+          backgroundColor: backgroundColor,
         },
         style,
       ]}
     >
-      <Text style={[styles.text, textStyle, { color: pressTextColor }]}>
+      <Text style={[styles.text, textStyle, { color: textColor || '#000' }]}>
         {text}
       </Text>
-      {iconDisplay}
+      {rightIcon ? <View style={[styles.icon]}>{rightIcon}</View> : null}
     </TouchableOpacity>
   )
 }
@@ -70,5 +60,3 @@ const styles = StyleSheet.create({
     height: 20,
   },
 })
-
-export default Button

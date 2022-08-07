@@ -1,28 +1,33 @@
 import { useState, useEffect } from 'react'
-import { StyleSheet, View, Keyboard, Text } from 'react-native'
+import { StyleSheet, View, Keyboard } from 'react-native'
 import { FontAwesome, MaterialIcons } from '@expo/vector-icons'
+
 import Screen from '../../components/core/Screen'
 import Header from '../../components/text/Header'
 import Button from '../../components/buttons/Button'
 import InputField from '../../components/forms/InputField'
 import Background from '../../components/core/Background'
+import Separator from '../../components/Separator'
+import EmailPhoneField from '../../components/forms/EmailPhoneField'
+
 import { theme } from '../../core/theme'
+
 import { login } from '../../api/AuthProvider'
 import { loginValidator } from '../../helpers/validation'
 
 export default function LoginScreen({ navigation }) {
-  const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
   const [password, setPassword] = useState('')
   const [activeField, setActiveField] = useState('')
 
-  const emailIcon = (
-    <FontAwesome
-      name="envelope"
-      color={activeField == 'Email' ? '#BB6BD9' : '#A5A5A5'}
-      size={15}
-    />
-  )
+  // button states
+  const [signUpBtnColor, setSignUpBtnColor] = useState(theme.colors.primary)
+  const [signUpBtnTextColor, setSignUpBtnTextColor] = useState('#fff')
+
+  const [loginBtnColor, setLoginBtnColor] = useState('#fff')
+  const [loginBtnTextColor, setLoginBtnTextColor] = useState('#A5A5A5')
+
   const passwordIcon = (
     <MaterialIcons
       name="lock"
@@ -85,9 +90,9 @@ export default function LoginScreen({ navigation }) {
               <Header style={styles.headerMessage}>Welcome{'\n'}Back!</Header>
             )}
             <Button
+              text="Skip"
               width="6%"
               height="5%"
-              text="Skip"
               style={styles.skipBtn}
               textStyle={styles.skipBtnText}
               textColor={isKeyboardOpen ? theme.colors.primary : '#fff'}
@@ -96,23 +101,26 @@ export default function LoginScreen({ navigation }) {
           </View>
 
           <View style={styles.loginFormContainer}>
-            {/* Email input */}
-            <InputField
-              id="Email"
-              placeHolder="Email"
-              icon={emailIcon}
-              inputFieldStyle={[{ marginBottom: 50 }, styles.inputFieldStyle]}
-              text={email}
-              setText={setEmail}
-              activeField={activeField}
+            {/* Email/Phone input */}
+            <EmailPhoneField
+              width={formWidth}
+              height={formItemHeight}
+              emailPhoneFieldStyle={styles.emailPhoneFieldStyle}
+              dropDownStyle={styles.dropDownStyle}
+              dropDownContainerStyle={styles.dropDownContainerStyle}
+              dropDownTextStyle={styles.dropDownTextStyle}
+              dropDownLabelStyle={styles.dropDownLabelStyle}
+              inputFieldStyle={styles.inputFieldStyle}
               setActiveField={setActiveField}
             />
 
             {/* Passowrd input */}
             <InputField
+              width={formWidth}
+              height={formItemHeight}
               id="Password"
               placeHolder="Password"
-              icon={passwordIcon}
+              leftIcon={passwordIcon}
               inputFieldStyle={[{ marginBottom: 7 }, styles.inputFieldStyle]}
               text={password}
               setText={setPassword}
@@ -123,8 +131,8 @@ export default function LoginScreen({ navigation }) {
 
             {/* Forgot password button */}
             <Button
-              height={formItemHeight}
               text="Forgot password?"
+              height={formItemHeight}
               style={styles.forgotPasswordBtn}
               textStyle={styles.forgotPasswordBtnText}
               textColor={theme.colors.primary}
@@ -133,52 +141,63 @@ export default function LoginScreen({ navigation }) {
 
             {/* Log in button */}
             <Button
+              text="Log in"
               width={formWidth}
               height={formItemHeight}
-              text="Log in"
-              backgroundColor={theme.colors.primary}
-              backgroundColorPressed="#fff"
-              style={styles.loginBtn}
-              textStyle={styles.loginBtnText}
-              textColor="#fff"
+              backgroundColor={signUpBtnColor}
+              style={styles.signUpBtn}
+              textStyle={styles.signUpBtnText}
+              textColor={signUpBtnTextColor}
               onPress={onLoginPressed}
+              onPressIn={() => {
+                setSignUpBtnColor('#fff')
+                setSignUpBtnTextColor('#A5A5A5')
+
+                setLoginBtnColor(theme.colors.primary)
+                setLoginBtnTextColor('#fff')
+              }}
+              onPressOut={() => {
+                setSignUpBtnColor(theme.colors.primary)
+                setSignUpBtnTextColor('#fff')
+
+                setLoginBtnColor('#fff')
+                setLoginBtnTextColor('#A5A5A5')
+              }}
             />
 
             {/** Separator */}
-            <View
-              style={{
-                width: formWidth,
-                marginTop: 12,
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}
-            >
-              <View
-                style={{ flex: 1, height: 1, backgroundColor: '#A5A5A5' }}
-              />
-              <View>
-                <Text
-                  style={{ color: '#A5A5A5', width: 50, textAlign: 'center' }}
-                >
-                  Or
-                </Text>
-              </View>
-              <View
-                style={{ flex: 1, height: 1, backgroundColor: '#A5A5A5' }}
-              />
-            </View>
+            <Separator
+              width={formWidth}
+              text="Or"
+              lineColor="#A5A5A5"
+              textColor="#A5A5A5"
+              style={{ marginTop: 12 }}
+            />
 
             {/* Sign up button */}
             <Button
+              text="Sign up"
               width={formWidth}
               height={formItemHeight}
-              text="Sign up"
-              backgroundColor="#fff"
-              backgroundColorPressed={theme.colors.primary}
-              style={styles.signUpBtn}
-              textStyle={styles.signUpBtnText}
-              textColor="#A5A5A5"
+              backgroundColor={loginBtnColor}
+              style={styles.loginBtn}
+              textStyle={styles.loginBtnText}
+              textColor={loginBtnTextColor}
               onPress={() => navigation.navigate('RegisterScreen')}
+              onPressIn={() => {
+                setLoginBtnColor(theme.colors.primary)
+                setLoginBtnTextColor('#fff')
+
+                setSignUpBtnColor('#fff')
+                setSignUpBtnTextColor('#A5A5A5')
+              }}
+              onPressOut={() => {
+                setLoginBtnColor('#fff')
+                setLoginBtnTextColor('#A5A5A5')
+
+                setSignUpBtnColor(theme.colors.primary)
+                setSignUpBtnTextColor('#fff')
+              }}
             />
           </View>
         </View>
@@ -229,10 +248,27 @@ const styles = StyleSheet.create({
     fontSize: 19,
   },
   inputFieldStyle: {
-    height: '9%',
     position: 'relative',
     borderBottomWidth: 1,
     borderBottomColor: '#BB6BD9',
+  },
+  emailPhoneFieldStyle: {
+    marginVertical: 50,
+  },
+  dropDownStyle: {
+    borderColor: theme.colors.primary,
+  },
+  dropDownContainerStyle: {
+    width: 60,
+    height: 28,
+    marginTop: -4,
+    alignSelf: 'flex-start',
+  },
+  dropDownTextStyle: {
+    color: '#fff',
+  },
+  dropDownLabelStyle: {
+    color: '#fff',
   },
   forgotPasswordBtn: {
     alignSelf: 'flex-end',
