@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, ScrollView } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 import DropDownPicker from 'react-native-dropdown-picker'
 import InputField from '../../components/forms/InputField'
@@ -52,6 +52,7 @@ export default function EmailPhoneField({
         setItems={setItems}
         placeholder=""
         showTickIcon={false}
+        listMode={'SCROLLVIEW'}
         closeOnBackPressed={true}
         closeAfterSelecting={true}
         style={dropDownStyle}
