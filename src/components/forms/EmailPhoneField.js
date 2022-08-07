@@ -40,7 +40,7 @@ export default function EmailPhoneField({
       style={[
         styles.container,
         emailPhoneFieldStyle,
-        { width: width || '100%', height: height || 30 },
+        { width: width, height: height },
       ]}
     >
       <DropDownPicker
@@ -55,7 +55,7 @@ export default function EmailPhoneField({
         listMode={'SCROLLVIEW'}
         closeOnBackPressed={true}
         closeAfterSelecting={true}
-        style={[{ backgroundColor: '#fff' }, dropDownStyle]}
+        style={dropDownStyle}
         containerStyle={dropDownContainerStyle}
         textStyle={dropDownTextStyle}
         labelStyle={dropDownLabelStyle}
@@ -109,6 +109,9 @@ export default function EmailPhoneField({
 
 const styles = StyleSheet.create({
   container: {
+    width: '100%',
+    height: 30,
+    zIndex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
