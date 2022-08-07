@@ -58,6 +58,11 @@ export default function EmailPhoneField({
         zIndex={1000}
         style={dropDownStyle}
         containerStyle={dropDownContainerStyle}
+        dropDownContainerStyle={{
+          backgroundColor: 'white',
+          zIndex: 1000,
+          elevation: 1000,
+        }}
         textStyle={dropDownTextStyle}
         labelStyle={dropDownLabelStyle}
         arrowIconContainerStyle={{ marginLeft: -4 }}
