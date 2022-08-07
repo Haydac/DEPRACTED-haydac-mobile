@@ -51,10 +51,11 @@ export default function EmailPhoneField({
         setValue={setValue}
         setItems={setItems}
         placeholder=""
+        listMode="SCROLLVIEW"
         showTickIcon={false}
-        listMode={'SCROLLVIEW'}
         closeOnBackPressed={true}
         closeAfterSelecting={true}
+        zIndex={1000}
         style={dropDownStyle}
         containerStyle={dropDownContainerStyle}
         textStyle={dropDownTextStyle}
@@ -111,7 +112,7 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: 30,
-    zIndex: 1,
+    // zIndex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
