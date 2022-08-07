@@ -19,7 +19,7 @@ export default function InputField({
       style={[
         styles.container,
         inputFieldStyle,
-        { width: width || '100%', height: height || 30 },
+        { width: width, height: height },
       ]}
     >
       {leftIcon ? (
@@ -40,6 +40,8 @@ export default function InputField({
 
 const styles = StyleSheet.create({
   container: {
+    width: '100%',
+    height: 30,
     flexDirection: 'row',
     justifyContent: 'center',
     marginVertical: 0,

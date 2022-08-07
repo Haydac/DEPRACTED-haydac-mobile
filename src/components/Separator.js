@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 
 export default function Separator({
   width,
@@ -11,21 +11,33 @@ export default function Separator({
   return (
     <View
       style={[
+        styles.container,
         {
           width: width,
-          flexDirection: 'row',
-          alignItems: 'center',
         },
         style,
       ]}
     >
-      <View style={{ flex: 1, height: 1, backgroundColor: lineColor }} />
+      <View style={[styles.lineStyle, { backgroundColor: lineColor }]} />
       <View>
-        <Text style={{ color: textColor, width: 50, textAlign: 'center' }}>
-          {text}
-        </Text>
+        <Text style={(styles.textStyle, { color: textColor })}>{text}</Text>
       </View>
-      <View style={{ flex: 1, height: 1, backgroundColor: lineColor }} />
+      <View style={[styles.lineStyle, { backgroundColor: lineColor }]} />
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  lineStyle: {
+    flex: 1,
+    height: 1,
+  },
+  textStyle: {
+    width: 50,
+    textAlign: 'center',
+  },
+})
