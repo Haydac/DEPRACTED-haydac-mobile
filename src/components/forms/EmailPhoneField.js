@@ -55,7 +55,7 @@ export default function EmailPhoneField({
         listMode={'SCROLLVIEW'}
         closeOnBackPressed={true}
         closeAfterSelecting={true}
-        style={dropDownStyle}
+        style={[{ backgroundColor: '#fff' }, dropDownStyle]}
         containerStyle={dropDownContainerStyle}
         textStyle={dropDownTextStyle}
         labelStyle={dropDownLabelStyle}
