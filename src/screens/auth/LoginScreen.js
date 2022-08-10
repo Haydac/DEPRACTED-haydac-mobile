@@ -106,12 +106,12 @@ export default function LoginScreen({ navigation }) {
               width={formWidth}
               height={formItemHeight}
               emailPhoneFieldStyle={styles.emailPhoneFieldStyle}
+              inputFieldStyle={styles.inputFieldStyle}
+              setActiveField={setActiveField}
               dropDownStyle={styles.dropDownStyle}
               dropDownContainerStyle={styles.dropDownContainerStyle}
               dropDownTextStyle={styles.dropDownTextStyle}
               dropDownLabelStyle={styles.dropDownLabelStyle}
-              inputFieldStyle={styles.inputFieldStyle}
-              setActiveField={setActiveField}
             />
 
             {/* Passowrd input */}

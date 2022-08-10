@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react'
-import { View, StyleSheet, ScrollView } from 'react-native'
+import React, { useState } from 'react'
+import { View, StyleSheet, Platform } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 import DropDownPicker from 'react-native-dropdown-picker'
 import InputField from '../../components/forms/InputField'
@@ -10,12 +10,12 @@ export default function EmailPhoneField({
   width,
   height,
   emailPhoneFieldStyle,
-  dropDownStyle,
-  dropDownContainerStyle,
-  dropDownTextStyle,
-  dropDownLabelStyle,
   inputFieldStyle,
   setActiveField,
+  dropDownStyle: style,
+  dropDownContainerStyle: containerStyle,
+  dropDownTextStyle: textStyle,
+  dropDownLabelStyle: labelStyle,
 }) {
   const [text, setText] = useState('')
   const [open, setOpen] = useState(false)
@@ -41,6 +41,7 @@ export default function EmailPhoneField({
         styles.container,
         emailPhoneFieldStyle,
         { width: width, height: height },
+        Platform.OS === 'ios' ? { zIndex: 1 } : {},
       ]}
     >
       <DropDownPicker
@@ -56,15 +57,15 @@ export default function EmailPhoneField({
         closeOnBackPressed={true}
         closeAfterSelecting={true}
         zIndex={1000}
-        style={dropDownStyle}
-        containerStyle={dropDownContainerStyle}
+        style={style}
+        containerStyle={containerStyle}
         dropDownContainerStyle={{
           backgroundColor: 'white',
           zIndex: 1000,
           elevation: 1000,
         }}
-        textStyle={dropDownTextStyle}
-        labelStyle={dropDownLabelStyle}
+        textStyle={textStyle}
+        labelStyle={labelStyle}
         arrowIconContainerStyle={{ marginLeft: -4 }}
         onSelectItem={(item) => {
           setActiveField(item.value)
@@ -117,7 +118,6 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: 30,
-    // zIndex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
