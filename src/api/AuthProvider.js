@@ -18,6 +18,12 @@ const login = async (formValues) => {
   }
 }
 
+/**
+ *
+ * @param {*} formValues - object containing user data
+ * @return {message, data} - an object conatining a message as response from the api
+ * and data - as stored user data in DB
+ */
 const signup = async (formValues) => {
   try {
     const { data } = await axios.post(
