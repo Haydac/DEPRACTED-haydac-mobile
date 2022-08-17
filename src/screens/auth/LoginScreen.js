@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { StyleSheet, View, Keyboard } from 'react-native'
-import { FontAwesome, MaterialIcons } from '@expo/vector-icons'
+import { MaterialIcons } from '@expo/vector-icons'
 
 import Screen from '../../components/core/Screen'
 import Header from '../../components/text/Header'
@@ -207,9 +207,6 @@ export default function LoginScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   content: {
     flex: 1,
     alignItems: 'center',
