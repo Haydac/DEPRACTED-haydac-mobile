@@ -1,12 +1,9 @@
 import React, { useState } from 'react'
 import { Image, Text, TouchableOpacity, View, StyleSheet } from 'react-native'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
-import { useNavigation } from '@react-navigation/native'
 import { theme } from '../core/theme'
 
-export default function BusinessItem({ businessData }) {
-  const navigation = useNavigation()
-
+export default function BusinessItem({ businessData, navigation }) {
   return (
     <View>
       {businessData?.map((business, index) => (
@@ -21,15 +18,18 @@ export default function BusinessItem({ businessData }) {
 }
 
 const BusinessItemCard = ({ business, navigation }) => {
-  const [isFavourite, setFavourite] = useState(false)
-
+  const [isFavourite, setIsFavourite] = useState(business.isFavourite)
   const handlePress = (business) => {
     navigation.navigate('BusinessScreen', {
-      business: { ...business },
-      state: {
-        isFavourite: isFavourite,
-      },
+      business,
+      favouriteCallback: favouriteCallback,
     })
+  }
+
+  const favouriteCallback = (f) => setIsFavourite(f)
+  const toggleFavourite = (f) => {
+    business.isFavourite = !f
+    setIsFavourite(business.isFavourite)
   }
 
   return (
@@ -39,10 +39,9 @@ const BusinessItemCard = ({ business, navigation }) => {
     >
       {/* Use uri, data will be remote <Image source={{ uri: business.image_url }} /> */}
       <Image source={business.image_url} style={styles.image} />
-
       <TouchableOpacity
         style={styles.favouriteIcon}
-        onPress={() => setFavourite((e) => !e)}
+        onPress={() => toggleFavourite(isFavourite)}
       >
         <FontAwesome name={'star-o'} size={24} color={'#fff'} />
         {isFavourite && (

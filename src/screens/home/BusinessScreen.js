@@ -11,24 +11,17 @@ import { Ionicons, Entypo, FontAwesome } from '@expo/vector-icons'
 import { theme } from '../../core/theme'
 
 export default function BusinessScreen({ route, navigation }) {
-  const [showMap, setShowMap] = useState(false)
-
-  const { image_url, name, distance, rating } = route?.params?.business
-  const { isFavourite } = route?.params?.state
-
-  return (
-    <View style={styles.container}>
-      <View style={styles.mapImageWrpper}>
-        {showMap ? (
-          {
-            /* Show map */
-          }
-        ) : (
-          <Image source={image_url} style={styles.image} />
-        )}
-        <View style={styles.favouriteIcon}>
+  navigation.setOptions({
+    headerShown: true,
+    headerTransparent: true,
+    headerRight: () =>
+      !showMap && (
+        <TouchableOpacity
+          style={styles.favouriteIcon}
+          onPress={() => toggleFavourite(isFavourite)}
+        >
           <FontAwesome name={'star-o'} size={29} color={'#fff'} />
-          {isFavourite && (
+          {isFavourited && (
             <FontAwesome
               style={{ position: 'absolute' }}
               name={'star'}
@@ -36,7 +29,30 @@ export default function BusinessScreen({ route, navigation }) {
               color={theme.colors.primary}
             />
           )}
-        </View>
+        </TouchableOpacity>
+      ),
+  })
+
+  const business = route?.params?.business
+  const { image_url, name, distance, rating, isFavourite } = business
+  const [isFavourited, setIsFavourited] = useState(business.isFavourite)
+  const [showMap, setShowMap] = useState(false)
+
+  const toggleFavourite = (f) => {
+    business.isFavourite = !f
+    setIsFavourited(business.isFavourite)
+    route?.params?.favouriteCallback(business.isFavourite)
+  }
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.mapImageContainer}>
+        {showMap ? (
+          // show map
+          <Text>Map</Text>
+        ) : (
+          <Image source={image_url} style={styles.image} />
+        )}
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false} style={{ zIndex: 20 }}>
@@ -94,9 +110,12 @@ const styles = StyleSheet.create({
     position: 'relative',
     backgroundColor: '#fff',
   },
-  mapImageWrpper: {
+  mapImageContainer: {
     width: '100%',
+    height: 230,
     position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   image: {
     width: '100%',
@@ -104,10 +123,6 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
   favouriteIcon: {
-    position: 'absolute',
-    top: 50,
-    right: 25,
-    zIndex: 40,
     alignItems: 'center',
     justifyContent: 'center',
   },
