@@ -67,7 +67,6 @@ export default function HomeScreen({ navigation }) {
     navigation.navigate('LocationScreen')
   }
   const onReigonButtonPressed = () => {
-    console.log('reigon button pressed')
     handlePresentModalPress()
   }
 
