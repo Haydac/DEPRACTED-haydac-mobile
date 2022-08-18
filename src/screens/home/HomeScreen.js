@@ -127,7 +127,7 @@ export default function HomeScreen({ navigation }) {
               style={styles.activityIndicator}
             />
           )}
-          <BusinessItem businessData={businessData} />
+          <BusinessItem businessData={businessData} navigation={navigation} />
         </ScrollView>
         {/* Location sheet modal */}
         <BottomSheetModal
