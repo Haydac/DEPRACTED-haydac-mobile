@@ -16,16 +16,16 @@ export default function StartScreen({ navigation }) {
           Bring home closer with a {'\n'} single click
         </Text>
         <Button
+          text="Get Started"
           width="80%"
           height="5%"
-          text="Get Started"
           borderRadius={20}
           backgroundColor="#fff"
           style={styles.getStartedBtn}
           textStyle={styles.getStartedBtnText}
           textColor="#000"
           textColorPressed="#000"
-          icon={
+          rightIcon={
             <FontAwesome5
               style={styles.iconStyle}
               name="arrow-right"

@@ -1,26 +1,30 @@
-import { View, TextInput, StyleSheet } from 'react-native'
 import React from 'react'
-import { theme } from '../../core/theme'
+import { View, TextInput, StyleSheet } from 'react-native'
 
 export default function InputField({
   id,
+  width,
+  height,
   placeHolder,
-  icon,
+  leftIcon,
   iconContainerStyle,
   inputFieldStyle,
   text,
   setText,
   secureTextEntry,
-  activeField,
   setActiveField,
 }) {
-  const iconDisplay = icon ? (
-    <View style={[styles.icon, iconContainerStyle]}>{icon}</View>
-  ) : null
-
   return (
-    <View style={[styles.container, inputFieldStyle]}>
-      {iconDisplay}
+    <View
+      style={[
+        styles.container,
+        inputFieldStyle,
+        { width: width, height: height },
+      ]}
+    >
+      {leftIcon ? (
+        <View style={[styles.icon, iconContainerStyle]}>{leftIcon}</View>
+      ) : null}
       <TextInput
         value={text}
         onChangeText={setText}
@@ -37,6 +41,7 @@ export default function InputField({
 const styles = StyleSheet.create({
   container: {
     width: '100%',
+    height: 30,
     flexDirection: 'row',
     justifyContent: 'center',
     marginVertical: 0,

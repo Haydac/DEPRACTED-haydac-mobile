@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { StyleSheet, View, Keyboard, Text } from 'react-native'
+import { StyleSheet, View, Keyboard } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 
 import Screen from '../../components/core/Screen'
@@ -7,27 +7,42 @@ import Header from '../../components/text/Header'
 import Button from '../../components/buttons/Button'
 import InputField from '../../components/forms/InputField'
 import Background from '../../components/core/Background'
+import Separator from '../../components/Separator'
+import EmailPhoneField from '../../components/forms/EmailPhoneField'
+
 import { theme } from '../../core/theme'
 
 export default function RegisterScreen({ navigation }) {
+  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
   const [address, setAddress] = useState('')
   const [password, setPassword] = useState('')
   const [passwordConfirm, setPasswordConfirm] = useState('')
   const [activeField, setActiveField] = useState('')
 
-  const emailIcon = (
+  // button states
+  const [signUpBtnColor, setSignUpBtnColor] = useState(theme.colors.primary)
+  const [signUpBtnTextColor, setSignUpBtnTextColor] = useState('#fff')
+
+  const [loginBtnColor, setLoginBtnColor] = useState('#fff')
+  const [loginBtnTextColor, setLoginBtnTextColor] = useState('#A5A5A5')
+
+  const activeIconColor = theme.colors.primary
+  const inactiveIconColor = '#A5A5A5'
+
+  const nameIcon = (
     <MaterialIcons
-      name="email"
-      color={activeField == 'Email' ? '#BB6BD9' : '#A5A5A5'}
-      size={16}
+      name="person"
+      color={activeField == 'Name' ? activeIconColor : inactiveIconColor}
+      size={20}
     />
   )
 
-  const phoneIcon = (
+  const addressIcon = (
     <MaterialIcons
-      name="phone"
-      color={activeField == 'Phone' ? '#BB6BD9' : '#A5A5A5'}
+      name="location-pin"
+      color={activeField == 'Address' ? activeIconColor : inactiveIconColor}
       size={20}
     />
   )
@@ -35,7 +50,7 @@ export default function RegisterScreen({ navigation }) {
   const passwordIcon = (
     <MaterialIcons
       name="lock"
-      color={activeField == 'Password' ? '#BB6BD9' : '#A5A5A5'}
+      color={activeField == 'Password' ? activeIconColor : inactiveIconColor}
       size={20}
     />
   )
@@ -43,14 +58,15 @@ export default function RegisterScreen({ navigation }) {
   const passwordConfirmIcon = (
     <MaterialIcons
       name="lock"
-      color={activeField == 'PasswordConfirm' ? '#BB6BD9' : '#A5A5A5'}
+      color={
+        activeField == 'PasswordConfirm' ? activeIconColor : inactiveIconColor
+      }
       size={20}
     />
   )
 
   const formWidth = '100%'
   const formItemHeight = 45
-  const formSpacing = 20
 
   const onSignUpPressed = () => {
     navigation.navigate('LoginScreen')
@@ -86,7 +102,7 @@ export default function RegisterScreen({ navigation }) {
   return (
     <Background
       imageSource={
-        isKeyboardOpen ? null : require('../../assets/background/login.png')
+        isKeyboardOpen ? null : require('../../assets/background/signup.png')
       }
     >
       <Screen>
@@ -97,9 +113,9 @@ export default function RegisterScreen({ navigation }) {
               <Header style={styles.headerMessage}>Create{'\n'}Account</Header>
             )}
             <Button
+              text="Skip"
               width="6%"
               height="5%"
-              text="Skip"
               style={styles.skipBtn}
               textStyle={styles.skipBtnText}
               textColor={isKeyboardOpen ? theme.colors.primary : '#fff'}
@@ -107,70 +123,83 @@ export default function RegisterScreen({ navigation }) {
             />
           </View>
 
-          <View style={styles.loginFormContainer}>
-            {/* Email input */}
+          <View
+            style={[
+              styles.loginFormContainer,
+              isKeyboardOpen ? { bottom: -20 } : {},
+            ]}
+          >
+            {/* Full name input */}
             <InputField
-              id="Email"
-              placeHolder="Email"
-              icon={emailIcon}
-              inputFieldStyle={[
-                { marginBottom: formSpacing },
-                styles.inputFieldStyle,
-              ]}
-              text={email}
-              setText={setEmail}
-              activeField={activeField}
+              id="Name"
+              width={formWidth}
+              height={formItemHeight}
+              placeHolder="Full name"
+              leftIcon={nameIcon}
+              inputFieldStyle={[styles.inputFieldStyle]}
+              text={name}
+              setText={setName}
               setActiveField={setActiveField}
+            />
+
+            {/* Email/Phone input */}
+            <EmailPhoneField
+              width={formWidth}
+              height={formItemHeight}
+              emailPhoneFieldStyle={styles.emailPhoneFieldStyle}
+              inputFieldStyle={styles.inputFieldStyle}
+              setActiveField={setActiveField}
+              dropDownStyle={styles.dropDownStyle}
+              dropDownContainerStyle={styles.dropDownContainerStyle}
+              dropDownTextStyle={styles.dropDownTextStyle}
+              dropDownLabelStyle={styles.dropDownLabelStyle}
             />
 
             {/* Address input */}
             <InputField
-              id="Phone"
-              placeHolder="Phone number"
-              icon={phoneIcon}
-              inputFieldStyle={[
-                { marginBottom: formSpacing },
-                styles.inputFieldStyle,
-              ]}
+              id="Address"
+              width={formWidth}
+              height={formItemHeight}
+              placeHolder="Address"
+              leftIcon={addressIcon}
+              inputFieldStyle={[styles.inputFieldStyle]}
               text={address}
               setText={setAddress}
-              activeField={activeField}
               setActiveField={setActiveField}
             />
 
             {/* Passowrd input */}
             <InputField
               id="Password"
+              width={formWidth}
+              height={formItemHeight}
               placeHolder="Password"
-              icon={passwordIcon}
-              inputFieldStyle={[
-                { marginBottom: formSpacing },
-                styles.inputFieldStyle,
-              ]}
+              leftIcon={passwordIcon}
+              inputFieldStyle={[styles.inputFieldStyle]}
               text={password}
               setText={setPassword}
               secureTextEntry
-              activeField={activeField}
               setActiveField={setActiveField}
             />
 
             {/* Passowrd confirmation input */}
             <InputField
               id="PasswordConfirm"
+              width={formWidth}
+              height={formItemHeight}
               placeHolder="Confirm Password"
-              icon={passwordConfirmIcon}
-              inputFieldStyle={[{ marginBottom: 7 }, styles.inputFieldStyle]}
+              leftIcon={passwordConfirmIcon}
+              inputFieldStyle={[styles.inputFieldStyle]}
               text={passwordConfirm}
               setText={setPasswordConfirm}
               secureTextEntry
-              activeField={activeField}
               setActiveField={setActiveField}
             />
 
             {/* Forgot password button */}
             <Button
-              height={formItemHeight}
               text="Forgot password?"
+              height={formItemHeight}
               style={styles.forgotPasswordBtn}
               textStyle={styles.forgotPasswordBtnText}
               textColor={theme.colors.primary}
@@ -179,52 +208,63 @@ export default function RegisterScreen({ navigation }) {
 
             {/* Sign up button */}
             <Button
+              text="Sign up"
               width={formWidth}
               height={formItemHeight}
-              text="Sign up"
-              backgroundColor={theme.colors.primary}
-              backgroundColorPressed="#fff"
+              backgroundColor={signUpBtnColor}
               style={styles.signUpBtn}
               textStyle={styles.signUpBtnText}
-              textColor="#fff"
+              textColor={signUpBtnTextColor}
               onPress={onSignUpPressed}
+              onPressIn={() => {
+                setSignUpBtnColor('#fff')
+                setSignUpBtnTextColor('#A5A5A5')
+
+                setLoginBtnColor(theme.colors.primary)
+                setLoginBtnTextColor('#fff')
+              }}
+              onPressOut={() => {
+                setSignUpBtnColor(theme.colors.primary)
+                setSignUpBtnTextColor('#fff')
+
+                setLoginBtnColor('#fff')
+                setLoginBtnTextColor('#A5A5A5')
+              }}
             />
 
             {/** Separator */}
-            <View
-              style={{
-                width: formWidth,
-                marginTop: 12,
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}
-            >
-              <View
-                style={{ flex: 1, height: 1, backgroundColor: '#A5A5A5' }}
-              />
-              <View>
-                <Text
-                  style={{ color: '#A5A5A5', width: 50, textAlign: 'center' }}
-                >
-                  Or
-                </Text>
-              </View>
-              <View
-                style={{ flex: 1, height: 1, backgroundColor: '#A5A5A5' }}
-              />
-            </View>
+            <Separator
+              width={formWidth}
+              text="Or"
+              lineColor="#A5A5A5"
+              textColor="#A5A5A5"
+              style={{ marginTop: 12 }}
+            />
 
-            {/* Sign up button */}
+            {/* Log in button */}
             <Button
+              text="Log in"
               width={formWidth}
               height={formItemHeight}
-              text="Log in"
-              backgroundColor="#fff"
-              backgroundColorPressed={theme.colors.primary}
+              backgroundColor={loginBtnColor}
               style={styles.loginBtn}
               textStyle={styles.loginBtnText}
-              textColor="#A5A5A5"
+              textColor={loginBtnTextColor}
               onPress={() => navigation.navigate('LoginScreen')}
+              onPressIn={() => {
+                setLoginBtnColor(theme.colors.primary)
+                setLoginBtnTextColor('#fff')
+
+                setSignUpBtnColor('#fff')
+                setSignUpBtnTextColor('#A5A5A5')
+              }}
+              onPressOut={() => {
+                setLoginBtnColor('#fff')
+                setLoginBtnTextColor('#A5A5A5')
+
+                setSignUpBtnColor(theme.colors.primary)
+                setSignUpBtnTextColor('#fff')
+              }}
             />
           </View>
         </View>
@@ -275,10 +315,28 @@ const styles = StyleSheet.create({
     fontSize: 19,
   },
   inputFieldStyle: {
-    height: '9%',
+    marginVertical: 10,
     position: 'relative',
     borderBottomWidth: 1,
     borderBottomColor: theme.colors.primary,
+  },
+  emailPhoneFieldStyle: {
+    marginVertical: 10,
+  },
+  dropDownStyle: {
+    borderColor: theme.colors.primary,
+  },
+  dropDownContainerStyle: {
+    width: 60,
+    height: 28,
+    marginTop: -4,
+    alignSelf: 'flex-start',
+  },
+  dropDownTextStyle: {
+    color: '#fff',
+  },
+  dropDownLabelStyle: {
+    color: '#fff',
   },
   forgotPasswordBtn: {
     alignSelf: 'flex-end',
