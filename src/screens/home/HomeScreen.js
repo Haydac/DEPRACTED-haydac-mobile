@@ -42,7 +42,7 @@ export default function HomeScreen({ navigation }) {
   const [isLoading, setLoading] = useState(false)
 
   const bottomSheetModalRef = useRef(null)
-  const snapPoints = useMemo(() => ['25%', '50%'], [])
+  const snapPoints = useMemo(() => ['30%', '60%', '90%'], [])
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present()
   }, [])
@@ -67,7 +67,6 @@ export default function HomeScreen({ navigation }) {
     navigation.navigate('LocationScreen')
   }
   const onReigonButtonPressed = () => {
-    console.log('reigon button pressed')
     handlePresentModalPress()
   }
 
@@ -101,7 +100,7 @@ export default function HomeScreen({ navigation }) {
           showsVerticalScrollIndicator={false}
         >
           <SearchBar
-            width="94%"
+            width="100%"
             height={45}
             placeHolder="Search stores, services or restaurants"
             searchBarOuterStyle={styles.searchBarOuterStyle}
@@ -169,7 +168,6 @@ const styles = StyleSheet.create({
   header: {
     width: '100%',
     height: 90,
-    position: 'absolute',
     zIndex: 100,
     marginTop: -Constants.statusBarHeight,
     paddingTop: headerOffsetPadding,
@@ -201,7 +199,6 @@ const styles = StyleSheet.create({
     bottom: headerOffsetPadding,
   },
   searchBarOuterStyle: {
-    marginTop: Constants.statusBarHeight + 40,
     paddingVertical: 10,
     alignSelf: 'center',
     backgroundColor: '#fff',

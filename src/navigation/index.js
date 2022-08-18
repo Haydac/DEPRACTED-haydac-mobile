@@ -18,6 +18,7 @@ import {
   RestaurantsScreen,
   ServicesScreen,
   BusinessScreen,
+  LocationScreen,
 } from '../screens/home'
 
 import { BrowseScreen } from '../screens/browse'
@@ -115,7 +116,9 @@ const HomeStackNavigator = () => {
       <HomeStack.Screen
         name="HomeScreen"
         component={HomeScreen}
-        options={{ headerShown: false }}
+        options={{
+          headerShown: false,
+        }}
       />
       <Stack.Screen
         name="GroceryStoresScreen"
@@ -123,6 +126,7 @@ const HomeStackNavigator = () => {
         options={{
           title: 'Grocery Stores',
           headerTitleAlign: 'center',
+          headerShadowVisible: false,
         }}
       />
       <Stack.Screen
@@ -131,6 +135,7 @@ const HomeStackNavigator = () => {
         options={{
           title: 'Restaurants',
           headerTitleAlign: 'center',
+          headerShadowVisible: false,
         }}
       />
       <Stack.Screen
@@ -139,11 +144,21 @@ const HomeStackNavigator = () => {
         options={{
           title: 'Services',
           headerTitleAlign: 'center',
+          headerShadowVisible: false,
         }}
       />
       <Stack.Screen
         name="BusinessScreen"
         component={BusinessScreen}
+        options={{
+          title: '',
+          headerTintColor: theme.colors.primary,
+          headerTransparent: true,
+        }}
+      />
+      <Stack.Screen
+        name="LocationScreen"
+        component={LocationScreen}
         options={{
           title: '',
           headerTintColor: theme.colors.primary,

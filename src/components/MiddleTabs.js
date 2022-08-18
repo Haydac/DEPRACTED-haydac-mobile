@@ -2,9 +2,9 @@ import React from 'react'
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { theme } from '../core/theme'
 
-export default function MiddleTabs({ activeTab, setActiveTab }) {
+export default function MiddleTabs({ activeTab, setActiveTab, style }) {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <TabButton
         text="Near me"
         active={activeTab === 'Near me'}
@@ -37,7 +37,6 @@ const TabButton = ({ text, active, onPress }) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 10,
     marginVertical: theme.constants.verticalCardMargin,
     flexDirection: 'row',
     justifyContent: 'center',
