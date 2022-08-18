@@ -54,52 +54,51 @@ export default function BusinessScreen({ route, navigation }) {
           <Image source={image_url} style={styles.image} />
         )}
       </View>
-
-      <ScrollView showsVerticalScrollIndicator={false} style={{ zIndex: 20 }}>
-        <View style={styles.content}>
-          <View style={styles.header}>
-            <Text style={styles.title}>{name}</Text>
-            <TouchableOpacity onPress={() => setShowMap((e) => !e)}>
-              <Entypo
-                name="map"
-                size={24}
-                color={`${showMap ? theme.colors.primary : '#000'}`}
+      <View style={styles.content}>
+        <View style={styles.header}>
+          <Text style={styles.title}>{name}</Text>
+          <TouchableOpacity onPress={() => setShowMap((e) => !e)}>
+            <Entypo
+              name="map"
+              size={24}
+              color={`${showMap ? theme.colors.primary : '#000'}`}
+            />
+          </TouchableOpacity>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'flex-start',
+          }}
+        >
+          <View style={styles.info}>
+            <View style={styles.infoItem}>
+              <View style={styles.businessRating}>
+                <Text style={styles.businessRatingText}>{rating}</Text>
+              </View>
+            </View>
+            <View style={styles.infoItem}>
+              <Ionicons
+                name="location-sharp"
+                size={13}
+                color={theme.colors.primary}
               />
-            </TouchableOpacity>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'flex-start',
-            }}
-          >
-            <View style={styles.info}>
-              <View style={styles.infoItem}>
-                <View style={styles.businessRating}>
-                  <Text style={styles.businessRatingText}>{rating}</Text>
-                </View>
-              </View>
-              <View style={styles.infoItem}>
-                <Ionicons
-                  name="location-sharp"
-                  size={13}
-                  color={theme.colors.primary}
-                />
-                <Text style={styles.infoText}>{distance}</Text>
-              </View>
-              <View style={styles.infoItem}>
-                <Entypo name="link" size={16} color={theme.colors.primary} />
-                <Text
-                  style={[styles.infoText, { color: theme.colors.primary }]}
-                >
-                  learn more
-                </Text>
-              </View>
+              <Text style={styles.infoText}>{distance}</Text>
+            </View>
+            <View style={styles.infoItem}>
+              <Entypo name="link" size={16} color={theme.colors.primary} />
+              <Text style={[styles.infoText, { color: theme.colors.primary }]}>
+                learn more
+              </Text>
             </View>
           </View>
         </View>
-      </ScrollView>
+      </View>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={{ zIndex: 20 }}
+      ></ScrollView>
     </View>
   )
 }
