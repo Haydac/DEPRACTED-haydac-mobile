@@ -10,6 +10,7 @@ export default function Button({
   style,
   textStyle,
   textColor,
+  leftIcon,
   rightIcon,
   onPress,
   onPressIn,
@@ -32,10 +33,11 @@ export default function Button({
         style,
       ]}
     >
+      {leftIcon ? <View style={[styles.leftIcon]}>{leftIcon}</View> : null}
       <Text style={[styles.text, textStyle, { color: textColor || '#000' }]}>
         {text}
       </Text>
-      {rightIcon ? <View style={[styles.icon]}>{rightIcon}</View> : null}
+      {rightIcon ? <View style={[styles.rightIcon]}>{rightIcon}</View> : null}
     </TouchableOpacity>
   )
 }
@@ -53,7 +55,13 @@ const styles = StyleSheet.create({
     color: '#000',
     fontWeight: 'bold',
   },
-  icon: {
+  rightIcon: {
+    position: 'absolute',
+    left: 20,
+    width: 20,
+    height: 20,
+  },
+  rightIcon: {
     position: 'absolute',
     right: 20,
     width: 20,
