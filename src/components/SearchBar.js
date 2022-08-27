@@ -18,13 +18,7 @@ export default function SearchBar({
   renderIconRight,
 }) {
   return (
-    <View
-      style={[
-        styles.container,
-        searchBarOuterStyle,
-        { width: width || '100%' },
-      ]}
-    >
+    <View style={[styles.container, searchBarOuterStyle]}>
       <GooglePlacesAutocomplete
         placeholder={placeHolder || 'Search'}
         nearbyPlacesAPI="GooglePlacesSearch"
@@ -54,6 +48,7 @@ export default function SearchBar({
             backgroundColor: 'transparent',
           },
           textInputContainer: {
+            width: width || '100%',
             height: height || 53,
             justifyContent: 'center',
             alignItems: 'center',

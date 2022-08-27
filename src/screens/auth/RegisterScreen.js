@@ -132,6 +132,7 @@ export default function RegisterScreen({ navigation }) {
             {/* Full name input */}
             <InputField
               id="Name"
+              placeholderTextColor="#C2C2C2"
               width={formWidth}
               height={formItemHeight}
               placeHolder="Full name"
@@ -158,6 +159,7 @@ export default function RegisterScreen({ navigation }) {
             {/* Address input */}
             <InputField
               id="Address"
+              placeholderTextColor="#C2C2C2"
               width={formWidth}
               height={formItemHeight}
               placeHolder="Address"
@@ -171,6 +173,7 @@ export default function RegisterScreen({ navigation }) {
             {/* Passowrd input */}
             <InputField
               id="Password"
+              placeholderTextColor="#C2C2C2"
               width={formWidth}
               height={formItemHeight}
               placeHolder="Password"
@@ -185,6 +188,7 @@ export default function RegisterScreen({ navigation }) {
             {/* Passowrd confirmation input */}
             <InputField
               id="PasswordConfirm"
+              placeholderTextColor="#C2C2C2"
               width={formWidth}
               height={formItemHeight}
               placeHolder="Confirm Password"

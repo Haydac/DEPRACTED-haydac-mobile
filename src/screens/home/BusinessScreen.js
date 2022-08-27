@@ -11,24 +11,17 @@ import { Ionicons, Entypo, FontAwesome } from '@expo/vector-icons'
 import { theme } from '../../core/theme'
 
 export default function BusinessScreen({ route, navigation }) {
-  const [showMap, setShowMap] = useState(false)
-
-  const { image_url, name, distance, rating } = route?.params?.business
-  const { isFavourite } = route?.params?.state
-
-  return (
-    <View style={styles.container}>
-      <View style={styles.mapImageWrpper}>
-        {showMap ? (
-          {
-            /* Show map */
-          }
-        ) : (
-          <Image source={image_url} style={styles.image} />
-        )}
-        <View style={styles.favouriteIcon}>
+  navigation.setOptions({
+    headerShown: true,
+    headerTransparent: true,
+    headerRight: () =>
+      !showMap && (
+        <TouchableOpacity
+          style={styles.favouriteIcon}
+          onPress={() => toggleFavourite(isFavourite)}
+        >
           <FontAwesome name={'star-o'} size={29} color={'#fff'} />
-          {isFavourite && (
+          {isFavourited && (
             <FontAwesome
               style={{ position: 'absolute' }}
               name={'star'}
@@ -36,54 +29,76 @@ export default function BusinessScreen({ route, navigation }) {
               color={theme.colors.primary}
             />
           )}
-        </View>
-      </View>
+        </TouchableOpacity>
+      ),
+  })
 
-      <ScrollView showsVerticalScrollIndicator={false} style={{ zIndex: 20 }}>
-        <View style={styles.content}>
-          <View style={styles.header}>
-            <Text style={styles.title}>{name}</Text>
-            <TouchableOpacity onPress={() => setShowMap((e) => !e)}>
-              <Entypo
-                name="map"
-                size={24}
-                color={`${showMap ? theme.colors.primary : '#000'}`}
+  const business = route?.params?.business
+  const { image_url, name, distance, rating, isFavourite } = business
+  const [isFavourited, setIsFavourited] = useState(business.isFavourite)
+  const [showMap, setShowMap] = useState(false)
+
+  const toggleFavourite = (f) => {
+    business.isFavourite = !f
+    setIsFavourited(business.isFavourite)
+    route?.params?.favouriteCallback(business.isFavourite)
+  }
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.mapImageContainer}>
+        {showMap ? (
+          // show map
+          <Text>Map</Text>
+        ) : (
+          <Image source={image_url} style={styles.image} />
+        )}
+      </View>
+      <View style={styles.content}>
+        <View style={styles.header}>
+          <Text style={styles.title}>{name}</Text>
+          <TouchableOpacity onPress={() => setShowMap((e) => !e)}>
+            <Entypo
+              name="map"
+              size={24}
+              color={`${showMap ? theme.colors.primary : '#000'}`}
+            />
+          </TouchableOpacity>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'flex-start',
+          }}
+        >
+          <View style={styles.info}>
+            <View style={styles.infoItem}>
+              <View style={styles.businessRating}>
+                <Text style={styles.businessRatingText}>{rating}</Text>
+              </View>
+            </View>
+            <View style={styles.infoItem}>
+              <Ionicons
+                name="location-sharp"
+                size={13}
+                color={theme.colors.primary}
               />
-            </TouchableOpacity>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'flex-start',
-            }}
-          >
-            <View style={styles.info}>
-              <View style={styles.infoItem}>
-                <View style={styles.businessRating}>
-                  <Text style={styles.businessRatingText}>{rating}</Text>
-                </View>
-              </View>
-              <View style={styles.infoItem}>
-                <Ionicons
-                  name="location-sharp"
-                  size={13}
-                  color={theme.colors.primary}
-                />
-                <Text style={styles.infoText}>{distance}</Text>
-              </View>
-              <View style={styles.infoItem}>
-                <Entypo name="link" size={16} color={theme.colors.primary} />
-                <Text
-                  style={[styles.infoText, { color: theme.colors.primary }]}
-                >
-                  learn more
-                </Text>
-              </View>
+              <Text style={styles.infoText}>{distance}</Text>
+            </View>
+            <View style={styles.infoItem}>
+              <Entypo name="link" size={16} color={theme.colors.primary} />
+              <Text style={[styles.infoText, { color: theme.colors.primary }]}>
+                learn more
+              </Text>
             </View>
           </View>
         </View>
-      </ScrollView>
+      </View>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={{ zIndex: 20 }}
+      ></ScrollView>
     </View>
   )
 }
@@ -94,9 +109,12 @@ const styles = StyleSheet.create({
     position: 'relative',
     backgroundColor: '#fff',
   },
-  mapImageWrpper: {
+  mapImageContainer: {
     width: '100%',
+    height: 230,
     position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   image: {
     width: '100%',
@@ -104,10 +122,6 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
   favouriteIcon: {
-    position: 'absolute',
-    top: 50,
-    right: 25,
-    zIndex: 40,
     alignItems: 'center',
     justifyContent: 'center',
   },

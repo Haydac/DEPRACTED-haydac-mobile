@@ -3,6 +3,7 @@ import { View, TextInput, StyleSheet } from 'react-native'
 
 export default function InputField({
   id,
+  placeholderTextColor,
   width,
   height,
   placeHolder,
@@ -26,6 +27,7 @@ export default function InputField({
         <View style={[styles.icon, iconContainerStyle]}>{leftIcon}</View>
       ) : null}
       <TextInput
+        placeholderTextColor={placeholderTextColor}
         value={text}
         onChangeText={setText}
         placeholder={placeHolder}

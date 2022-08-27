@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { StyleSheet, View, Keyboard } from 'react-native'
-import { FontAwesome, MaterialIcons } from '@expo/vector-icons'
+import { MaterialIcons } from '@expo/vector-icons'
 
 import Screen from '../../components/core/Screen'
 import Header from '../../components/text/Header'
@@ -120,6 +120,7 @@ export default function LoginScreen({ navigation }) {
               height={formItemHeight}
               id="Password"
               placeHolder="Password"
+              placeholderTextColor="#C2C2C2"
               leftIcon={passwordIcon}
               inputFieldStyle={[{ marginBottom: 7 }, styles.inputFieldStyle]}
               text={password}
@@ -207,9 +208,6 @@ export default function LoginScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   content: {
     flex: 1,
     alignItems: 'center',
@@ -251,6 +249,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     borderBottomWidth: 1,
     borderBottomColor: '#BB6BD9',
+   
   },
   emailPhoneFieldStyle: {
     marginVertical: 50,

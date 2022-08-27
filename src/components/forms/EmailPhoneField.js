@@ -105,6 +105,7 @@ export default function EmailPhoneField({
         id={value}
         height={height}
         placeHolder={value == 'Email' ? 'Email' : 'Phone'}
+        placeholderTextColor="#C2C2C2"
         inputFieldStyle={[{ flex: 1 }, inputFieldStyle]}
         text={text}
         setText={setText}

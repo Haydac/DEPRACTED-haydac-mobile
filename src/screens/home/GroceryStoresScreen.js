@@ -17,7 +17,7 @@ export default function GroceryStoresScreen({ navigation }) {
     <Screen style={styles.container}>
       {/* Header: menuButton  ---- search ---- filterButton */}
       <SearchBar
-        width="95%"
+        width="87%"
         height={45}
         placeHolder="Search stores"
         searchBarOuterStyle={styles.searchBarOuterStyle}
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#eee',
   },
   searchBarOuterStyle: {
-    marginVertical: theme.constants.verticalCardMargin,
+    marginBottom: theme.constants.verticalCardMargin,
     alignSelf: 'center',
   },
   activityIndicator: {

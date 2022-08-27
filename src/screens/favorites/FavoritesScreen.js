@@ -6,15 +6,12 @@ import BusinessItem from '../../components/BusinessItem'
 import { theme } from '../../core/theme'
 import { demoBusinesses } from '../../screens/home/HomeScreen'
 
-const randomFiveSubset = demoBusinesses.slice(0, 5)
-
 export default function FavoritesScreen({ navigation }) {
-  const [businessData, setBusinessData] = useState(randomFiveSubset)
+  const [businessData, setBusinessData] = useState(demoBusinesses)
   const [isLoading, setLoading] = useState(false)
 
   return (
     <Screen style={styles.container}>
-      {/* Header: menuButton  ---- search ---- regionButton */}
       <ScrollView
         style={styles.scrollView}
         showsVerticalScrollIndicator={false}
@@ -26,7 +23,7 @@ export default function FavoritesScreen({ navigation }) {
             style={styles.activityIndicator}
           />
         )}
-        <BusinessItem businessData={businessData} />
+        <BusinessItem businessData={businessData} navigation={navigation} />
       </ScrollView>
     </Screen>
   )
