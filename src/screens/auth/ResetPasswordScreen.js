@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { ImageBackground, Text, StyleSheet } from 'react-native'
+import { ImageBackground, Text, StyleSheet,View } from 'react-native'
 
 import Screen from '../../components/core/Screen'
-import Header from '../../components/text/Header'
 import InputField from '../../components/forms/InputField'
-import Brand from '../../components/core/Brand'
+import Desgin from '../../assets/background/design-icon.svg'
+import { backgroundColor, borderColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes'
 
 export default function ResetPasswordScreen({ navigation }) {
   const [email, setEmail] = useState('')
@@ -15,15 +15,27 @@ export default function ResetPasswordScreen({ navigation }) {
 
   return (
     <Screen style={styles.container}>
-      <Brand />
+      <View><View style={styles.designsvg}><Desgin/></View></View>
     </Screen>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: 'white',
+    
   },
+
+  designsvg:{
+
+   alignItems: 'flex-end',
+   borderStyle:'solid',
+  justifyContent: 'flex-end',
+   width: '100%',
+   height:'102.4%',
+   marginLeft:'-0.1%'
+ 
+  },
+  
+  
 })
