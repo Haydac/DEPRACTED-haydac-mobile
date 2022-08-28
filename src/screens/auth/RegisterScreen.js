@@ -12,6 +12,9 @@ import EmailPhoneField from '../../components/forms/EmailPhoneField'
 
 import { theme } from '../../core/theme'
 
+import { signup } from '../../api/AuthProvider'
+import { signupValidator } from '../../helpers/validation'
+
 export default function RegisterScreen({ navigation }) {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -68,8 +71,24 @@ export default function RegisterScreen({ navigation }) {
   const formWidth = '100%'
   const formItemHeight = 45
 
-  const onSignUpPressed = () => {
-    navigation.navigate('LoginScreen')
+  const onSignUpPressed = async () => {
+    // could be email or phone
+    let emailInput = email.toLowerCase()
+    const formValues = {
+      name: name,
+      email: emailInput,
+      phone: phone,
+      password: password,
+      confirmPassword: passwordConfirm,
+    }
+
+    if (signupValidator(formValues)) {
+      // passes formvalues to api
+      const user = await signup(formValues)
+      if (user.success) {
+        navigation.navigate('LoginScreen')
+      }
+    }
   }
 
   // Keyboard listener
