@@ -162,7 +162,7 @@ const HomeStackNavigator = () => {
         options={{
           title: '',
           headerTintColor: theme.colors.primary,
-          headerTransparent: true,
+          headerShadowVisible: false,
         }}
       />
     </HomeStack.Navigator>
