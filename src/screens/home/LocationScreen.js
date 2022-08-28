@@ -12,7 +12,7 @@ import { theme } from '../../core/theme'
 
 export default function LocationScreen({ navigation }) {
   const currentLocationDemo = {
-    address: '95 the pond road\n Toronto, Ontario m3J 0L1',
+    address: '95 the pond road\nToronto, Ontario m3J 0L1',
   }
   const recentLocationsDemo = [
     {
@@ -54,14 +54,14 @@ export default function LocationScreen({ navigation }) {
   ]
 
   const currentLocationIcon = (
-    <Entypo name="location" color={theme.colors.primary} size={34} />
+    <Entypo name="location" color={theme.colors.primary} size={24} />
   )
 
   const leftIcon = (
     <Ionicons
       name="ios-location-sharp"
       color={theme.colors.primary}
-      size={34}
+      size={20}
     />
   )
 
