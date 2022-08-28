@@ -1,5 +1,4 @@
 import React, { useState, useRef, useCallback, useMemo } from 'react'
-import { gestureHandlerRootHOC } from 'react-native-gesture-handler'
 import {
   ScrollView,
   ActivityIndicator,
@@ -8,12 +7,15 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native'
+import Checkbox from 'expo-checkbox'
 import Constants from 'expo-constants'
 import {
-  BottomSheetModal,
   BottomSheetModalProvider,
+  BottomSheetModal,
   BottomSheetBackdrop,
+  BottomSheetScrollView,
 } from '@gorhom/bottom-sheet'
+import Flag from 'react-native-flags'
 
 import Screen from '../../components/core/Screen'
 import MiddleTabs from '../../components/MiddleTabs'
@@ -40,6 +42,7 @@ export default function HomeScreen({ navigation }) {
   const [city, setCity] = useState('Toronto')
   const [activeTab, setActiveTab] = useState('Near me')
   const [isLoading, setLoading] = useState(false)
+  const [selectedRegion, setSelectedRegion] = useState('ASIA-India')
 
   const bottomSheetModalRef = useRef(null)
   const snapPoints = useMemo(() => ['30%', '60%', '90%'], [])
@@ -57,11 +60,46 @@ export default function HomeScreen({ navigation }) {
     ),
     []
   )
-  const LocationModal = gestureHandlerRootHOC(() => (
-    <View style={styles.contentContainer}>
-      <Text>Reigons</Text>
+
+  const regions = [
+    {
+      name: 'ASIA-India',
+      countryCode: 'IN',
+      isSelected: true,
+    },
+    {
+      name: 'AFRICA-Ghana',
+      countryCode: 'GH',
+      isSelected: false,
+    },
+    {
+      name: 'NORTH AMERICA-Jamaica',
+      countryCode: 'JM',
+      isSelected: false,
+    },
+    {
+      name: 'AFRICA-Nigeria',
+      countryCode: 'NG',
+      isSelected: false,
+    },
+    {
+      name: 'ASIA-China',
+      countryCode: 'CN',
+      isSelected: false,
+    },
+    {
+      name: 'AFRICA-Ethiopia',
+      countryCode: 'ET',
+      isSelected: false,
+    },
+  ]
+
+  // section header
+  const SectionHeader = ({ title }) => (
+    <View style={styles.sectionHeaderContainer}>
+      <Text style={styles.sectionHeaderText}>{title}</Text>
     </View>
-  ))
+  )
 
   const onLocationButtonPressed = () => {
     navigation.navigate('LocationScreen')
@@ -145,7 +183,33 @@ export default function HomeScreen({ navigation }) {
           backdropComponent={backdropComponent}
           onChange={handleSheetChanges}
         >
-          <LocationModal />
+          <BottomSheetScrollView>
+            <SectionHeader title="Regions" />
+            {regions.map((region, index) => {
+              return (
+                <View key={index} style={styles.regionContainer}>
+                  <Flag
+                    style={styles.regionFlag}
+                    code={region.countryCode}
+                    size={32}
+                  />
+                  <Text style={styles.regionText}>{region.name}</Text>
+                  <Checkbox
+                    style={styles.checkbox}
+                    value={selectedRegion === region.name}
+                    onValueChange={(value) => {
+                      setSelectedRegion(region.name)
+                    }}
+                    color={
+                      selectedRegion == region.name
+                        ? theme.colors.primary
+                        : undefined
+                    }
+                  />
+                </View>
+              )
+            })}
+          </BottomSheetScrollView>
         </BottomSheetModal>
       </Screen>
     </BottomSheetModalProvider>
@@ -157,10 +221,6 @@ const headerOffsetPadding = 10
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
-  },
-  contentContainer: {
-    flex: 1,
-    alignItems: 'center',
   },
   scrollView: {
     backgroundColor: '#eee',
@@ -214,5 +274,40 @@ const styles = StyleSheet.create({
   activityIndicator: {
     marginTop: 2,
     marginBottom: 6,
+  },
+  regionContentContainer: {
+    backgroundColor: '#fff',
+  },
+  sectionHeaderContainer: {
+    backgroundColor: '#fff',
+    padding: 6,
+  },
+  sectionHeaderText: {
+    fontWeight: 'bold',
+    fontSize: 15,
+  },
+  regionContainer: {
+    height: 56,
+    margin: 6,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderRadius: 23,
+    backgroundColor: '#eee',
+  },
+  regionFlag: {
+    marginLeft: 20,
+    marginRight: 10,
+  },
+  regionText: {
+    flex: 2,
+    fontWeight: 'normal',
+    fontSize: 16,
+  },
+  checkbox: {
+    margin: 8,
+    marginRight: 20,
+    borderRadius: 10,
   },
 })
