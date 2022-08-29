@@ -73,19 +73,24 @@ export default function RegisterScreen({ navigation }) {
 
   const onSignUpPressed = async () => {
     // could be email or phone
-    let emailInput = email.toLowerCase()
-    const formValues = {
-      name: name,
-      email: emailInput,
-      phone: phone,
+    let formValues = {
+      fullname: name,
       password: password,
-      confirmPassword: passwordConfirm,
+      password_confirmation: passwordConfirm,
+    }
+
+    if (email) {
+      let emailInput = email.toLowerCase()
+      formValues.email = emailInput
+    } else if (phone) {
+      formValues.phone = phone
     }
 
     if (signupValidator(formValues)) {
       // passes formvalues to api
       const user = await signup(formValues)
-      if (user.success) {
+      console.log(user)
+      if (user?.success) {
         navigation.navigate('LoginScreen')
       }
     }
@@ -168,6 +173,8 @@ export default function RegisterScreen({ navigation }) {
               emailPhoneFieldStyle={styles.emailPhoneFieldStyle}
               inputFieldStyle={styles.inputFieldStyle}
               setActiveField={setActiveField}
+              setEmail={setEmail}
+              setPhone={setPhone}
               dropDownStyle={styles.dropDownStyle}
               dropDownContainerStyle={styles.dropDownContainerStyle}
               dropDownTextStyle={styles.dropDownTextStyle}

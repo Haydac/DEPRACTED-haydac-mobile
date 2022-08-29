@@ -21,10 +21,10 @@ const loginValidator = (formValues) => {
  */
 const signupValidator = async (formValues) => {
   const password = formValues.password,
-    confirmPassword = formValues.confirmPassword
-  if (passwordValidator(password) && password == confirmPassword) {
+    confirmPassword = formValues.password_confirmation
+  if (passwordValidator(password) && password === confirmPassword) {
     return (
-      validator.isAlpha(formValues.name) &&
+      validator.isAlpha(formValues.fullName) &&
       (emailValidator(formValues.email) || phoneValidator(formValues.phone)) &&
       validator.isAlphanumeric(formValues.address)
     )
@@ -42,7 +42,7 @@ const signupValidator = async (formValues) => {
  * @returns true if email is valid and false otherwise
  */
 const emailValidator = (email) => {
-  return email && validator.isEmail(email)
+  return email !== undefined && validator.isEmail(email)
 }
 
 /**
@@ -51,7 +51,7 @@ const emailValidator = (email) => {
  * @returns true if phone is valid and false otherwise
  */
 const phoneValidator = (phone) => {
-  return phone && validator.isMobilePhone(phone)
+  return phone !== undefined && phone && validator.isMobilePhone(phone)
 }
 
 /**
@@ -63,4 +63,4 @@ const passwordValidator = (password) => {
   return password && validator.isAlphanumeric(password)
 }
 
-export { loginValidator, signupValidator }
+export { loginValidator, signupValidator, emailValidator, phoneValidator }
