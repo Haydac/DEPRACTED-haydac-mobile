@@ -71,10 +71,14 @@ export default function RegisterScreen({ navigation }) {
   const formWidth = '100%'
   const formItemHeight = 45
 
+  /**
+   * Sends values from form to the server
+   */
   const onSignUpPressed = async () => {
     // could be email or phone
     let formValues = {
       fullname: name,
+      address: address,
       password: password,
       password_confirmation: passwordConfirm,
     }
@@ -86,13 +90,16 @@ export default function RegisterScreen({ navigation }) {
       formValues.phone = phone
     }
 
-    if (signupValidator(formValues)) {
-      // passes formvalues to api
-      const user = await signup(formValues)
-      console.log(user)
-      if (user?.success) {
-        navigation.navigate('LoginScreen')
-      }
+    // validate form values before sending to server
+    try {
+      signupValidator(formValues).then(async () => {
+        const user = await signup(formValues)
+        if (user?.success) {
+          navigation.navigate('LoginScreen')
+        }
+      })
+    } catch (error) {
+      throw error
     }
   }
 

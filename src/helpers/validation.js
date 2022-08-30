@@ -22,11 +22,12 @@ const loginValidator = (formValues) => {
 const signupValidator = async (formValues) => {
   const password = formValues.password,
     confirmPassword = formValues.password_confirmation
+
   if (passwordValidator(password) && password === confirmPassword) {
     return (
-      validator.isAlpha(formValues.fullName) &&
+      nameValidator(formValues.fullname) &&
       (emailValidator(formValues.email) || phoneValidator(formValues.phone)) &&
-      validator.isAlphanumeric(formValues.address)
+      addressValidator(formValues.address)
     )
   }
   return false
@@ -36,13 +37,21 @@ const signupValidator = async (formValues) => {
  * Helper methods
  */
 
+const nameValidator = (fullname) => {
+  return fullname && validator.isAlpha(fullname)
+}
+
+const addressValidator = (address) => {
+  return address && validator.isAlphanumeric(address)
+}
+
 /**
  * Validates email input
  * @param {*} email
  * @returns true if email is valid and false otherwise
  */
 const emailValidator = (email) => {
-  return email !== undefined && validator.isEmail(email)
+  return email && validator.isEmail(email)
 }
 
 /**
@@ -51,7 +60,7 @@ const emailValidator = (email) => {
  * @returns true if phone is valid and false otherwise
  */
 const phoneValidator = (phone) => {
-  return phone !== undefined && phone && validator.isMobilePhone(phone)
+  return phone && phone && validator.isMobilePhone(phone)
 }
 
 /**
@@ -63,4 +72,11 @@ const passwordValidator = (password) => {
   return password && validator.isAlphanumeric(password)
 }
 
-export { loginValidator, signupValidator, emailValidator, phoneValidator }
+export {
+  loginValidator,
+  signupValidator,
+  emailValidator,
+  phoneValidator,
+  nameValidator,
+  addressValidator,
+}
