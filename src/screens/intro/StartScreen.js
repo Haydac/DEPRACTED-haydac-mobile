@@ -3,13 +3,11 @@ import { StyleSheet, Text, View } from 'react-native'
 import { FontAwesome5 } from '@expo/vector-icons'
 import Button from '../../components/buttons/Button'
 import Brand from '../../components/core/Brand'
-import Background from '../../components/core/Background'
+import Screen from '../../components/core/Screen'
 
 export default function StartScreen({ navigation }) {
   return (
-    <Background
-      imageSource={require('../../assets/background/start-screen.png')}
-    >
+    <Screen imageSource={require('../../assets/background/start-screen.png')}>
       <View style={styles.container}>
         <Brand logoStyle={styles.logoStyle} />
         <Text style={[styles.welcomeText]}>
@@ -35,7 +33,7 @@ export default function StartScreen({ navigation }) {
           onPress={() => navigation.navigate('LoginScreen')}
         />
       </View>
-    </Background>
+    </Screen>
   )
 }
 

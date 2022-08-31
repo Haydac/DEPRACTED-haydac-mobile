@@ -16,6 +16,7 @@ export default function InputField({
   setText,
   secureTextEntry,
   setActiveField,
+  blurOnSubmit,
 }) {
   const [hidePassword, setHidpassword] = useState(true)
   const [passwordIconColor, setPasswordIconColor] = useState('#A5A5A5')
@@ -45,6 +46,7 @@ export default function InputField({
         }
         style={[styles.textInputStyle]}
         selectionColor="#B659FF50"
+        blurOnSubmit={blurOnSubmit}
         onBlur={() => {
           setPasswordIconColor('#A5A5A5')
           setActiveField('')

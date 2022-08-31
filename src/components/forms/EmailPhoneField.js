@@ -19,6 +19,7 @@ export default function EmailPhoneField({
   dropDownContainerStyle: containerStyle,
   dropDownTextStyle: textStyle,
   dropDownLabelStyle: labelStyle,
+  blurOnSubmit,
 }) {
   const [text, setText] = useState('')
   const [open, setOpen] = useState(false)
@@ -121,6 +122,7 @@ export default function EmailPhoneField({
           }
         }}
         setActiveField={setActiveField}
+        blurOnSubmit={blurOnSubmit}
       />
     </View>
   )

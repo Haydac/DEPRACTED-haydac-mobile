@@ -8,7 +8,6 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native'
-import Constants from 'expo-constants'
 import {
   BottomSheetModal,
   BottomSheetModalProvider,
@@ -71,8 +70,8 @@ export default function HomeScreen({ navigation }) {
   }
 
   return (
-    <BottomSheetModalProvider>
-      <Screen style={styles.container}>
+    <Screen style={styles.container}>
+      <BottomSheetModalProvider>
         {/* Header: ---- locationButton ---- regionButton */}
         <View style={styles.header}>
           <View style={styles.locationButton}>
@@ -147,16 +146,14 @@ export default function HomeScreen({ navigation }) {
         >
           <LocationModal />
         </BottomSheetModal>
-      </Screen>
-    </BottomSheetModalProvider>
+      </BottomSheetModalProvider>
+    </Screen>
   )
 }
 
-const headerOffsetPadding = 10
-
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
+    backgroundColor: '#DECCEC',
   },
   contentContainer: {
     flex: 1,
@@ -167,10 +164,8 @@ const styles = StyleSheet.create({
   },
   header: {
     width: '100%',
-    height: 90,
+    height: 70,
     zIndex: 100,
-    marginTop: -Constants.statusBarHeight,
-    paddingTop: headerOffsetPadding,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -179,8 +174,6 @@ const styles = StyleSheet.create({
   locationButton: {
     width: 188,
     height: 35,
-    position: 'absolute',
-    bottom: headerOffsetPadding,
     justifyContent: 'center',
     borderRadius: 30,
     backgroundColor: '#eee',
@@ -196,7 +189,6 @@ const styles = StyleSheet.create({
   regionButton: {
     position: 'absolute',
     right: 20,
-    bottom: headerOffsetPadding,
   },
   searchBarOuterStyle: {
     paddingVertical: 10,
