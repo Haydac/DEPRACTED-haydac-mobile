@@ -5,6 +5,7 @@ import DropDownPicker from 'react-native-dropdown-picker'
 import InputField from '../../components/forms/InputField'
 
 import { theme } from '../../core/theme'
+import { emailValidator, phoneValidator } from '../../helpers/validation'
 
 export default function EmailPhoneField({
   width,
@@ -12,10 +13,13 @@ export default function EmailPhoneField({
   emailPhoneFieldStyle,
   inputFieldStyle,
   setActiveField,
+  setEmail,
+  setPhone,
   dropDownStyle: style,
   dropDownContainerStyle: containerStyle,
   dropDownTextStyle: textStyle,
   dropDownLabelStyle: labelStyle,
+  blurOnSubmit,
 }) {
   const [text, setText] = useState('')
   const [open, setOpen] = useState(false)
@@ -69,6 +73,7 @@ export default function EmailPhoneField({
         arrowIconContainerStyle={{ marginLeft: -4 }}
         onSelectItem={(item) => {
           setActiveField(item.value)
+
           setItems([
             {
               label: 'Email',
@@ -107,8 +112,17 @@ export default function EmailPhoneField({
         placeHolder={value == 'Email' ? 'Email' : 'Phone'}
         inputFieldStyle={[{ flex: 1 }, inputFieldStyle]}
         text={text}
-        setText={setText}
+        setText={(value) => {
+          setText(value)
+          if (emailValidator(value)) {
+            setEmail(value)
+          }
+          if (phoneValidator(value)) {
+            setPhone(value)
+          }
+        }}
         setActiveField={setActiveField}
+        blurOnSubmit={blurOnSubmit}
       />
     </View>
   )

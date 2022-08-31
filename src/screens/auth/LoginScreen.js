@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react'
-import { StyleSheet, View, Keyboard } from 'react-native'
+import { StyleSheet, View, Keyboard, ScrollView } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 
 import Screen from '../../components/core/Screen'
 import Header from '../../components/text/Header'
 import Button from '../../components/buttons/Button'
 import InputField from '../../components/forms/InputField'
-import Background from '../../components/core/Background'
 import Separator from '../../components/Separator'
 import EmailPhoneField from '../../components/forms/EmailPhoneField'
 
@@ -16,9 +15,12 @@ import { login } from '../../api/AuthProvider'
 import { loginValidator } from '../../helpers/validation'
 
 export default function LoginScreen({ navigation }) {
-  const [email, setEmail] = useState('')
-  const [phone, setPhone] = useState('')
-  const [password, setPassword] = useState('')
+  const [formValues, setFormValues] = useState({
+    email: '',
+    phone: '',
+    password: '',
+  })
+  const [errors, setErrors] = useState({})
   const [activeField, setActiveField] = useState('')
 
   // button states
@@ -39,6 +41,30 @@ export default function LoginScreen({ navigation }) {
   const formWidth = '100%'
   const formItemHeight = 45
 
+  const updateFormValue = (value, formField) => {
+    setFormValues((prevValues) => ({ ...prevValues, [formField]: value }))
+  }
+
+  const handleError = (errorMessage, formField) => {
+    setErrors((prevErrors) => ({ ...prevErrors, [formField]: errorMessage }))
+  }
+
+  const validate = () => {
+    Keyboard.dismiss()
+
+    if (!emailValidator(formValues.email)) {
+      handleError('Email is not valid', 'email')
+    }
+
+    if (!phoneValidator(formValues.phone)) {
+      handleError('Phone is not valid', 'phone')
+    }
+
+    if (!passwordValidator(formValues.password)) {
+      handleError('Password is not valid', 'password')
+    }
+  }
+
   const onLoginPressed = async () => {
     // could be email or phone
     let emailinput = email.toLowerCase()
@@ -52,157 +78,163 @@ export default function LoginScreen({ navigation }) {
     }
   }
 
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false)
+
   useEffect(() => {
-    const showObserver = Keyboard.addListener(
+    const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
-      _keyboardDidShow
+      () => {
+        setKeyboardVisible(true) // or some other action
+      }
     )
-    const hideObserver = Keyboard.addListener(
+    const keyboardDidHideListener = Keyboard.addListener(
       'keyboardDidHide',
-      _keyboardDidHide
+      () => {
+        setKeyboardVisible(false) // or some other action
+      }
     )
 
     return () => {
-      if (showObserver.removeListener) {
-        showObserver.removeListener('keyboardDidShow', _keyboardDidShow)
-      }
-      if (hideObserver.removeListener) {
-        hideObserver.removeListener('keyboardDidHide', _keyboardDidHide)
-      }
+      keyboardDidHideListener.remove()
+      keyboardDidShowListener.remove()
     }
   }, [])
 
-  const [isKeyboardOpen, setIsKeyBoardOpen] = useState(false)
-  const _keyboardDidShow = () => setIsKeyBoardOpen(true)
-  const _keyboardDidHide = () => setIsKeyBoardOpen(false)
-
   return (
-    <Background
+    <Screen
       imageSource={
-        isKeyboardOpen ? null : require('../../assets/background/login.png')
+        isKeyboardVisible ? null : require('../../assets/background/login.png')
       }
     >
-      <Screen>
-        <View style={styles.content}>
-          {/* Login header :  */}
-          <View style={styles.header}>
-            {isKeyboardOpen ? null : (
-              <Header style={styles.headerMessage}>Welcome{'\n'}Back!</Header>
-            )}
-            <Button
-              text="Skip"
-              width="6%"
-              height="5%"
-              style={styles.skipBtn}
-              textStyle={styles.skipBtnText}
-              textColor={isKeyboardOpen ? theme.colors.primary : '#fff'}
-              onPress={() => navigation.navigate('HomeTabs')}
-            />
-          </View>
-
-          <View style={styles.loginFormContainer}>
-            {/* Email/Phone input */}
-            <EmailPhoneField
-              width={formWidth}
-              height={formItemHeight}
-              emailPhoneFieldStyle={styles.emailPhoneFieldStyle}
-              inputFieldStyle={styles.inputFieldStyle}
-              setActiveField={setActiveField}
-              dropDownStyle={styles.dropDownStyle}
-              dropDownContainerStyle={styles.dropDownContainerStyle}
-              dropDownTextStyle={styles.dropDownTextStyle}
-              dropDownLabelStyle={styles.dropDownLabelStyle}
-            />
-
-            {/* Passowrd input */}
-            <InputField
-              width={formWidth}
-              height={formItemHeight}
-              id="Password"
-              placeHolder="Password"
-              leftIcon={passwordIcon}
-              inputFieldStyle={[{ marginBottom: 7 }, styles.inputFieldStyle]}
-              text={password}
-              setText={setPassword}
-              secureTextEntry
-              activeField={activeField}
-              setActiveField={setActiveField}
-            />
-
-            {/* Forgot password button */}
-            <Button
-              text="Forgot password?"
-              height={formItemHeight}
-              style={styles.forgotPasswordBtn}
-              textStyle={styles.forgotPasswordBtnText}
-              textColor={theme.colors.primary}
-              onPress={() => navigation.navigate('ResetPasswordScreen')}
-            />
-
-            {/* Log in button */}
-            <Button
-              text="Log in"
-              width={formWidth}
-              height={formItemHeight}
-              backgroundColor={signUpBtnColor}
-              style={styles.signUpBtn}
-              textStyle={styles.signUpBtnText}
-              textColor={signUpBtnTextColor}
-              onPress={onLoginPressed}
-              onPressIn={() => {
-                setSignUpBtnColor('#fff')
-                setSignUpBtnTextColor('#A5A5A5')
-
-                setLoginBtnColor(theme.colors.primary)
-                setLoginBtnTextColor('#fff')
-              }}
-              onPressOut={() => {
-                setSignUpBtnColor(theme.colors.primary)
-                setSignUpBtnTextColor('#fff')
-
-                setLoginBtnColor('#fff')
-                setLoginBtnTextColor('#A5A5A5')
-              }}
-            />
-
-            {/** Separator */}
-            <Separator
-              width={formWidth}
-              text="Or"
-              lineColor="#A5A5A5"
-              textColor="#A5A5A5"
-              style={{ marginTop: 12 }}
-            />
-
-            {/* Sign up button */}
-            <Button
-              text="Sign up"
-              width={formWidth}
-              height={formItemHeight}
-              backgroundColor={loginBtnColor}
-              style={styles.loginBtn}
-              textStyle={styles.loginBtnText}
-              textColor={loginBtnTextColor}
-              onPress={() => navigation.navigate('RegisterScreen')}
-              onPressIn={() => {
-                setLoginBtnColor(theme.colors.primary)
-                setLoginBtnTextColor('#fff')
-
-                setSignUpBtnColor('#fff')
-                setSignUpBtnTextColor('#A5A5A5')
-              }}
-              onPressOut={() => {
-                setLoginBtnColor('#fff')
-                setLoginBtnTextColor('#A5A5A5')
-
-                setSignUpBtnColor(theme.colors.primary)
-                setSignUpBtnTextColor('#fff')
-              }}
-            />
-          </View>
+      <View style={styles.content}>
+        {/* Login header :  */}
+        <View style={styles.header}>
+          {isKeyboardVisible ? null : (
+            <Header style={styles.headerMessage}>Welcome{'\n'}Back!</Header>
+          )}
+          <Button
+            text="Skip"
+            width="6%"
+            height="5%"
+            style={styles.skipBtn}
+            textStyle={styles.skipBtnText}
+            textColor={isKeyboardVisible ? theme.colors.primary : '#fff'}
+            onPress={() => navigation.navigate('HomeTabs')}
+          />
         </View>
-      </Screen>
-    </Background>
+
+        <View
+          style={[
+            styles.loginFormContainer,
+            isKeyboardVisible ? { bottom: 70 } : {},
+          ]}
+        >
+          {/* Email/Phone input */}
+          <EmailPhoneField
+            width={formWidth}
+            height={formItemHeight}
+            emailPhoneFieldStyle={styles.emailPhoneFieldStyle}
+            inputFieldStyle={styles.inputFieldStyle}
+            setActiveField={setActiveField}
+            setEmail={(text) => updateFormValue(text, 'email')}
+            setPhone={(text) => updateFormValue(text, 'phone')}
+            dropDownStyle={styles.dropDownStyle}
+            dropDownContainerStyle={styles.dropDownContainerStyle}
+            dropDownTextStyle={styles.dropDownTextStyle}
+            dropDownLabelStyle={styles.dropDownLabelStyle}
+            blurOnSubmit={false}
+          />
+
+          {/* Passowrd input */}
+          <InputField
+            width={formWidth}
+            height={formItemHeight}
+            id="Password"
+            placeHolder="Password"
+            leftIcon={passwordIcon}
+            inputFieldStyle={[{ marginBottom: 7 }, styles.inputFieldStyle]}
+            text={formValues.password}
+            setText={(text) => updateFormValue(text, 'password')}
+            secureTextEntry
+            activeField={activeField}
+            setActiveField={setActiveField}
+            blurOnSubmit={true}
+          />
+
+          {/* Forgot password button */}
+          <Button
+            text="Forgot password?"
+            height={formItemHeight}
+            style={styles.forgotPasswordBtn}
+            textStyle={styles.forgotPasswordBtnText}
+            textColor={theme.colors.primary}
+            onPress={() => navigation.navigate('ResetPasswordScreen')}
+          />
+
+          {/* Log in button */}
+          <Button
+            text="Log in"
+            width={formWidth}
+            height={formItemHeight}
+            backgroundColor={signUpBtnColor}
+            style={styles.signUpBtn}
+            textStyle={styles.signUpBtnText}
+            textColor={signUpBtnTextColor}
+            onPress={onLoginPressed}
+            onPressIn={() => {
+              setSignUpBtnColor('#fff')
+              setSignUpBtnTextColor('#A5A5A5')
+
+              setLoginBtnColor(theme.colors.primary)
+              setLoginBtnTextColor('#fff')
+            }}
+            onPressOut={() => {
+              setSignUpBtnColor(theme.colors.primary)
+              setSignUpBtnTextColor('#fff')
+
+              setLoginBtnColor('#fff')
+              setLoginBtnTextColor('#A5A5A5')
+            }}
+          />
+
+          {/** Separator */}
+          <Separator
+            width={formWidth}
+            text="Or"
+            lineColor="#A5A5A5"
+            textColor="#A5A5A5"
+            style={{ marginTop: 12 }}
+          />
+
+          {/* Sign up button */}
+          <Button
+            text="Sign up"
+            width={formWidth}
+            height={formItemHeight}
+            backgroundColor={loginBtnColor}
+            style={styles.loginBtn}
+            textStyle={styles.loginBtnText}
+            textColor={loginBtnTextColor}
+            onPress={() => navigation.navigate('RegisterScreen')}
+            onPressIn={() => {
+              setLoginBtnColor(theme.colors.primary)
+              setLoginBtnTextColor('#fff')
+
+              setSignUpBtnColor('#fff')
+              setSignUpBtnTextColor('#A5A5A5')
+            }}
+            onPressOut={() => {
+              setLoginBtnColor('#fff')
+              setLoginBtnTextColor('#A5A5A5')
+
+              setSignUpBtnColor(theme.colors.primary)
+              setSignUpBtnTextColor('#fff')
+            }}
+            blurOnSubmit={false}
+          />
+        </View>
+      </View>
+    </Screen>
   )
 }
 

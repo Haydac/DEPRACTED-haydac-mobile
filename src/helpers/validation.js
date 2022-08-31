@@ -19,14 +19,15 @@ const loginValidator = (formValues) => {
  * @return {message, data} - an object conatining a message as response from the api
  * and data - as stored user data in DB
  */
-const signupValidator = async (formValues) => {
+const signupValidator = (formValues) => {
   const password = formValues.password,
-    confirmPassword = formValues.confirmPassword
-  if (passwordValidator(password) && password == confirmPassword) {
+    confirmPassword = formValues.password_confirmation
+
+  if (passwordValidator(password) && password === confirmPassword) {
     return (
-      validator.isAlpha(formValues.name) &&
+      nameValidator(formValues.fullname) &&
       (emailValidator(formValues.email) || phoneValidator(formValues.phone)) &&
-      validator.isAlphanumeric(formValues.address)
+      addressValidator(formValues.address)
     )
   }
   return false
@@ -35,6 +36,14 @@ const signupValidator = async (formValues) => {
 /**
  * Helper methods
  */
+
+const nameValidator = (fullname) => {
+  return fullname && validator.isAlpha(fullname)
+}
+
+const addressValidator = (address) => {
+  return address && validator.isAlphanumeric(address)
+}
 
 /**
  * Validates email input
@@ -63,4 +72,12 @@ const passwordValidator = (password) => {
   return password && validator.isAlphanumeric(password)
 }
 
-export { loginValidator, signupValidator }
+export {
+  loginValidator,
+  signupValidator,
+  emailValidator,
+  phoneValidator,
+  nameValidator,
+  addressValidator,
+  passwordValidator,
+}
