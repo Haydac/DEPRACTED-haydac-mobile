@@ -1,5 +1,5 @@
 import axios from 'axios'
-
+import { API_URL } from '@env'
 /**
  *
  * @param {*} formValues - object containing user data
@@ -8,10 +8,7 @@ import axios from 'axios'
  */
 const login = async (formValues) => {
   try {
-    const { data } = await axios.post(
-      'https://haydac-server.uc.r.appspot.com/user/login',
-      formValues
-    )
+    const { data } = await axios.post(`${API_URL}/user/login`, formValues)
     return data
   } catch (error) {
     throw error
@@ -26,10 +23,7 @@ const login = async (formValues) => {
  */
 const signup = async (formValues) => {
   try {
-    const { data } = await axios.post(
-      'https://haydac-server.uc.r.appspot.com/user/signup',
-      formValues
-    )
+    const { data } = await axios.post(`${API_URL}/user/signup`, formValues)
     return data
   } catch (error) {
     throw error
