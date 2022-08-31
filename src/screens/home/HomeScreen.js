@@ -13,6 +13,7 @@ import {
   BottomSheetBackdrop,
   BottomSheetScrollView,
 } from '@gorhom/bottom-sheet'
+import Checkbox from 'expo-checkbox'
 import Flag from 'react-native-flags'
 
 import Screen from '../../components/core/Screen'
