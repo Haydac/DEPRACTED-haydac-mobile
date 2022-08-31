@@ -14,14 +14,22 @@ import { theme } from '../../core/theme'
 
 import { signup } from '../../api/AuthProvider'
 import { signupValidator } from '../../helpers/validation'
+import {
+  emailValidator,
+  phoneValidator,
+  passwordValidator,
+} from '../../helpers/validation'
 
 export default function RegisterScreen({ navigation }) {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [phone, setPhone] = useState('')
-  const [address, setAddress] = useState('')
-  const [password, setPassword] = useState('')
-  const [passwordConfirm, setPasswordConfirm] = useState('')
+  const [formValues, setFormValues] = useState({
+    fullname: '',
+    email: '',
+    phone: '',
+    address: '',
+    password: '',
+    password_confirmation: '',
+  })
+  const [errors, setErrors] = useState({})
   const [activeField, setActiveField] = useState('')
 
   // button states
@@ -33,6 +41,38 @@ export default function RegisterScreen({ navigation }) {
 
   const activeIconColor = theme.colors.primary
   const inactiveIconColor = '#A5A5A5'
+
+  const validate = () => {
+    Keyboard.dismiss()
+
+    if (!emailValidator(formValues.email)) {
+      handleError('Email is not valid', 'email')
+    }
+
+    if (!phoneValidator(formValues.phone)) {
+      handleError('Phone is not valid', 'phone')
+    }
+
+    if (!passwordValidator(formValues.password)) {
+      handleError('Password is not valid', 'password')
+    }
+
+    if (!passwordValidator(formValues.password_confirmation)) {
+      handleError('Password confirmation is not valid', 'password_confirmation')
+    }
+
+    if (formValues.password !== formValues.password_confirmation) {
+      handleError('Password fields should match', 'password_confirmation')
+    }
+  }
+
+  const updateFormValue = (value, formField) => {
+    setFormValues((prevValues) => ({ ...prevValues, [formField]: value }))
+  }
+
+  const handleError = (errorMessage, formField) => {
+    setErrors((prevErrors) => ({ ...prevErrors, [formField]: errorMessage }))
+  }
 
   const nameIcon = (
     <MaterialIcons
@@ -76,19 +116,6 @@ export default function RegisterScreen({ navigation }) {
    */
   const onSignUpPressed = async () => {
     // could be email or phone
-    let formValues = {
-      fullname: name,
-      address: address,
-      password: password,
-      password_confirmation: passwordConfirm,
-    }
-
-    if (email) {
-      let emailInput = email.toLowerCase()
-      formValues.email = emailInput
-    } else if (phone) {
-      formValues.phone = phone
-    }
 
     // validate form values before sending to server
     try {
@@ -130,6 +157,8 @@ export default function RegisterScreen({ navigation }) {
   const _keyboardDidShow = () => setIsKeyBoardOpen(true)
   const _keyboardDidHide = () => setIsKeyBoardOpen(false)
 
+  console.log(formValues)
+
   return (
     <Background
       imageSource={
@@ -168,8 +197,8 @@ export default function RegisterScreen({ navigation }) {
               placeHolder="Full name"
               leftIcon={nameIcon}
               inputFieldStyle={[styles.inputFieldStyle]}
-              text={name}
-              setText={setName}
+              text={formValues.fullname}
+              setText={(text) => updateFormValue(text, 'fullname')}
               setActiveField={setActiveField}
             />
 
@@ -180,8 +209,8 @@ export default function RegisterScreen({ navigation }) {
               emailPhoneFieldStyle={styles.emailPhoneFieldStyle}
               inputFieldStyle={styles.inputFieldStyle}
               setActiveField={setActiveField}
-              setEmail={setEmail}
-              setPhone={setPhone}
+              setEmail={(text) => updateFormValue(text, 'email')}
+              setPhone={(text) => updateFormValue(text, 'phone')}
               dropDownStyle={styles.dropDownStyle}
               dropDownContainerStyle={styles.dropDownContainerStyle}
               dropDownTextStyle={styles.dropDownTextStyle}
@@ -196,8 +225,8 @@ export default function RegisterScreen({ navigation }) {
               placeHolder="Address"
               leftIcon={addressIcon}
               inputFieldStyle={[styles.inputFieldStyle]}
-              text={address}
-              setText={setAddress}
+              text={formValues.address}
+              setText={(text) => updateFormValue(text, 'address')}
               setActiveField={setActiveField}
             />
 
@@ -209,8 +238,8 @@ export default function RegisterScreen({ navigation }) {
               placeHolder="Password"
               leftIcon={passwordIcon}
               inputFieldStyle={[styles.inputFieldStyle]}
-              text={password}
-              setText={setPassword}
+              text={formValues.password}
+              setText={(text) => updateFormValue(text, 'password')}
               secureTextEntry
               setActiveField={setActiveField}
             />
@@ -223,8 +252,8 @@ export default function RegisterScreen({ navigation }) {
               placeHolder="Confirm Password"
               leftIcon={passwordConfirmIcon}
               inputFieldStyle={[styles.inputFieldStyle]}
-              text={passwordConfirm}
-              setText={setPasswordConfirm}
+              text={formValues.password_confirmation}
+              setText={(text) => updateFormValue(text, 'password_confirmation')}
               secureTextEntry
               setActiveField={setActiveField}
             />

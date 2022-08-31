@@ -1,5 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, TextInput, StyleSheet } from 'react-native'
+
+import { Feather } from '@expo/vector-icons'
+import { theme } from '../../core/theme'
 
 export default function InputField({
   id,
@@ -14,6 +17,9 @@ export default function InputField({
   secureTextEntry,
   setActiveField,
 }) {
+  const [hidePassword, setHidpassword] = useState(true)
+  const [passwordIconColor, setPasswordIconColor] = useState('#A5A5A5')
+
   return (
     <View
       style={[
@@ -29,11 +35,35 @@ export default function InputField({
         value={text}
         onChangeText={setText}
         placeholder={placeHolder}
-        secureTextEntry={secureTextEntry}
+        secureTextEntry={secureTextEntry && hidePassword}
+        keyboardType={
+          id == 'Email'
+            ? 'email-address'
+            : id == 'Phone'
+            ? 'phone-pad'
+            : 'default'
+        }
         style={[styles.textInputStyle]}
         selectionColor="#B659FF50"
-        onFocus={() => setActiveField(id)}
+        onBlur={() => {
+          setPasswordIconColor('#A5A5A5')
+          setActiveField('')
+        }}
+        onFocus={() => {
+          setPasswordIconColor(theme.colors.primary)
+          setActiveField(id)
+        }}
       />
+      {secureTextEntry ? (
+        <View style={[styles.icon, iconContainerStyle]}>
+          <Feather
+            onPress={() => setHidpassword(!hidePassword)}
+            name={hidePassword ? 'eye-off' : 'eye'}
+            color={passwordIconColor}
+            size={20}
+          />
+        </View>
+      ) : null}
     </View>
   )
 }

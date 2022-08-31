@@ -19,7 +19,7 @@ const loginValidator = (formValues) => {
  * @return {message, data} - an object conatining a message as response from the api
  * and data - as stored user data in DB
  */
-const signupValidator = async (formValues) => {
+const signupValidator = (formValues) => {
   const password = formValues.password,
     confirmPassword = formValues.password_confirmation
 
@@ -60,7 +60,7 @@ const emailValidator = (email) => {
  * @returns true if phone is valid and false otherwise
  */
 const phoneValidator = (phone) => {
-  return phone && phone && validator.isMobilePhone(phone)
+  return phone && validator.isMobilePhone(phone)
 }
 
 /**
@@ -79,4 +79,5 @@ export {
   phoneValidator,
   nameValidator,
   addressValidator,
+  passwordValidator,
 }
