@@ -8,12 +8,12 @@ import Reset from '../../assets/background/reset.svg'
 import Button from '../../components/buttons/Button'
 
 import { theme } from '../../core/theme' //provides theme/design for the componenet
+import { backgroundColor, color } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes'
 
-
-export default function ResetPasswordScreen({ navigation }) {
+export default function verificationScreen({ navigation }) {
   const [email, setEmail] = useState('')
 
-  //button states
+  
   const [loginBtnColor, setLoginBtnColor] = useState('#fff')
   const [loginBtnTextColor, setLoginBtnTextColor] = useState('white')
 
@@ -33,15 +33,11 @@ textColor={loginBtnTextColor}
 backgroundColor={loginBtnColor}
 style={styles.nextbtn}
 textStyle={styles.NextbtnText}
-onPress={() => console.log('hi')}
+onPress={() => navigation.navigate('verificationScreen.js')}
+
  />
       
 
-     <Text style={styles.instructions}>Please enter a recovery email ID/Phone.</Text> 
-     <Text style={styles.pageinstructions}>A link would be send to the email entered to activate{'\n'}
-the create a new password option.</Text>
-      <View style={styles.designsvg}><Desgin/></View>
-        <View style={styles.resetsvg}><Reset/></View>
         
 
        
@@ -76,7 +72,7 @@ const styles = StyleSheet.create({
     alignItems:'center',
     justifyContent:'center',
     width:'100%',
-    height:'60%',
+    height:'80%',
     position:'absolute',
     
   
@@ -89,7 +85,7 @@ instructions:{
   position:'absolute',
   color:'black',
   marginLeft:'20%',
-  marginTop:'90%'
+  marginTop:'104%'
 },
 //place other set of instuctions on screen 
 pageinstructions:{
@@ -98,7 +94,7 @@ pageinstructions:{
   position:'absolute',
   color:'black',
   marginLeft:'15%',
-  marginTop:'100%',
+  marginTop:'110%',
   fontSize:12
 },
 
