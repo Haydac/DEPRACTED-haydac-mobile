@@ -10,6 +10,7 @@ import {
   LoginScreen,
   RegisterScreen,
   ResetPasswordScreen,
+  VerificationScreen,
 } from '../screens/auth'
 
 import {
@@ -24,6 +25,7 @@ import {
 import { BrowseScreen } from '../screens/browse'
 import { FavoritesScreen } from '../screens/favorites'
 import { ProfileScreen } from '../screens/profile'
+
 
 import { theme } from '../core/theme'
 
@@ -41,6 +43,7 @@ export default function RootNavigator() {
           <Stack.Screen name="StartScreen" component={StartScreen} />
           <Stack.Screen name="LoginScreen" component={LoginScreen} />
           <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
+     
           <Stack.Screen
             name="ResetPasswordScreen"
             component={ResetPasswordScreen}
@@ -50,6 +53,17 @@ export default function RootNavigator() {
               headerTitleAlign: 'center',
             }}
           />
+
+<Stack.Screen
+            name="VerificationScreen"
+            component={VerificationScreen}
+            options={{
+              headerShown: true,
+              title: 'Reset password',
+              headerTitleAlign: 'center',
+            }}
+          />
+          
           <Stack.Screen name="HomeTabs" component={AppTabs} />
         </>
       )}

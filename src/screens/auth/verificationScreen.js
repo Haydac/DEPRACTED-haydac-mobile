@@ -8,9 +8,9 @@ import Reset from '../../assets/background/reset.svg'
 import Button from '../../components/buttons/Button'
 
 import { theme } from '../../core/theme' //provides theme/design for the componenet
-import { backgroundColor, color } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes'
 
-export default function verificationScreen({ navigation }) {
+
+export default function VerificationScreen({ navigation }) {
   const [email, setEmail] = useState('')
 
   
@@ -33,7 +33,7 @@ textColor={loginBtnTextColor}
 backgroundColor={loginBtnColor}
 style={styles.nextbtn}
 textStyle={styles.NextbtnText}
-onPress={() => navigation.navigate('verificationScreen.js')}
+
 
  />
       
