@@ -17,6 +17,8 @@ export default function ResetPasswordScreen({ navigation }) {
   const [loginBtnColor, setLoginBtnColor] = useState('#fff')
   const [loginBtnTextColor, setLoginBtnTextColor] = useState('white')
 
+  const formWidth = '80%'
+  const formItemHeight = 45
 
   const handleResetPassword = () => {
     // call reset API
