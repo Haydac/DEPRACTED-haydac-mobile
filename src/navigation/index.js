@@ -11,6 +11,7 @@ import {
   RegisterScreen,
   ResetPasswordScreen,
   VerificationScreen,
+  NewPasswordScreen,
 } from '../screens/auth'
 
 import {
@@ -54,15 +55,26 @@ export default function RootNavigator() {
             }}
           />
 
-<Stack.Screen
+            <Stack.Screen
             name="VerificationScreen"
             component={VerificationScreen}
             options={{
               headerShown: true,
-              title: 'Reset password',
+              title: 'Verify password',
               headerTitleAlign: 'center',
             }}
           />
+
+<Stack.Screen
+            name="NewPasswordScreen"
+            component={NewPasswordScreen}
+            options={{
+              headerShown: true,
+              title: 'NewPassword',
+              headerTitleAlign: 'center',
+            }}
+          />
+          
           
           <Stack.Screen name="HomeTabs" component={AppTabs} />
         </>
