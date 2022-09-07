@@ -12,7 +12,7 @@ import {
   MaterialCommunityIcons,
 } from '@expo/vector-icons'
 
-export default function ProfileScreen() {
+export default function ProfileScreen({ navigation }) {
   const accountItemGroups = [
     [
       {
@@ -73,7 +73,10 @@ export default function ProfileScreen() {
   ]
 
   // TODO: implement logout request
-  const logout = () => {}
+  const logout = () => {
+    // clear token/session of user in cookies
+    navigation.navigate('LoginScreen')
+  }
 
   return (
     <Screen style={styles.container}>
