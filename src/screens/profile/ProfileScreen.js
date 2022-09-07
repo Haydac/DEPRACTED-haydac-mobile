@@ -74,6 +74,7 @@ export default function ProfileScreen({ navigation }) {
 
   // TODO: implement logout request
   const logout = () => {
+    // clear jwt for user in cookies
     navigation.navigate('LoginScreen')
   }
 
