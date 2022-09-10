@@ -186,6 +186,7 @@ export default function RegisterScreen({ navigation }) {
             width={formWidth}
             height={formItemHeight}
             placeHolder="Full name"
+            placeholderTextColor="#9E9E9E"
             leftIcon={nameIcon}
             inputFieldStyle={[styles.inputFieldStyle]}
             text={formValues.fullname}
@@ -201,6 +202,7 @@ export default function RegisterScreen({ navigation }) {
             height={formItemHeight}
             id="Email"
             placeHolder="Email"
+            placeholderTextColor="#9E9E9E"
             leftIcon={emailIcon}
             inputFieldStyle={[{ marginBottom: 7 }, styles.inputFieldStyle]}
             text={formValues.email}
@@ -216,6 +218,7 @@ export default function RegisterScreen({ navigation }) {
             width={formWidth}
             height={formItemHeight}
             placeHolder="Address"
+            placeholderTextColor="#9E9E9E"
             leftIcon={addressIcon}
             inputFieldStyle={[styles.inputFieldStyle]}
             text={formValues.address}
@@ -230,6 +233,7 @@ export default function RegisterScreen({ navigation }) {
             width={formWidth}
             height={formItemHeight}
             placeHolder="Password"
+            placeholderTextColor="#9E9E9E"
             leftIcon={passwordIcon}
             inputFieldStyle={[styles.inputFieldStyle]}
             text={formValues.password}
@@ -245,6 +249,7 @@ export default function RegisterScreen({ navigation }) {
             width={formWidth}
             height={formItemHeight}
             placeHolder="Confirm Password"
+            placeholderTextColor="#9E9E9E"
             leftIcon={passwordConfirmIcon}
             inputFieldStyle={[styles.inputFieldStyle]}
             text={formValues.password_confirmation}

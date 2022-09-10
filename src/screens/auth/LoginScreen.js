@@ -144,6 +144,7 @@ export default function LoginScreen({ navigation }) {
             height={formItemHeight}
             id="Email"
             placeHolder="Email"
+            placeholderTextColor="#9E9E9E"
             leftIcon={emailIcon}
             inputFieldStyle={[{ marginBottom: 40 }, styles.inputFieldStyle]}
             text={formValues.email}
@@ -159,6 +160,7 @@ export default function LoginScreen({ navigation }) {
             height={formItemHeight}
             id="Password"
             placeHolder="Password"
+            placeholderTextColor="#9E9E9E"
             leftIcon={passwordIcon}
             inputFieldStyle={[{ marginBottom: 7 }, styles.inputFieldStyle]}
             text={formValues.password}
