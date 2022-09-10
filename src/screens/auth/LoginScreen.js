@@ -31,7 +31,7 @@ export default function LoginScreen({ navigation }) {
   const passwordIcon = (
     <MaterialIcons
       name="lock"
-      color={activeField == 'Password' ? '#BB6BD9' : '#A5A5A5'}
+      color={activeField == 'Password' ? theme.colors.primary : '#A5A5A5'}
       size={20}
     />
   )
@@ -249,7 +249,6 @@ const styles = StyleSheet.create({
     position: 'relative',
     borderBottomWidth: 1,
     borderBottomColor: '#BB6BD9',
-   
   },
   emailPhoneFieldStyle: {
     marginVertical: 50,

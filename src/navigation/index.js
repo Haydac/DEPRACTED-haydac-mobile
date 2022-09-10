@@ -27,7 +27,6 @@ import { BrowseScreen } from '../screens/browse'
 import { FavoritesScreen } from '../screens/favorites'
 import { ProfileScreen } from '../screens/profile'
 
-
 import { theme } from '../core/theme'
 
 const Stack = createNativeStackNavigator()
@@ -44,38 +43,46 @@ export default function RootNavigator() {
           <Stack.Screen name="StartScreen" component={StartScreen} />
           <Stack.Screen name="LoginScreen" component={LoginScreen} />
           <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
-     
+
           <Stack.Screen
             name="ResetPasswordScreen"
             component={ResetPasswordScreen}
             options={{
               headerShown: true,
-              title: 'Reset password',
-              headerTitleAlign: 'center',
+              title: '',
+              headerTintColor: theme.colors.primary,
+              headerShadowVisible: false,
+              headerBackTitle: 'login',
+              headerBackTitleVisible: true,
             }}
           />
 
-            <Stack.Screen
+          <Stack.Screen
             name="VerificationScreen"
             component={VerificationScreen}
             options={{
               headerShown: true,
-              title: 'Verify password',
-              headerTitleAlign: 'center',
+              title: '',
+              headerTintColor: theme.colors.primary,
+              headerShadowVisible: false,
+              headerBackTitle: 'email',
+              headerBackTitleVisible: true,
             }}
           />
 
-<Stack.Screen
+          <Stack.Screen
             name="NewPasswordScreen"
             component={NewPasswordScreen}
             options={{
               headerShown: true,
-              title: 'NewPassword',
-              headerTitleAlign: 'center',
+              title: '',
+              headerTintColor: theme.colors.primary,
+              headerShadowVisible: false,
+              headerBackTitle: 'verification',
+              headerBackTitleVisible: true,
             }}
           />
-          
-          
+
           <Stack.Screen name="HomeTabs" component={AppTabs} />
         </>
       )}

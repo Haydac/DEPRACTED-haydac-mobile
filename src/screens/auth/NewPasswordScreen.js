@@ -1,42 +1,30 @@
 import React, { useState } from 'react'
-import { Text, StyleSheet,View, } from 'react-native'
-import Verifyicon from '../../components/core/verifyicon'
-import Designicon from '../../components/core/Designicon'
-import Padlock from '../../components/core/padlock'
+import { Text, StyleSheet } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 
 import Screen from '../../components/core/Screen'
 import InputField from '../../components/forms/InputField'
 import Button from '../../components/buttons/Button'
-
+import LockIcon from '../../components/core/LockIcon'
+import DesignIcon from '../../components/core/DesignIcon'
 
 import { theme } from '../../core/theme' //provides theme/design for the componenet
 
-
 export default function NewPasswordScreen({ navigation }) {
   const [password, setPassword] = useState('')
-  const [activeField, setActiveField] = useState('')
   const [passwordConfirm, setPasswordConfirm] = useState('')
-  
-
-  //button states
-  const [loginBtnColor, setLoginBtnColor] = useState('#fff')
-  const [loginBtnTextColor, setLoginBtnTextColor] = useState('white')
-  const formWidth = '75%'
-  const formItemHeight = 45
+  const [activeField, setActiveField] = useState('')
 
   const activeIconColor = theme.colors.primary
   const inactiveIconColor = '#A5A5A5'
 
-
   const passwordIcon = (
     <MaterialIcons
       name="lock"
-      color={activeField == 'Password' ? '#BB6BD9' : '#A5A5A5'}
+      color={activeField == 'Password' ? activeIconColor : inactiveIconColor}
       size={20}
     />
   )
-
 
   const passwordConfirmIcon = (
     <MaterialIcons
@@ -47,217 +35,119 @@ export default function NewPasswordScreen({ navigation }) {
       size={20}
     />
   )
- 
 
   const handleResetPassword = () => {
     // call reset API
+    navigation.navigate('LoginScreen')
   }
 
   return (
-    
     <Screen style={styles.container}>
+      <LockIcon style={styles.locksvg} />
 
+      <Text style={styles.instructions}>
+        Please enter your verification code
+      </Text>
 
+      <Text style={styles.pageinstructions}>
+        A verification code has been sent to your email{'\n'}
+        please enter it below
+      </Text>
 
+      <InputField
+        width={'80%'}
+        height={45}
+        id="Password"
+        placeHolder="New password"
+        placeholderTextColor="#C2C2C2"
+        leftIcon={passwordIcon}
+        inputFieldStyle={[{ marginBottom: 7 }, styles.inputFieldStyle]}
+        text={password}
+        setText={setPassword}
+        secureTextEntry
+        activeField={activeField}
+        setActiveField={setActiveField}
+      />
 
+      <InputField
+        id="PasswordConfirm"
+        placeholderTextColor="#C2C2C2"
+        width={'80%'}
+        height={45}
+        placeHolder="Confirm Password"
+        leftIcon={passwordIcon}
+        inputFieldStyle={[styles.inputFieldStyle, { marginTop: '5%' }]}
+        text={passwordConfirm}
+        setText={setPasswordConfirm}
+        secureTextEntry
+        setActiveField={setActiveField}
+      />
 
+      <Button
+        text="Submit"
+        width={'50%'}
+        height={45}
+        borderRadius={15}
+        backgroundColor={theme.colors.primary}
+        style={[styles.nextbtn, { zIndex: 1 }]}
+        textStyle={styles.nextBtnText}
+        textColor={'#fff'}
+        onPress={() => handleResetPassword()}
+      />
 
- <View style={styles.resetsvg}>
-    <Padlock/>
-    </View>
-
-          
-
-       
-
- <View  style={styles.iconsvg}>
-    <Designicon/> 
-    </View>
-
-
- 
-  
-     <Text style={styles.instructions}>Please enter your new passord</Text> 
-     <Text style={styles.pageinstructions}>Make sure it is not the same as your old passowrd</Text>
-
-
-<View style={styles.passwordbox}>
-<View>
-<InputField
-              width={formWidth}
-              height={formItemHeight}
-              id="Password"
-              placeHolder="Password"
-              placeholderTextColor="#C2C2C2"
-              leftIcon={passwordIcon}
-              inputFieldStyle={styles.inputFieldStyle1}
-              text={password}
-              setText={setPassword}
-              secureTextEntry
-              activeField={activeField}
-              setActiveField={setActiveField}
-            />
-
-
-<InputField
-              width={formWidth}
-              height={formItemHeight}
-              id="PasswordConfirm"
-              placeHolder="Confirm Password"
-              placeholderTextColor="#C2C2C2"
-              leftIcon={passwordConfirmIcon}
-              inputFieldStyle={styles.inputFieldStyle2}
-              text={passwordConfirm}
-              setText={setPasswordConfirm}
-              secureTextEntry
-              activeField={activeField}
-              setActiveField={setActiveField}
-            />
-            </View>
-
-
-
-</View>
-
-
-
-<View>
-<Button
-text="Submit"
-textColor={loginBtnTextColor}
-backgroundColor={loginBtnColor}
-style={styles.nextbtn}
-textStyle={styles.NextbtnText}
-onPress={() => navigation.navigate('LoginScreen')}
- />
- </View>
-        
-
-       
-
+      <DesignIcon style={styles.iconsvg} />
     </Screen>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
-    
-    
+    backgroundColor: '#fff',
   },
-
-
   //place the svg at the bottom right of the screen
- iconsvg:{
-   marginTop:'160.4%',
-   marginLeft:'65.5%',
-   position:'absolute'
-
- },
-
-
-//display the icon for this page in the center 
-  resetsvg:{
-   marginTop:'12.74%',
-   marginLeft:'25%',
-   justifyContent:'center',
-   position:'absolute',
-   alignItems:'center',
-   textAlign:'center'
-  
+  iconsvg: {
+    position: 'absolute',
+    right: 0,
+    bottom: 0,
   },
-//place text on screen
-instructions:{
-  textAlign:'center',
-  alignItems:'center',
-  justifyContent:'center',
-  position:'absolute',
-  color:'black',
-  marginLeft:'20%',
-  marginTop:'75%'
-},
-//place other set of instuctions on screen 
-pageinstructions:{
-  textAlign:'center',
-  justifyContent:'center',
-  position:'absolute',
-  color:'black',
-  marginLeft:'15%',
-  marginTop:'80%',
-  fontSize:12
-},
-
-passwordbox:{
-  
-  width:'100%',
-  height:45,
-  marginLeft:'30%',
-  marginTop:'120%',
-  position: 'relative'
-   
-},
-
-
-//place and design the button 
-nextbtn:{
-  marginTop:40,
-  borderRadius:7,
-  borderWidth: 1,
-  borderColor: theme.colors.primary,
-  position:'absolute',
-  marginLeft:'24%',
-  height:45,
-  width:'50.62%',
-  backgroundColor:'#BB6BD9'
-  
-
-},
-//text for the button 
-NextbtnText: {
-  fontWeight: 'bold',
-  fontSize: 15,
-  lineHeight: 26,
-  
-},
-
-// START OF DROP DOWN MENU DESIGN 
-dropDownContainerStyle: {
-  width: 60,
-  height: 28,
-  marginTop: -4,
-  alignSelf: 'flex-start',
-  marginLeft:'-20%'
-},
-
-
-dropDownLabelStyle: {
-  color: '#fff',
-},
-  
-
-
-dropDownTextStyle: {
-  color: '#fff',
-},
-
-//the line for the input
-inputFieldStyle1: {
-  position: 'relative',
-  borderBottomWidth: 1,
-  borderBottomColor: '#BB6BD9', 
-  marginLeft:'-20%',
-  bottom:'8%',
-  marginTop:'-17%'
- 
-},
-
-inputFieldStyle2: {
-    position: 'relative',
+  //display the icon for this page in the center
+  locksvg: {
+    alignSelf: 'center',
+  },
+  //place text on screen
+  instructions: {
+    marginTop: '7%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+    color: '#000',
+  },
+  //place other set of instuctions on screen
+  pageinstructions: {
+    marginTop: '7%',
+    justifyContent: 'center',
+    textAlign: 'center',
+    fontSize: 12,
+    color: '#858585',
+  },
+  //place and design the button
+  nextbtn: {
+    marginTop: '10%',
+    alignSelf: 'center',
+    borderWidth: 1,
+    borderColor: theme.colors.primary,
+  },
+  //text for the button
+  nextBtnText: {
+    fontWeight: 'bold',
+    fontSize: 15,
+    lineHeight: 26,
+  },
+  //the line for the input
+  inputFieldStyle: {
+    marginTop: '10%',
+    alignSelf: 'center',
     borderBottomWidth: 1,
-    borderBottomColor: '#BB6BD9', 
-    marginLeft:'-20%',
-    bottom:'8%',
-    marginTop:'8%'
-   
+    borderBottomColor: '#BB6BD9',
   },
 })

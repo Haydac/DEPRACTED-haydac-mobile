@@ -1,217 +1,118 @@
 import React, { useState } from 'react'
-import { Text, StyleSheet,View, } from 'react-native'
-import Resertlogo from '../../components/core/Resertlogo'
-import Designicon from '../../components/core/Designicon'
-import EmailPhoneField from '../../components/forms/EmailPhoneField'
-import {Dimensions, StatusBar} from 'react-native'; 
-
+import { Text, StyleSheet } from 'react-native'
+import { MaterialIcons } from '@expo/vector-icons'
 
 import Screen from '../../components/core/Screen'
 import InputField from '../../components/forms/InputField'
 import Button from '../../components/buttons/Button'
-
+import ResetIcon from '../../components/core/ResetIcon'
+import DesignIcon from '../../components/core/DesignIcon'
 
 import { theme } from '../../core/theme' //provides theme/design for the componenet
 
-const SCREEN_HEIGHT = Dimensions.get('screen').height; // device height
-const STATUS_BAR_HEIGHT = StatusBar.currentHeight || 24; 
-const WINDOW_HEIGHT = Dimensions.get('window').height;
-
 export default function ResetPasswordScreen({ navigation }) {
   const [email, setEmail] = useState('')
-  const [phone, setPhone] = useState('')
-  const [password, setPassword] = useState('')
   const [activeField, setActiveField] = useState('')
 
-  //button states
-  const [loginBtnColor, setLoginBtnColor] = useState('#fff')
-  const [loginBtnTextColor, setLoginBtnTextColor] = useState('white')
-  const formWidth = '100%'
-  const formItemHeight = 45
-
- 
-
-  const handleResetPassword = () => {
-    // call reset API
-  }
+  const emailIcon = (
+    <MaterialIcons
+      name="email"
+      color={activeField == 'Email' ? theme.colors.primary : '#A5A5A5'}
+      size={20}
+    />
+  )
 
   return (
-    
     <Screen style={styles.container}>
+      <ResetIcon style={styles.resetsvg} />
 
+      <Text style={styles.instructions}>Please enter your recovery email</Text>
 
+      <Text style={styles.pageinstructions}>
+        A link would be send to the email entered to activate{'\n'}
+        the create a new password option
+      </Text>
 
+      <InputField
+        width={'80%'}
+        height={45}
+        id="Email"
+        placeHolder="Email"
+        placeholderTextColor="#C2C2C2"
+        leftIcon={emailIcon}
+        inputFieldStyle={[{ marginBottom: 7 }, styles.inputFieldStyle]}
+        text={email}
+        setText={setEmail}
+        secureTextEntry
+        activeField={activeField}
+        setActiveField={setActiveField}
+      />
+      <Button
+        text="Next"
+        width={'50%'}
+        height={45}
+        borderRadius={15}
+        backgroundColor={theme.colors.primary}
+        style={styles.nextbtn}
+        textStyle={styles.nextBtnText}
+        textColor={'#fff'}
+        onPress={() => navigation.navigate('VerificationScreen')}
+      />
 
-
-
- <View style={styles.resetsvg}>
-    <Resertlogo/>
-    </View>
-
-          
-
-       
-
- <View  style={styles.iconsvg}>
-    <Designicon/> 
-    </View>
-
-
- 
-  
-     <Text style={styles.instructions}>Please enter a recovery email ID/Phones.</Text> 
-     <Text style={styles.pageinstructions}>A link would be send to the email entered to activate{'\n'}
-the create a new password option.</Text>
-
-
-<View style={styles.recoveryemail}>
-
-<EmailPhoneField
-              width={formWidth}
-              height={formItemHeight}
-              emailPhoneFieldStyle={styles.emailPhoneFieldStyle}
-              inputFieldStyle={styles.inputFieldStyle}
-              setActiveField={setActiveField}
-              dropDownStyle={styles.dropDownStyle}
-              dropDownContainerStyle={styles.dropDownContainerStyle}
-              dropDownTextStyle={styles.dropDownTextStyle}
-             dropDownLabelStyle={styles.dropDownLabelStyle}
-            />
-
-
-</View>
-
-
-
-<View>
-<Button
-text="next"
-textColor={loginBtnTextColor}
-backgroundColor={loginBtnColor}
-style={styles.nextbtn}
-textStyle={styles.NextbtnText}
-onPress={() => navigation.navigate('VerificationScreen')}
- />
- </View>
-        
-
-       
-
+      <DesignIcon style={styles.iconsvg} />
     </Screen>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
-    
-    
+    backgroundColor: '#fff',
   },
-
-
   //place the svg at the bottom right of the screen
- iconsvg:{
-   position:'absolute',
-   right:0,
-   bottom:SCREEN_HEIGHT-WINDOW_HEIGHT-STATUS_BAR_HEIGHT-10,
-
- },
-
-
-//display the icon for this page in the center 
-  resetsvg:{
-   marginTop:'30%',
-   marginLeft:'25%',
-   justifyContent:'center',
-   position:'absolute',
-   alignItems:'center',
-   textAlign:'center'
-  
+  iconsvg: {
+    position: 'absolute',
+    right: 0,
+    bottom: 0,
   },
-//place text on screen
-instructions:{
-  textAlign:'center',
-  alignItems:'center',
-  justifyContent:'center',
-  position:'absolute',
-  color:'black',
-  marginLeft:'20%',
-  marginTop:'90%'
-},
-//place other set of instuctions on screen 
-pageinstructions:{
-  textAlign:'center',
-  justifyContent:'center',
-  position:'absolute',
-  color:'black',
-  marginLeft:'15%',
-  marginTop:'100%',
-  fontSize:12
-},
-
-recoveryemail:{
-  
-  width:'100%',
-  height:45,
-  marginLeft:'30%',
-  marginTop:'120%',
-  position: 'relative'
-   
-},
-
-
-//place and design the button 
-nextbtn:{
-  marginTop:45,
-  borderRadius:7,
-  borderWidth: 1,
-  borderColor: theme.colors.primary,
-  position:'absolute',
-  marginLeft:'24%',
-  height:45,
-  width:'50.62%',
-  backgroundColor:'#BB6BD9'
-  
-
-},
-//text for the button 
-NextbtnText: {
-  fontWeight: 'bold',
-  fontSize: 15,
-  lineHeight: 26,
-  
-},
-
-// START OF DROP DOWN MENU DESIGN 
-dropDownContainerStyle: {
-  width: 60,
-  height: 28,
-  marginTop: -4,
-  alignSelf: 'flex-start',
-  marginLeft:'-20%'
-},
-
-
-dropDownLabelStyle: {
-  color: '#fff',
-},
-  
-
-
-dropDownTextStyle: {
-  color: '#fff',
-},
-
-//the line for the input
-inputFieldStyle: {
-  position: 'relative',
-  borderBottomWidth: 1,
-  borderBottomColor: '#BB6BD9', 
-  marginRight:'40%'
-
-},
-dropDownStyle: {
-  borderColor: theme.colors.primary,
-    //END OF DROP DOWN MENU DESIGN 
-},
+  //display the icon for this page in the center
+  resetsvg: {
+    marginTop: '10%',
+    alignSelf: 'center',
+  },
+  //place text on screen
+  instructions: {
+    marginTop: '10%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+    color: '#000',
+  },
+  //place other set of instuctions on screen
+  pageinstructions: {
+    marginTop: '7%',
+    justifyContent: 'center',
+    textAlign: 'center',
+    fontSize: 12,
+    color: '#858585',
+  },
+  //place and design the button
+  nextbtn: {
+    marginTop: '15%',
+    alignSelf: 'center',
+    borderWidth: 1,
+    borderColor: theme.colors.primary,
+  },
+  //text for the button
+  nextBtnText: {
+    fontWeight: 'bold',
+    fontSize: 15,
+    lineHeight: 26,
+  },
+  //the line for the input
+  inputFieldStyle: {
+    marginTop: '10%',
+    alignSelf: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: '#BB6BD9',
+  },
 })

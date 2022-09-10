@@ -1,220 +1,121 @@
 import React, { useState } from 'react'
-import { Text, StyleSheet,View,Platform} from 'react-native'
-import Verifyicon from '../../components/core/verifyicon'
-import Designicon from '../../components/core/Designicon'
-import { MaterialIcons } from '@expo/vector-icons'
-
+import { Text, StyleSheet } from 'react-native'
+import { Foundation } from '@expo/vector-icons'
 
 import Screen from '../../components/core/Screen'
 import InputField from '../../components/forms/InputField'
 import Button from '../../components/buttons/Button'
+import VerifiyIcon from '../../components/core/VerifiyIcon'
+import DesignIcon from '../../components/core/DesignIcon'
+
 import { theme } from '../../core/theme' //provides theme/design for the componenet
+
 export default function VerificationScreen({ navigation }) {
-    const [text, setText] = useState('')
+  const [email, setEmail] = useState('')
   const [activeField, setActiveField] = useState('')
 
-  //button states
-  const [loginBtnColor, setLoginBtnColor] = useState('#fff')
-  const [loginBtnTextColor, setLoginBtnTextColor] = useState('white')
-  const formWidth = '75%'
-  const formItemHeight = 45
-
- 
-  const KeyIcon = (
-    <MaterialIcons
+  const keyIcon = (
+    <Foundation
       name="key"
-      color={activeField == 'Password' ? '#BB6BD9' : '#A5A5A5'}
+      color={activeField == 'Code' ? theme.colors.primary : '#A5A5A5'}
       size={20}
     />
   )
 
-
   return (
-    
     <Screen style={styles.container}>
+      <VerifiyIcon style={styles.verifiysvg} />
 
+      <Text style={styles.instructions}>
+        Please enter your verification code
+      </Text>
 
+      <Text style={styles.pageinstructions}>
+        A verification code has been sent to your email{'\n'}
+        please enter it below
+      </Text>
 
+      <InputField
+        width={'80%'}
+        height={45}
+        id="Code"
+        placeHolder="Verification code"
+        placeholderTextColor="#C2C2C2"
+        leftIcon={keyIcon}
+        inputFieldStyle={[{ marginBottom: 7 }, styles.inputFieldStyle]}
+        text={email}
+        setText={setEmail}
+        secureTextEntry
+        activeField={activeField}
+        setActiveField={setActiveField}
+      />
 
+      <Button
+        text="Next"
+        width={'50%'}
+        height={45}
+        borderRadius={15}
+        backgroundColor={theme.colors.primary}
+        style={styles.nextbtn}
+        textStyle={styles.nextBtnText}
+        textColor={'#fff'}
+        onPress={() => navigation.navigate('NewPasswordScreen')}
+      />
 
-
- <View style={styles.resetsvg}>
-    <Verifyicon/>
-    </View>
-
-          
-
-       
-
- <View  style={styles.iconsvg}>
-    <Designicon/> 
-    </View>
-
-
- 
-  
-     <Text style={styles.instructions}>Please enter your verification code.</Text> 
-     <Text style={styles.pageinstructions}>A verification code has been sent to your email adress{'\n'}
-please enter it below</Text>
-
-
-<View style={styles.recoveryemail}>
-
-<InputField
-              width={formWidth}
-              height={formItemHeight}
-              placeHolder="Verivication code"
-              placeholderTextColor="#C2C2C2"
-              leftIcon={KeyIcon}
-              inputFieldStyle={styles.inputFieldStyle1}
-              text={text}
-              setText={setText}
-              activeField={activeField}
-              setActiveField={setActiveField}
-            />
-
-</View>
-
-
-
-<View>
-<Button
-text="next"
-textColor={loginBtnTextColor}
-backgroundColor={loginBtnColor}
-style={styles.nextbtn}
-textStyle={styles.NextbtnText}
-onPress={() => navigation.navigate('NewPasswordScreen')}
- />
- </View>
-        
-
-       
-
+      <DesignIcon style={styles.iconsvg} />
     </Screen>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
-    
-    
+    backgroundColor: '#fff',
   },
-
-
   //place the svg at the bottom right of the screen
- iconsvg:{
-   marginTop:'160.4%',
-   marginLeft:'65.5%',
-   position:'absolute'
-
- },
-
-
-//display the icon for this page in the center 
-  resetsvg:{
-   marginTop:'15%',
-   marginLeft:'25%',
-   justifyContent:'center',
-   position:'absolute',
-   alignItems:'center',
-   textAlign:'center'
-  
+  iconsvg: {
+    position: 'absolute',
+    right: 0,
+    bottom: 0,
   },
-//place text on screen
-instructions:{
-  textAlign:'center',
-  alignItems:'center',
-  justifyContent:'center',
-  position:'absolute',
-  color:'black',
-  marginLeft:'20%',
-  marginTop:'73%'
-},
-//place other set of instuctions on screen 
-pageinstructions:{
-  textAlign:'center',
-  justifyContent:'center',
-  position:'absolute',
-  color:'black',
-  marginLeft:'15%',
-  marginTop:'85%',
-  fontSize:12
-},
-
-recoveryemail:{
-  
-  width:'100%',
-  height:45,
-  marginLeft:'30%',
-  marginTop:'105%',
-  position: 'relative'
-   
-},
-
-
-//place and design the button 
-nextbtn:{
-  marginTop:80,
-  borderRadius:7,
-  borderWidth: 1,
-  borderColor: theme.colors.primary,
-  position:'absolute',
-  marginLeft:'24%',
-  height:45,
-  width:'50.62%',
-  backgroundColor:'#BB6BD9'
-  
-
-},
-//text for the button 
-NextbtnText: {
-  fontWeight: 'bold',
-  fontSize: 15,
-  lineHeight: 26,
-  
-},
-
-// START OF DROP DOWN MENU DESIGN 
-dropDownContainerStyle: {
-  width: 60,
-  height: 28,
-  marginTop: -4,
-  alignSelf: 'flex-start',
-  marginLeft:'-20%'
-},
-
-
-dropDownLabelStyle: {
-  color: '#fff',
-},
-  
-
-
-dropDownTextStyle: {
-  color: '#fff',
-},
-
-//the line for the input
-inputFieldStyle: {
-  position: 'relative',
-  borderBottomWidth: 1,
-  borderBottomColor: '#BB6BD9', 
-  marginRight:'40%'
-
-},
-dropDownStyle: {
-  borderColor: theme.colors.primary,
-    //END OF DROP DOWN MENU DESIGN 
-},
-inputFieldStyle1: {
-    position: 'relative',
+  //display the icon for this page in the center
+  verifiysvg: {
+    marginTop: '10%',
+    alignSelf: 'center',
+  },
+  //place text on screen
+  instructions: {
+    marginTop: '10%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+    color: '#000',
+  },
+  //place other set of instuctions on screen
+  pageinstructions: {
+    marginTop: '7%',
+    justifyContent: 'center',
+    textAlign: 'center',
+    fontSize: 12,
+    color: '#858585',
+  },
+  //place and design the button
+  nextbtn: {
+    marginTop: '15%',
+    alignSelf: 'center',
+    borderWidth: 1,
+    borderColor: theme.colors.primary,
+  },
+  //text for the button
+  nextBtnText: {
+    fontWeight: 'bold',
+    fontSize: 15,
+    lineHeight: 26,
+  },
+  //the line for the input
+  inputFieldStyle: {
+    marginTop: '10%',
+    alignSelf: 'center',
     borderBottomWidth: 1,
-    borderBottomColor: '#BB6BD9', 
-    marginLeft:'-20%',
-    bottom:'8%',
-    
-   
+    borderBottomColor: '#BB6BD9',
   },
 })

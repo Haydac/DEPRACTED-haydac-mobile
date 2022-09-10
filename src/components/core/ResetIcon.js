@@ -9,11 +9,10 @@ import Svg, {
   Rect,
   LinearGradient,
 } from 'react-native-svg'
-export default function Resertlogo({}) {
+export default function ResetIcon({ style }) {
   return (
-    <View>
+    <View style={[style]}>
       <Svg
-        style={[styles.logo]}
         width="183"
         height="183"
         viewBox="0 0 183 183"
@@ -39,23 +38,11 @@ export default function Resertlogo({}) {
             <Stop stopColor="#8BB5FE" />
             <Stop offset="1" stopColor="#DBA3FE" />
           </LinearGradient>
-          <LinearGradient
-            id="grad02"
-            x1="0%"
-             y1="0%"
-              x2="0%" 
-              y2="100%"
-          >
+          <LinearGradient id="grad02" x1="0%" y1="0%" x2="0%" y2="100%">
             <Stop stopColor="#1C60FC" />
             <Stop offset="1" stopColor="#AD2BFD" />
           </LinearGradient>
-          <LinearGradient
-            id="grad03"
-            x1="0%"
-             y1="0%"
-              x2="0%" 
-              y2="100%"
-          >
+          <LinearGradient id="grad03" x1="0%" y1="0%" x2="0%" y2="100%">
             <Stop stopColor="#1C60FC" />
             <Stop offset="1" stopColor="#AD2BFD" />
           </LinearGradient>
@@ -67,4 +54,5 @@ export default function Resertlogo({}) {
     </View>
   )
 }
+
 const styles = StyleSheet.create({})

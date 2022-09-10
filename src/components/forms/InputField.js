@@ -35,6 +35,7 @@ export default function InputField({
         style={[styles.textInputStyle]}
         selectionColor="#B659FF50"
         onFocus={() => setActiveField(id)}
+        onBlur={() => setActiveField('')}
       />
     </View>
   )
