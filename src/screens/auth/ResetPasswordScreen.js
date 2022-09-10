@@ -43,7 +43,6 @@ export default function ResetPasswordScreen({ navigation }) {
         inputFieldStyle={[{ marginBottom: 7 }, styles.inputFieldStyle]}
         text={email}
         setText={setEmail}
-        secureTextEntry
         activeField={activeField}
         setActiveField={setActiveField}
       />

@@ -45,7 +45,6 @@ export default function VerificationScreen({ navigation }) {
         inputFieldStyle={[{ marginBottom: 7 }, styles.inputFieldStyle]}
         text={email}
         setText={setEmail}
-        secureTextEntry
         activeField={activeField}
         setActiveField={setActiveField}
       />

@@ -75,7 +75,7 @@ export default function NewPasswordScreen({ navigation }) {
         width={'80%'}
         height={45}
         placeHolder="Confirm Password"
-        leftIcon={passwordIcon}
+        leftIcon={passwordConfirmIcon}
         inputFieldStyle={[styles.inputFieldStyle, { marginTop: '5%' }]}
         text={passwordConfirm}
         setText={setPasswordConfirm}
