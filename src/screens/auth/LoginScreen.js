@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { StyleSheet, View, Keyboard, ScrollView } from 'react-native'
+import { StyleSheet, View, Keyboard } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 
 import Screen from '../../components/core/Screen'
@@ -7,17 +7,19 @@ import Header from '../../components/text/Header'
 import Button from '../../components/buttons/Button'
 import InputField from '../../components/forms/InputField'
 import Separator from '../../components/Separator'
-import EmailPhoneField from '../../components/forms/EmailPhoneField'
 
 import { theme } from '../../core/theme'
 
 import { login } from '../../api/AuthProvider'
-import { loginValidator } from '../../helpers/validation'
+import {
+  loginValidator,
+  emailValidator,
+  passwordValidator,
+} from '../../helpers/validation'
 
 export default function LoginScreen({ navigation }) {
   const [formValues, setFormValues] = useState({
     email: '',
-    phone: '',
     password: '',
   })
   const [errors, setErrors] = useState({})
@@ -30,10 +32,21 @@ export default function LoginScreen({ navigation }) {
   const [loginBtnColor, setLoginBtnColor] = useState('#fff')
   const [loginBtnTextColor, setLoginBtnTextColor] = useState('#A5A5A5')
 
+  const activeIconColor = theme.colors.primary
+  const inactiveIconColor = '#A5A5A5'
+
+  const emailIcon = (
+    <MaterialIcons
+      name="email"
+      color={activeField == 'Email' ? activeIconColor : inactiveIconColor}
+      size={17}
+    />
+  )
+
   const passwordIcon = (
     <MaterialIcons
       name="lock"
-      color={activeField == 'Password' ? theme.colors.primary : '#A5A5A5'}
+      color={activeField == 'Password' ? activeIconColor : inactiveIconColor}
       size={20}
     />
   )
@@ -54,10 +67,6 @@ export default function LoginScreen({ navigation }) {
 
     if (!emailValidator(formValues.email)) {
       handleError('Email is not valid', 'email')
-    }
-
-    if (!phoneValidator(formValues.phone)) {
-      handleError('Phone is not valid', 'phone')
     }
 
     if (!passwordValidator(formValues.password)) {
@@ -129,20 +138,19 @@ export default function LoginScreen({ navigation }) {
             isKeyboardVisible ? { bottom: 70 } : {},
           ]}
         >
-          {/* Email/Phone input */}
-          <EmailPhoneField
+          {/* Email input */}
+          <InputField
             width={formWidth}
             height={formItemHeight}
-            emailPhoneFieldStyle={styles.emailPhoneFieldStyle}
-            inputFieldStyle={styles.inputFieldStyle}
+            id="Email"
+            placeHolder="Email"
+            leftIcon={emailIcon}
+            inputFieldStyle={[{ marginBottom: 40 }, styles.inputFieldStyle]}
+            text={formValues.email}
+            setText={(text) => updateFormValue(text, 'email')}
+            activeField={activeField}
             setActiveField={setActiveField}
-            setEmail={(text) => updateFormValue(text, 'email')}
-            setPhone={(text) => updateFormValue(text, 'phone')}
-            dropDownStyle={styles.dropDownStyle}
-            dropDownContainerStyle={styles.dropDownContainerStyle}
-            dropDownTextStyle={styles.dropDownTextStyle}
-            dropDownLabelStyle={styles.dropDownLabelStyle}
-            blurOnSubmit={false}
+            blurOnSubmit={true}
           />
 
           {/* Passowrd input */}

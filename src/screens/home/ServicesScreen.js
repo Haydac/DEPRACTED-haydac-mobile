@@ -41,7 +41,7 @@ export default function ServicesScreen({ navigation }) {
             style={styles.activityIndicator}
           />
         )}
-        <BusinessItem businessData={businessData} />
+        <BusinessItem businessData={businessData} navigation={navigation} />
       </ScrollView>
     </Screen>
   )
