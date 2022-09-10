@@ -7,23 +7,17 @@ import Header from '../../components/text/Header'
 import Button from '../../components/buttons/Button'
 import InputField from '../../components/forms/InputField'
 import Separator from '../../components/Separator'
-import EmailPhoneField from '../../components/forms/EmailPhoneField'
 
 import { theme } from '../../core/theme'
 
 import { signup } from '../../api/AuthProvider'
 import { signupValidator } from '../../helpers/validation'
-import {
-  emailValidator,
-  phoneValidator,
-  passwordValidator,
-} from '../../helpers/validation'
+import { emailValidator, passwordValidator } from '../../helpers/validation'
 
 export default function RegisterScreen({ navigation }) {
   const [formValues, setFormValues] = useState({
     fullname: '',
     email: '',
-    phone: '',
     address: '',
     password: '',
     password_confirmation: '',
@@ -46,6 +40,14 @@ export default function RegisterScreen({ navigation }) {
       name="person"
       color={activeField == 'Name' ? activeIconColor : inactiveIconColor}
       size={20}
+    />
+  )
+
+  const emailIcon = (
+    <MaterialIcons
+      name="email"
+      color={activeField == 'Email' ? activeIconColor : inactiveIconColor}
+      size={17}
     />
   )
 
@@ -91,10 +93,6 @@ export default function RegisterScreen({ navigation }) {
 
     if (!emailValidator(formValues.email)) {
       handleError('Email is not valid', 'email')
-    }
-
-    if (!phoneValidator(formValues.phone)) {
-      handleError('Phone is not valid', 'phone')
     }
 
     if (!passwordValidator(formValues.password)) {
@@ -197,20 +195,19 @@ export default function RegisterScreen({ navigation }) {
             blurOnSubmit={false}
           />
 
-          {/* Email/Phone input */}
-          <EmailPhoneField
+          {/* Email input */}
+          <InputField
             width={formWidth}
             height={formItemHeight}
-            emailPhoneFieldStyle={styles.emailPhoneFieldStyle}
-            inputFieldStyle={styles.inputFieldStyle}
+            id="Email"
+            placeHolder="Email"
+            leftIcon={emailIcon}
+            inputFieldStyle={[{ marginBottom: 7 }, styles.inputFieldStyle]}
+            text={formValues.email}
+            setText={(text) => updateFormValue(text, 'email')}
+            activeField={activeField}
             setActiveField={setActiveField}
-            setEmail={(text) => updateFormValue(text, 'email')}
-            setPhone={(text) => updateFormValue(text, 'phone')}
-            dropDownStyle={styles.dropDownStyle}
-            dropDownContainerStyle={styles.dropDownContainerStyle}
-            dropDownTextStyle={styles.dropDownTextStyle}
-            dropDownLabelStyle={styles.dropDownLabelStyle}
-            blurOnSubmit={false}
+            blurOnSubmit={true}
           />
 
           {/* Address input */}
