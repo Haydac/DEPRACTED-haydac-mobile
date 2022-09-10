@@ -1,51 +1,54 @@
 import React, { useState } from 'react'
 import { Text, StyleSheet } from 'react-native'
-import { MaterialIcons } from '@expo/vector-icons'
+import { Foundation } from '@expo/vector-icons'
 
 import Screen from '../../components/core/Screen'
 import InputField from '../../components/forms/InputField'
 import Button from '../../components/buttons/Button'
-import ResetIcon from '../../components/core/ResetIcon'
+import VerifiyIcon from '../../components/core/VerifiyIcon'
 import DesignIcon from '../../components/core/DesignIcon'
 
 import { theme } from '../../core/theme' //provides theme/design for the componenet
 
-export default function ResetPasswordScreen({ navigation }) {
+export default function VerificationScreen({ navigation }) {
   const [email, setEmail] = useState('')
   const [activeField, setActiveField] = useState('')
 
-  const emailIcon = (
-    <MaterialIcons
-      name="email"
-      color={activeField == 'Email' ? theme.colors.primary : '#A5A5A5'}
+  const keyIcon = (
+    <Foundation
+      name="key"
+      color={activeField == 'Code' ? theme.colors.primary : '#A5A5A5'}
       size={20}
     />
   )
 
   return (
     <Screen style={styles.container}>
-      <ResetIcon style={styles.resetsvg} />
+      <VerifiyIcon style={styles.verifiysvg} />
 
-      <Text style={styles.instructions}>Please enter your recovery email</Text>
+      <Text style={styles.instructions}>
+        Please enter your verification code
+      </Text>
 
       <Text style={styles.pageinstructions}>
-        A link would be send to the email entered to activate{'\n'}
-        the create a new password option
+        A verification code has been sent to your email{'\n'}
+        please enter it below
       </Text>
 
       <InputField
         width={'80%'}
         height={45}
-        id="Email"
-        placeHolder="Email"
+        id="Code"
+        placeHolder="Verification code"
         placeholderTextColor="#C2C2C2"
-        leftIcon={emailIcon}
+        leftIcon={keyIcon}
         inputFieldStyle={[{ marginBottom: 7 }, styles.inputFieldStyle]}
         text={email}
         setText={setEmail}
         activeField={activeField}
         setActiveField={setActiveField}
       />
+
       <Button
         text="Next"
         width={'50%'}
@@ -55,7 +58,7 @@ export default function ResetPasswordScreen({ navigation }) {
         style={styles.nextbtn}
         textStyle={styles.nextBtnText}
         textColor={'#fff'}
-        onPress={() => navigation.navigate('VerificationScreen')}
+        onPress={() => navigation.navigate('NewPasswordScreen')}
       />
 
       <DesignIcon style={styles.iconsvg} />
@@ -74,7 +77,7 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   //display the icon for this page in the center
-  resetsvg: {
+  verifiysvg: {
     marginTop: '10%',
     alignSelf: 'center',
   },
