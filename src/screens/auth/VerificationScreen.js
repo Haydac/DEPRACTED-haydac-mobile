@@ -38,7 +38,7 @@ export default function VerificationScreen({ navigation }) {
       <InputField
         width={'80%'}
         height={45}
-        id="Code"
+        id="Number"
         placeHolder="Verification code"
         placeholderTextColor="#C2C2C2"
         leftIcon={keyIcon}

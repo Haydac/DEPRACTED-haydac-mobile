@@ -51,6 +51,8 @@ export default function InputField({
             ? 'email-address'
             : id == 'Phone'
             ? 'phone-pad'
+            : id == 'Number'
+            ? 'number-pad'
             : 'default'
         }
         style={[styles.textInputStyle]}
