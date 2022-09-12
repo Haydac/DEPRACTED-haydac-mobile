@@ -15,6 +15,7 @@ export default function InputField({
   inputFieldStyle,
   text,
   setText,
+  error,
   secureTextEntry,
   setActiveField,
   blurOnSubmit,
@@ -27,7 +28,11 @@ export default function InputField({
       style={[
         styles.container,
         inputFieldStyle,
-        { width: width, height: height },
+        {
+          width: width,
+          height: height,
+        },
+        error ? { borderBottomColor: theme.colors.error } : {},
       ]}
     >
       {leftIcon ? (

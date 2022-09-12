@@ -88,42 +88,71 @@ export default function RegisterScreen({ navigation }) {
     setErrors((prevErrors) => ({ ...prevErrors, [formField]: errorMessage }))
   }
 
-  const validate = () => {
-    Keyboard.dismiss()
+  const validate = ({
+    fullname,
+    email,
+    address,
+    password,
+    password_confirmation,
+  }) => {
+    let isValid = true
 
-    if (!emailValidator(formValues.email)) {
+    if (!emailValidator(email)) {
       handleError('Email is not valid', 'email')
+      isValid = false
+    } else {
+      handleError(undefined, 'email')
     }
 
-    if (!passwordValidator(formValues.password)) {
+    if (!passwordValidator(password)) {
       handleError('Password is not valid', 'password')
+      isValid = false
+    } else {
+      handleError(undefined, 'password')
     }
 
-    if (!passwordValidator(formValues.password_confirmation)) {
+    if (!passwordValidator(password_confirmation)) {
       handleError('Password confirmation is not valid', 'password_confirmation')
+      isValid = false
+    } else {
+      handleError(undefined, 'password_confirmation')
     }
 
-    if (formValues.password !== formValues.password_confirmation) {
+    if (password !== password_confirmation) {
       handleError('Password fields should match', 'password_confirmation')
+      isValid = false
+    } else {
+      handleError(undefined, 'password_confirmation')
     }
+
+    return isValid
   }
 
   /**
    * Sends values from form to the server
    */
   const onSignUpPressed = async () => {
-    // could be email or phone
+    Keyboard.dismiss()
+    let emailInput = formValues.email.toLowerCase()
+    const signUpRequest = {
+      fullname: formValues.fullname,
+      email: emailInput,
+      address: formValues.address,
+      password: formValues.password,
+      password_confirmation: formValues.password_confirmation,
+    }
 
-    // validate form values before sending to server
-    try {
-      signupValidator(formValues).then(async () => {
-        const user = await signup(formValues)
-        if (user?.success) {
+    if (validate(signUpRequest)) {
+      try {
+        // passes signUpRequest to api
+        const user = await signup(signUpRequest)
+
+        if (user.success) {
           navigation.navigate('LoginScreen')
         }
-      })
-    } catch (error) {
-      throw error
+      } catch (error) {
+        console.warn(error)
+      }
     }
   }
 
@@ -191,7 +220,7 @@ export default function RegisterScreen({ navigation }) {
             inputFieldStyle={[styles.inputFieldStyle]}
             text={formValues.fullname}
             setText={(text) => updateFormValue(text, 'fullname')}
-            error={errors.email}
+            error={errors.fullname}
             setActiveField={setActiveField}
             blurOnSubmit={false}
           />
@@ -207,6 +236,7 @@ export default function RegisterScreen({ navigation }) {
             inputFieldStyle={[{ marginBottom: 7 }, styles.inputFieldStyle]}
             text={formValues.email}
             setText={(text) => updateFormValue(text, 'email')}
+            error={errors.email}
             activeField={activeField}
             setActiveField={setActiveField}
             blurOnSubmit={true}
@@ -223,6 +253,7 @@ export default function RegisterScreen({ navigation }) {
             inputFieldStyle={[styles.inputFieldStyle]}
             text={formValues.address}
             setText={(text) => updateFormValue(text, 'address')}
+            error={errors.address}
             setActiveField={setActiveField}
             blurOnSubmit={false}
           />
@@ -238,6 +269,7 @@ export default function RegisterScreen({ navigation }) {
             inputFieldStyle={[styles.inputFieldStyle]}
             text={formValues.password}
             setText={(text) => updateFormValue(text, 'password')}
+            error={errors.password}
             secureTextEntry
             setActiveField={setActiveField}
             blurOnSubmit={false}
@@ -254,6 +286,7 @@ export default function RegisterScreen({ navigation }) {
             inputFieldStyle={[styles.inputFieldStyle]}
             text={formValues.password_confirmation}
             setText={(text) => updateFormValue(text, 'password_confirmation')}
+            error={errors.password_confirmation}
             secureTextEntry
             setActiveField={setActiveField}
             blurOnSubmit={true}

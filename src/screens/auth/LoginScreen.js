@@ -62,27 +62,40 @@ export default function LoginScreen({ navigation }) {
     setErrors((prevErrors) => ({ ...prevErrors, [formField]: errorMessage }))
   }
 
-  const validate = () => {
-    Keyboard.dismiss()
+  const validate = ({ email, password }) => {
+    let isValid = true
 
-    if (!emailValidator(formValues.email)) {
+    if (!emailValidator(email)) {
       handleError('Email is not valid', 'email')
+      isValid = false
+    } else {
+      handleError(undefined, 'email')
     }
 
-    if (!passwordValidator(formValues.password)) {
+    if (!passwordValidator(password)) {
       handleError('Password is not valid', 'password')
+      isValid = false
+    } else {
+      handleError(undefined, 'password')
     }
+
+    return isValid
   }
 
   const onLoginPressed = async () => {
-    // could be email or phone
-    let emailinput = email.toLowerCase()
-    const formValues = { phone: phone, email: emailinput, password: password }
-    if (loginValidator(formValues)) {
-      // passes formvalues to api
-      const user = await login(formValues)
-      if (user.success) {
-        navigation.navigate('HomeTabs')
+    Keyboard.dismiss()
+    let emailInput = formValues.email.toLowerCase()
+    const loginRequest = { email: emailInput, password: formValues.password }
+
+    if (validate(loginRequest) && loginValidator(loginRequest)) {
+      try {
+        // passes loginRequest to api
+        const user = await login(loginRequest)
+        if (user.success) {
+          navigation.navigate('HomeTabs')
+        }
+      } catch (error) {
+        console.warn(error)
       }
     }
   }
@@ -149,6 +162,7 @@ export default function LoginScreen({ navigation }) {
             inputFieldStyle={[{ marginBottom: 40 }, styles.inputFieldStyle]}
             text={formValues.email}
             setText={(text) => updateFormValue(text, 'email')}
+            error={errors.email}
             activeField={activeField}
             setActiveField={setActiveField}
             blurOnSubmit={true}
@@ -165,6 +179,7 @@ export default function LoginScreen({ navigation }) {
             inputFieldStyle={[{ marginBottom: 7 }, styles.inputFieldStyle]}
             text={formValues.password}
             setText={(text) => updateFormValue(text, 'password')}
+            error={errors.password}
             secureTextEntry
             activeField={activeField}
             setActiveField={setActiveField}
@@ -289,7 +304,7 @@ const styles = StyleSheet.create({
   inputFieldStyle: {
     position: 'relative',
     borderBottomWidth: 1,
-    borderBottomColor: '#BB6BD9',
+    borderBottomColor: theme.colors.primary,
   },
   emailPhoneFieldStyle: {
     marginVertical: 50,
