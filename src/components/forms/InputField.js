@@ -22,6 +22,8 @@ export default function InputField({
 }) {
   const [hidePassword, setHidpassword] = useState(true)
   const [passwordIconColor, setPasswordIconColor] = useState('#A5A5A5')
+  const [placeHolderColor, setPlaceHolderColor] = useState(placeholderTextColor)
+  const [currentPlaceHolder, setCurrentPlaceHolder] = useState(placeHolder)
 
   return (
     <View
@@ -39,11 +41,11 @@ export default function InputField({
         <View style={[styles.icon, iconContainerStyle]}>{leftIcon}</View>
       ) : null}
       <TextInput
-        placeholderTextColor={placeholderTextColor}
+        placeholderTextColor={placeHolderColor}
         value={text}
         onChangeText={setText}
-        placeholder={placeHolder}
-        secureTextEntry={secureTextEntry && hidePassword}
+        placeholder={currentPlaceHolder}
+        secureTextEntry={!error && secureTextEntry && hidePassword}
         keyboardType={
           id == 'Email'
             ? 'email-address'
@@ -57,10 +59,14 @@ export default function InputField({
         onBlur={() => {
           setPasswordIconColor('#A5A5A5')
           setActiveField('')
+          setPlaceHolderColor(placeholderTextColor)
+          setCurrentPlaceHolder(placeHolder)
         }}
         onFocus={() => {
           setPasswordIconColor(theme.colors.primary)
           setActiveField(id)
+          setPlaceHolderColor(error ? theme.colors.error : placeholderTextColor)
+          setCurrentPlaceHolder(error ? error : placeHolder)
         }}
       />
       {secureTextEntry ? (
