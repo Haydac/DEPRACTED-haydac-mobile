@@ -26,7 +26,6 @@ yarn.lock
 .settings
 
 # Env
-.env
 .env.local
 .env.development.local
 .env.test.local
