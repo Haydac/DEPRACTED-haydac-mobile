@@ -11,8 +11,12 @@ import Separator from '../../components/Separator'
 import { theme } from '../../core/theme'
 
 import { signup } from '../../api/AuthProvider'
-import { signupValidator } from '../../helpers/validation'
-import { emailValidator, passwordValidator } from '../../helpers/validation'
+import {
+  addressValidator,
+  nameValidator,
+  emailValidator,
+  passwordValidator,
+} from '../../helpers/validation'
 
 export default function RegisterScreen({ navigation }) {
   const [formValues, setFormValues] = useState({
@@ -96,23 +100,42 @@ export default function RegisterScreen({ navigation }) {
     password_confirmation,
   }) => {
     let isValid = true
+    let nameError = nameValidator(fullname)
+    let emailError = emailValidator(email)
+    let addressError = addressValidator(address)
+    let passwordError = passwordValidator(password)
+    let passwordConfirmError = passwordValidator(password_confirmation)
 
-    if (!emailValidator(email)) {
-      handleError('Email is not valid', 'email')
+    if (nameError) {
+      handleError(nameError, 'fullname')
+      isValid = false
+    } else {
+      handleError(undefined, 'fullname')
+    }
+
+    if (emailError) {
+      handleError(emailError, 'email')
       isValid = false
     } else {
       handleError(undefined, 'email')
     }
 
-    if (!passwordValidator(password)) {
-      handleError('Password is not valid', 'password')
+    if (addressError) {
+      handleError(addressError, 'address')
+      isValid = false
+    } else {
+      handleError(undefined, 'address')
+    }
+
+    if (passwordError) {
+      handleError(passwordError, 'password')
       isValid = false
     } else {
       handleError(undefined, 'password')
     }
 
-    if (!passwordValidator(password_confirmation)) {
-      handleError('Password confirmation is not valid', 'password_confirmation')
+    if (passwordConfirmError) {
+      handleError(passwordConfirmError, 'password_confirmation')
       isValid = false
     } else {
       handleError(undefined, 'password_confirmation')

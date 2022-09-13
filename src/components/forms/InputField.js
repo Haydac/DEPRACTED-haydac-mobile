@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, TextInput, StyleSheet } from 'react-native'
+import { View, TextInput, StyleSheet, Text } from 'react-native'
 
 import { Feather } from '@expo/vector-icons'
 import { theme } from '../../core/theme'
@@ -22,8 +22,6 @@ export default function InputField({
 }) {
   const [hidePassword, setHidpassword] = useState(true)
   const [passwordIconColor, setPasswordIconColor] = useState('#A5A5A5')
-  const [placeHolderColor, setPlaceHolderColor] = useState(placeholderTextColor)
-  const [currentPlaceHolder, setCurrentPlaceHolder] = useState(placeHolder)
 
   return (
     <View
@@ -37,15 +35,18 @@ export default function InputField({
         error ? { borderBottomColor: theme.colors.error } : {},
       ]}
     >
+      <View style={styles.errorMessage}>
+        <Text style={{ color: theme.colors.error }}>{error}</Text>
+      </View>
       {leftIcon ? (
         <View style={[styles.icon, iconContainerStyle]}>{leftIcon}</View>
       ) : null}
       <TextInput
-        placeholderTextColor={placeHolderColor}
+        placeholderTextColor={placeholderTextColor}
         value={text}
         onChangeText={setText}
-        placeholder={currentPlaceHolder}
-        secureTextEntry={!error && secureTextEntry && hidePassword}
+        placeholder={placeHolder}
+        secureTextEntry={secureTextEntry && hidePassword}
         keyboardType={
           id == 'Email'
             ? 'email-address'
@@ -61,14 +62,10 @@ export default function InputField({
         onBlur={() => {
           setPasswordIconColor('#A5A5A5')
           setActiveField('')
-          setPlaceHolderColor(placeholderTextColor)
-          setCurrentPlaceHolder(placeHolder)
         }}
         onFocus={() => {
           setPasswordIconColor(theme.colors.primary)
           setActiveField(id)
-          setPlaceHolderColor(error ? theme.colors.error : placeholderTextColor)
-          setCurrentPlaceHolder(error ? error : placeHolder)
         }}
       />
       {secureTextEntry ? (
@@ -104,5 +101,14 @@ const styles = StyleSheet.create({
   textInputStyle: {
     paddingHorizontal: 10,
     flex: 1,
+  },
+  errorMessage: {
+    position: 'absolute',
+    left: 49,
+    top: 0,
+    marginTop: -10,
+    fontWeight: 'bold',
+    fontSize: 10,
+    lineHeight: 15,
   },
 })

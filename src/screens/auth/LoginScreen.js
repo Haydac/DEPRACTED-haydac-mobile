@@ -11,11 +11,7 @@ import Separator from '../../components/Separator'
 import { theme } from '../../core/theme'
 
 import { login } from '../../api/AuthProvider'
-import {
-  loginValidator,
-  emailValidator,
-  passwordValidator,
-} from '../../helpers/validation'
+import { emailValidator, passwordValidator } from '../../helpers/validation'
 
 export default function LoginScreen({ navigation }) {
   const [formValues, setFormValues] = useState({
@@ -64,16 +60,18 @@ export default function LoginScreen({ navigation }) {
 
   const validate = ({ email, password }) => {
     let isValid = true
+    let emailError = emailValidator(email)
+    let passwordError = passwordValidator(password)
 
-    if (!emailValidator(email)) {
-      handleError('Email is not valid', 'email')
+    if (emailError) {
+      handleError(emailError, 'email')
       isValid = false
     } else {
       handleError(undefined, 'email')
     }
 
-    if (!passwordValidator(password)) {
-      handleError('Password is not valid', 'password')
+    if (passwordError) {
+      handleError(passwordError, 'password')
       isValid = false
     } else {
       handleError(undefined, 'password')
@@ -87,7 +85,7 @@ export default function LoginScreen({ navigation }) {
     let emailInput = formValues.email.toLowerCase()
     const loginRequest = { email: emailInput, password: formValues.password }
 
-    if (validate(loginRequest) && loginValidator(loginRequest)) {
+    if (validate(loginRequest)) {
       try {
         // passes loginRequest to api
         const user = await login(loginRequest)
