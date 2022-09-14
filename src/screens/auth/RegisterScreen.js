@@ -171,7 +171,10 @@ export default function RegisterScreen({ navigation }) {
         const user = await signup(signUpRequest)
 
         if (user.success) {
-          navigation.navigate('LoginScreen')
+          navigation.navigate('HomeTabs')
+        } else {
+          // TODO: instead of the console.log, display error message to user
+          console.log(user.message)
         }
       } catch (error) {
         console.warn(error)
