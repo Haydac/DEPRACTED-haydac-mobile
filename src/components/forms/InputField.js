@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, TextInput, StyleSheet } from 'react-native'
+import { View, TextInput, StyleSheet, Text } from 'react-native'
 
 import { Feather } from '@expo/vector-icons'
 import { theme } from '../../core/theme'
@@ -15,6 +15,7 @@ export default function InputField({
   inputFieldStyle,
   text,
   setText,
+  error,
   secureTextEntry,
   setActiveField,
   blurOnSubmit,
@@ -27,9 +28,16 @@ export default function InputField({
       style={[
         styles.container,
         inputFieldStyle,
-        { width: width, height: height },
+        {
+          width: width,
+          height: height,
+        },
+        error ? { borderBottomColor: theme.colors.error } : {},
       ]}
     >
+      <View style={styles.errorMessage}>
+        <Text style={{ color: theme.colors.error }}>{error}</Text>
+      </View>
       {leftIcon ? (
         <View style={[styles.icon, iconContainerStyle]}>{leftIcon}</View>
       ) : null}
@@ -44,6 +52,8 @@ export default function InputField({
             ? 'email-address'
             : id == 'Phone'
             ? 'phone-pad'
+            : id == 'Number'
+            ? 'number-pad'
             : 'default'
         }
         style={[styles.textInputStyle]}
@@ -91,5 +101,14 @@ const styles = StyleSheet.create({
   textInputStyle: {
     paddingHorizontal: 10,
     flex: 1,
+  },
+  errorMessage: {
+    position: 'absolute',
+    left: 49,
+    top: 0,
+    marginTop: -10,
+    fontWeight: 'bold',
+    fontSize: 10,
+    lineHeight: 15,
   },
 })
