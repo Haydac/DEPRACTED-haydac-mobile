@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { StyleSheet, View, Keyboard } from 'react-native'
+import { StyleSheet, View, Keyboard, ScrollView } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 
 import Screen from '../../components/core/Screen'
@@ -17,6 +17,7 @@ import {
   emailValidator,
   passwordValidator,
 } from '../../helpers/validation'
+import { backgroundSvg } from '../../components/core/Brand'
 
 export default function RegisterScreen({ navigation }) {
   const [formValues, setFormValues] = useState({
@@ -207,11 +208,7 @@ export default function RegisterScreen({ navigation }) {
   }, [])
 
   return (
-    <Screen
-      imageSource={
-        isKeyboardVisible ? null : require('../../assets/background/signup.png')
-      }
-    >
+    <Screen svg={backgroundSvg}>
       <View style={styles.content}>
         {/* Login header :  */}
         <View style={styles.header}>
@@ -229,7 +226,11 @@ export default function RegisterScreen({ navigation }) {
           />
         </View>
 
-        <View
+        <ScrollView
+          contentContainerStyle={{
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+          }}
           style={[
             styles.loginFormContainer,
             isKeyboardVisible ? { bottom: -20 } : {},
@@ -388,7 +389,7 @@ export default function RegisterScreen({ navigation }) {
               setSignUpBtnTextColor('#fff')
             }}
           />
-        </View>
+        </ScrollView>
       </View>
     </Screen>
   )
@@ -411,12 +412,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   loginFormContainer: {
+    paddingTop: 180,
     width: '80%',
-    height: '50%',
+    height: '100%',
     position: 'absolute',
-    bottom: 60,
-    alignItems: 'center',
-    justifyContent: 'flex-end',
   },
   headerMessage: {
     color: 'white',

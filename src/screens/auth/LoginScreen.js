@@ -9,7 +9,7 @@ import InputField from '../../components/forms/InputField'
 import Separator from '../../components/Separator'
 
 import { theme } from '../../core/theme'
-
+import { backgroundSvg } from '../../components/core/Brand'
 import { login } from '../../api/AuthProvider'
 import { emailValidator, passwordValidator } from '../../helpers/validation'
 
@@ -121,11 +121,7 @@ export default function LoginScreen({ navigation }) {
   }, [])
 
   return (
-    <Screen
-      imageSource={
-        isKeyboardVisible ? null : require('../../assets/background/login.png')
-      }
-    >
+    <Screen svg={backgroundSvg}>
       <View style={styles.content}>
         {/* Login header :  */}
         <View style={styles.header}>
