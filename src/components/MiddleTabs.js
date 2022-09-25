@@ -26,6 +26,7 @@ const TabButton = ({ text, active, onPress }) => {
         styles.tabButton,
         { backgroundColor: active ? theme.colors.primary : '#fff' },
       ]}
+      activeOpacity={1}
       onPress={onPress}
     >
       <Text style={[styles.tabText, { color: active ? '#fff' : '#B8B8B8' }]}>
