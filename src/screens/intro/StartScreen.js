@@ -2,12 +2,15 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { FontAwesome5 } from '@expo/vector-icons'
 import Button from '../../components/buttons/Button'
-import Brand from '../../components/core/Brand'
+import Brand, { getStartedSvg } from '../../components/core/Brand'
 import Screen from '../../components/core/Screen'
 
 export default function StartScreen({ navigation }) {
   return (
-    <Screen imageSource={require('../../assets/background/start-screen.png')}>
+    <Screen
+      svg={getStartedSvg('100%', '86%')}
+      style={{ backgroundColor: '#E6E6FA' }}
+    >
       <View style={styles.container}>
         <Brand logoStyle={styles.logoStyle} />
         <Text style={[styles.welcomeText]}>

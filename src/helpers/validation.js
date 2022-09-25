@@ -15,7 +15,7 @@ const nameValidator = (fullname) => {
   }
 
   if (!validator.isAlpha(fullname)) {
-    return 'Name is invalid'
+    return 'Name should only contain letters'
   }
 
   return ''
@@ -30,11 +30,6 @@ const addressValidator = (address) => {
   if (!address) {
     return 'Address is required'
   }
-
-  if (!validator.isAlphanumeric(address)) {
-    return 'Address is invalid'
-  }
-
   return ''
 }
 
@@ -66,7 +61,7 @@ const passwordValidator = (password) => {
   }
 
   if (!validator.isAlphanumeric(password)) {
-    return 'Password is invalid'
+    return 'Password should contain letters and numbers'
   }
 
   return ''
