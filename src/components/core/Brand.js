@@ -31,11 +31,11 @@ const styles = StyleSheet.create({
   },
 })
 
-export const backgroundSvg = (
+export const backgroundSvg = (width, height) => (
   <Svg
     style={{ position: 'absolute' }}
-    width="200%"
-    height="30%"
+    width={width}
+    height={height}
     viewBox="0 0 614 397"
     preserveAspectRatio="none"
   >
@@ -47,11 +47,11 @@ export const backgroundSvg = (
   </Svg>
 )
 
-export const getStartedSvg = (
+export const getStartedSvg = (width, height) => (
   <Svg
     style={{ position: 'absolute' }}
-    width="100%"
-    height="87%"
+    width={width}
+    height={height}
     viewBox="0 0 498 826"
     fill="none"
     preserveAspectRatio="none"

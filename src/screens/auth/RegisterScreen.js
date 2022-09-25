@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { StyleSheet, View, Keyboard, ScrollView } from 'react-native'
+import { StyleSheet, View, Keyboard, ScrollView, Text } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 
 import Screen from '../../components/core/Screen'
@@ -28,6 +28,7 @@ export default function RegisterScreen({ navigation }) {
     password_confirmation: '',
   })
   const [errors, setErrors] = useState({})
+  const [signUpError, setSignUpError] = useState('')
   const [activeField, setActiveField] = useState('')
 
   // button states
@@ -156,6 +157,7 @@ export default function RegisterScreen({ navigation }) {
    * Sends values from form to the server
    */
   const onSignUpPressed = async () => {
+    setSignUpError('')
     Keyboard.dismiss()
     let emailInput = formValues.email.toLowerCase()
     const signUpRequest = {
@@ -174,13 +176,14 @@ export default function RegisterScreen({ navigation }) {
         if (user.success) {
           navigation.navigate('HomeTabs')
         } else {
-          // TODO: instead of the console.log, display error message to user
-          console.log(user.message)
+          setSignUpError(user.message)
         }
       } catch (error) {
-        console.warn(error)
+        setSignUpError('Unexpected error signing up')
       }
     }
+
+    console.log(signUpError)
   }
 
   // Keyboard listener
@@ -208,7 +211,10 @@ export default function RegisterScreen({ navigation }) {
   }, [])
 
   return (
-    <Screen svg={backgroundSvg}>
+    <Screen
+      style={styles.container}
+      svg={isKeyboardVisible ? null : backgroundSvg('200%', '25%')}
+    >
       <View style={styles.content}>
         {/* Login header :  */}
         <View style={styles.header}>
@@ -226,16 +232,13 @@ export default function RegisterScreen({ navigation }) {
           />
         </View>
 
-        <ScrollView
-          contentContainerStyle={{
-            alignItems: 'center',
-            justifyContent: 'flex-end',
-          }}
+        <View
           style={[
             styles.loginFormContainer,
             isKeyboardVisible ? { bottom: -20 } : {},
           ]}
         >
+          <Text style={{ color: theme.colors.error }}>{signUpError}</Text>
           {/* Full name input */}
           <InputField
             id="Name"
@@ -389,7 +392,7 @@ export default function RegisterScreen({ navigation }) {
               setSignUpBtnTextColor('#fff')
             }}
           />
-        </ScrollView>
+        </View>
       </View>
     </Screen>
   )
@@ -398,6 +401,7 @@ export default function RegisterScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fff',
   },
   content: {
     flex: 1,
@@ -412,10 +416,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   loginFormContainer: {
-    paddingTop: 180,
     width: '80%',
-    height: '100%',
+    height: '50%',
     position: 'absolute',
+    bottom: 60,
+    alignItems: 'center',
+    justifyContent: 'flex-end',
   },
   headerMessage: {
     color: 'white',

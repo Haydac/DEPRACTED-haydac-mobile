@@ -7,7 +7,10 @@ import Screen from '../../components/core/Screen'
 
 export default function StartScreen({ navigation }) {
   return (
-    <Screen svg={getStartedSvg} style={{ backgroundColor: '#E6E6FA' }}>
+    <Screen
+      svg={getStartedSvg('100%', '86%')}
+      style={{ backgroundColor: '#E6E6FA' }}
+    >
       <View style={styles.container}>
         <Brand logoStyle={styles.logoStyle} />
         <Text style={[styles.welcomeText]}>
