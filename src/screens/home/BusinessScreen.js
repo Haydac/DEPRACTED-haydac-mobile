@@ -9,6 +9,7 @@ import {
 } from 'react-native'
 import { Ionicons, Entypo, FontAwesome } from '@expo/vector-icons'
 import { theme } from '../../core/theme'
+import Button from '../../components/buttons/Button'
 
 export default function BusinessScreen({ route, navigation }) {
   navigation.setOptions({
@@ -43,6 +44,9 @@ export default function BusinessScreen({ route, navigation }) {
     setIsFavourited(business.isFavourite)
     route?.params?.favouriteCallback(business.isFavourite)
   }
+
+  // open directions to business
+  const onTakeMeTherePressed = () => {}
 
   return (
     <View style={styles.container}>
@@ -97,8 +101,24 @@ export default function BusinessScreen({ route, navigation }) {
       </View>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={{ zIndex: 20 }}
+        style={styles.businessInfo}
+        contentContainerStyle={{
+          alignItems: 'center',
+        }}
       ></ScrollView>
+      <Button
+        text="Take me there"
+        width={'86%'}
+        height={40}
+        borderRadius={50}
+        backgroundColor={theme.colors.primary}
+        style={styles.takeMeThereBtn}
+        textStyle={styles.takeMeThereText}
+        textColor={'#fff'}
+        onPress={onTakeMeTherePressed}
+        onPressIn={() => {}}
+        onPressOut={() => {}}
+      />
     </View>
   )
 }
@@ -106,6 +126,7 @@ export default function BusinessScreen({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    alignItems: 'center',
     position: 'relative',
     backgroundColor: '#fff',
   },
@@ -126,6 +147,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   content: {
+    width: '100%',
     marginTop: 160,
     paddingHorizontal: 25,
     paddingVertical: 25,
@@ -177,4 +199,14 @@ const styles = StyleSheet.create({
     marginLeft: 4,
     fontSize: 12,
   },
+  businessInfo: {
+    width: '100%',
+    zIndex: 20,
+  },
+  takeMeThereBtn: {
+    position: 'absolute',
+    bottom: 10,
+    zIndex: 100,
+  },
+  takeMeThereText: {},
 })

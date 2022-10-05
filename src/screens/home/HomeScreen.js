@@ -127,7 +127,10 @@ export default function HomeScreen({ navigation }) {
             </TouchableOpacity>
           </View>
           <View style={styles.regionButton}>
-            <TouchableOpacity onPress={onReigonButtonPressed}>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={onReigonButtonPressed}
+            >
               <Fontisto name="earth" size={40} color="#eee" />
             </TouchableOpacity>
           </View>

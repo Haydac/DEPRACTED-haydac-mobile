@@ -35,6 +35,7 @@ const BusinessItemCard = ({ business, navigation }) => {
   return (
     <TouchableOpacity
       style={styles.businessItemCard}
+      activeOpacity={0.9}
       onPress={() => handlePress(business)}
     >
       {/* Use uri, data will be remote <Image source={{ uri: business.image_url }} /> */}
@@ -54,24 +55,25 @@ const BusinessItemCard = ({ business, navigation }) => {
         )}
       </TouchableOpacity>
       <View style={styles.businessInfoContainer}>
-        <View style={styles.businessInfo}>
-          <Text style={styles.businessNameText} numberOfLines={1}>
-            {business.name}
-          </Text>
-          <View style={styles.businessDistance}>
-            <Ionicons
-              name="location-sharp"
-              size={13}
-              color={theme.colors.primary}
-            />
-            <Text style={styles.businessDistanceText}>
-              {' '}
-              {business.distance}
-            </Text>
-          </View>
-        </View>
+        <Text style={styles.businessNameText} numberOfLines={1}>
+          {business.name}
+        </Text>
         <View style={styles.businessRating}>
           <Text style={styles.businessRatingText}>{business.rating}</Text>
+        </View>
+      </View>
+      <View style={styles.businessInfo}>
+        <View style={styles.businessItemInfoPill}>
+          <Ionicons
+            name="location-sharp"
+            size={13}
+            color={theme.colors.primary}
+          />
+          <Text style={styles.businessInfoPillText}> {business.distance}</Text>
+        </View>
+        <View style={styles.businessItemInfoPill}>
+          <Ionicons name="time" size={13} color={theme.colors.primary} />
+          <Text style={styles.businessInfoPillText}> open</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -100,18 +102,22 @@ const styles = StyleSheet.create({
   },
   businessInfoContainer: {
     width: '98%',
-    padding: 8,
+    paddingHorizontal: 8,
     alignSelf: 'center',
     justifyContent: 'space-between',
     flexDirection: 'row',
   },
-  businessInfo: {},
+  businessInfo: {
+    padding: 8,
+    flexDirection: 'row',
+  },
   businessNameText: {
     fontWeight: '700',
   },
-  businessDistance: {
+  businessItemInfoPill: {
     height: 20,
     paddingHorizontal: 16,
+    marginRight: 10,
     marginTop: 5,
     alignItems: 'center',
     justifyContent: 'center',
@@ -120,7 +126,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     backgroundColor: '#eee',
   },
-  businessDistanceText: {
+  businessInfoPillText: {
     fontSize: 12,
     fontWeight: '700',
   },
