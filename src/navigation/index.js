@@ -35,7 +35,9 @@ export default function RootNavigator() {
   const { state } = useAuthContext()
 
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator
+      screenOptions={{ headerShown: false, statusBarTranslucent: true }}
+    >
       {state.token != null ? (
         <Stack.Screen name="HomeTabs" component={AppTabs} />
       ) : (

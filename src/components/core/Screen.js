@@ -32,7 +32,6 @@ export default function Screen({ svg, style, children }) {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: Constants.statusBarHeight,
     flex: 1,
   },
   view: {
@@ -41,5 +40,9 @@ const styles = StyleSheet.create({
   background: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  image: {
+    flex: 1,
+    justifyContent: 'center',
   },
 })
