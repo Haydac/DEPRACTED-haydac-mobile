@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   skipBtn: {
-    margin: '4%',
+    margin: '7%',
     position: 'absolute',
     top: 10,
     right: 0,

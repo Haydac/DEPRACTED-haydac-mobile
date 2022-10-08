@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
   header: {
     width: '100%',
     height: 70,
-    zIndex: 100,
+    marginTop: 30,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',

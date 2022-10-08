@@ -35,7 +35,9 @@ export default function RootNavigator() {
   const { state } = useAuthContext()
 
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator
+      screenOptions={{ headerShown: false, statusBarTranslucent: true }}
+    >
       {state.token != null ? (
         <Stack.Screen name="HomeTabs" component={AppTabs} />
       ) : (
@@ -132,6 +134,9 @@ const AppTabs = () => {
         name="Profile"
         component={ProfileScreen}
         options={{
+          headerShown: true,
+          title: 'Account',
+          headerTitleAlign: 'center',
           tabBarIcon: ({ color }) => (
             <FontAwesome name="user" size={20} color={color} />
           ),
