@@ -134,6 +134,9 @@ const AppTabs = () => {
         name="Profile"
         component={ProfileScreen}
         options={{
+          headerShown: true,
+          title: 'Account',
+          headerTitleAlign: 'center',
           tabBarIcon: ({ color }) => (
             <FontAwesome name="user" size={20} color={color} />
           ),
