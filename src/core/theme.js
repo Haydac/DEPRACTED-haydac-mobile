@@ -10,6 +10,6 @@ export const theme = {
     error: '#f13a59',
   },
   constants: {
-    verticalCardMargin: 5,
+    verticalCardMargin: 10,
   },
 }

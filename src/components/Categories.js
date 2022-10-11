@@ -3,10 +3,6 @@ import { View, Text, Image, StyleSheet, Pressable } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { theme } from '../core/theme'
 
-// the api will have a key that will specify if it is a grocery store or not
-// depending on the button/icon that is pressed,
-// the content on the page will be determined based on the button pressed
-
 const items = [
   {
     key: 1,

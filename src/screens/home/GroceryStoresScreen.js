@@ -18,7 +18,6 @@ export default function GroceryStoresScreen({ navigation }) {
       {/* Header: menuButton  ---- search ---- filterButton */}
       <SearchBar
         width="87%"
-        height={45}
         placeHolder="Search stores"
         searchBarOuterStyle={styles.searchBarOuterStyle}
         searchBarColor="#eee"
@@ -31,9 +30,6 @@ export default function GroceryStoresScreen({ navigation }) {
         style={styles.scrollView}
         showsVerticalScrollIndicator={false}
       >
-        <BusinessAd
-          image_url={require('../../assets/data/stores/ad/demoStoresAd.png')}
-        />
         {isLoading && (
           <ActivityIndicator
             size="large"
@@ -56,6 +52,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#eee',
   },
   searchBarOuterStyle: {
+    marginTop: 10,
     marginBottom: theme.constants.verticalCardMargin,
     alignSelf: 'center',
   },

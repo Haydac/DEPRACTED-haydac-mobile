@@ -6,7 +6,7 @@ import { theme } from '../core/theme'
 
 export default function SearchBar({
   width,
-  height,
+  height = 35,
   placeHolder,
   searchBarOuterStyle,
   searchBarColor,

@@ -18,7 +18,6 @@ export default function RestaurantsScreen({ navigation }) {
       {/* Header: ---- search ---- filterButton */}
       <SearchBar
         width="87%"
-        height={45}
         placeHolder="Search restaurants"
         searchBarOuterStyle={styles.searchBarOuterStyle}
         searchBarColor="#eee"
@@ -31,9 +30,6 @@ export default function RestaurantsScreen({ navigation }) {
         style={styles.scrollView}
         showsVerticalScrollIndicator={false}
       >
-        <BusinessAd
-          image_url={require('../../assets/data/restaurants/ad/demoRestaurantAd.png')}
-        />
         {isLoading && (
           <ActivityIndicator
             size="large"

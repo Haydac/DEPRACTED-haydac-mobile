@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { StyleSheet, View, Keyboard } from 'react-native'
+import { StyleSheet, View, Keyboard, Text } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 
 import Screen from '../../components/core/Screen'
@@ -11,7 +11,7 @@ import Separator from '../../components/Separator'
 import { theme } from '../../core/theme'
 
 import { login } from '../../api/AuthProvider'
-import { emailValidator, passwordValidator } from '../../helpers/validation'
+import { onValidLogin } from '../../helpers/authValidation'
 
 export default function LoginScreen({ navigation }) {
   const [formValues, setFormValues] = useState({
@@ -58,43 +58,31 @@ export default function LoginScreen({ navigation }) {
     setErrors((prevErrors) => ({ ...prevErrors, [formField]: errorMessage }))
   }
 
-  const validate = ({ email, password }) => {
-    let isValid = true
-    let emailError = emailValidator(email)
-    let passwordError = passwordValidator(password)
-
-    if (emailError) {
-      handleError(emailError, 'email')
-      isValid = false
-    } else {
-      handleError(undefined, 'email')
-    }
-
-    if (passwordError) {
-      handleError(passwordError, 'password')
-      isValid = false
-    } else {
-      handleError(undefined, 'password')
-    }
-
-    return isValid
-  }
-
   const onLoginPressed = async () => {
     Keyboard.dismiss()
-    let emailInput = formValues.email.toLowerCase()
-    const loginRequest = { email: emailInput, password: formValues.password }
+    formValues.email = formValues.email.toLowerCase()
 
-    if (validate(loginRequest)) {
+    if (onValidLogin(formValues)) {
       try {
-        // passes loginRequest to api
-        const user = await login(loginRequest)
+        const user = await login(formValues)
         if (user.success) {
           navigation.navigate('HomeTabs')
         }
       } catch (error) {
-        console.warn(error)
+        let errorStatus = error.response.status
+
+        if (formValues.email && formValues.password) {
+          if (errorStatus === 412 || errorStatus === 403) {
+            setErrors({ ...errors, message: error.response.data.message })
+          } else {
+            setErrors({ ...errors, message: 'An unexpected error has occured' })
+          }
+        }
+        console.log(errors)
+        throw error
       }
+    } else {
+      setErrors({ ...errors, message: 'Invalid login credentials' })
     }
   }
 
@@ -141,6 +129,18 @@ export default function LoginScreen({ navigation }) {
             textColor={isKeyboardVisible ? theme.colors.primary : '#fff'}
             onPress={() => navigation.navigate('HomeTabs')}
           />
+        </View>
+
+        {/* Error messages */}
+        <View
+          style={{
+            color: 'red',
+            marginBottom: 50,
+            fontStyle: 'italic',
+            fontWeight: 500,
+          }}
+        >
+          <Text>{errors.message}</Text>
         </View>
 
         <View

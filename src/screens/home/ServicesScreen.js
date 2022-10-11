@@ -18,7 +18,6 @@ export default function ServicesScreen({ navigation }) {
       {/* Header: ---- search ---- filterButton */}
       <SearchBar
         width="87%"
-        height={45}
         placeHolder="Search services"
         searchBarOuterStyle={styles.searchBarOuterStyle}
         searchBarColor="#eee"
@@ -31,9 +30,6 @@ export default function ServicesScreen({ navigation }) {
         style={styles.scrollView}
         showsVerticalScrollIndicator={false}
       >
-        <BusinessAd
-          image_url={require('../../assets/data/services/ad/demoServicesAd.png')}
-        />
         {isLoading && (
           <ActivityIndicator
             size="large"

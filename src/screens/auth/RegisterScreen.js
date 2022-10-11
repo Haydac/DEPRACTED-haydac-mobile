@@ -16,7 +16,7 @@ import {
   nameValidator,
   emailValidator,
   passwordValidator,
-} from '../../helpers/validation'
+} from '../../helpers/authValidation'
 
 export default function RegisterScreen({ navigation }) {
   const [formValues, setFormValues] = useState({

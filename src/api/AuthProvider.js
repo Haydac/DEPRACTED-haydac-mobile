@@ -1,5 +1,7 @@
 import axios from 'axios'
 import { API_URL } from '@env'
+import * as SecureStore from 'expo-secure-store' // store user token
+
 /**
  *
  * @param {*} formValues - object containing user data
@@ -7,8 +9,9 @@ import { API_URL } from '@env'
  * and data - as stored user data in DB
  */
 const login = async (formValues) => {
+  let data
   try {
-    const { data } = await axios.post(`${API_URL}/user/login`, formValues)
+    data = await axios.post(`http://127.0.0.1:3000/user/login`, formValues)
     return data
   } catch (error) {
     throw error
