@@ -23,7 +23,6 @@ const onValidSignup = (formValues) => {
   let isValid = true
   if (fullname && !nameValidator(fullname)) isValid = false
   if (email && !emailValidator(email)) isValid = false
-  if (address && !addressValidator(address)) isValid = false
   if (password && !passwordValidator(password)) isValid = false
   return isValid
 }
@@ -39,15 +38,6 @@ const onValidSignup = (formValues) => {
  */
 const nameValidator = (name) => {
   return name && validator.isAlpha(name)
-}
-
-/**
- * Validates address input
- * @param {*} address
- * @returns error messsage if address is invalid
- */
-const addressValidator = (address) => {
-  return address && validator.isAlpha(address)
 }
 
 /**

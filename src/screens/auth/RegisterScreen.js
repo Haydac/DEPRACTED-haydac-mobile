@@ -11,17 +11,16 @@ import Separator from '../../components/Separator'
 import { theme } from '../../core/theme'
 
 import {
-  addressValidator,
   nameValidator,
-  emailValidator,
   passwordValidator,
+  emailValidator,
   onValidSignup,
 } from '../../helpers/authValidation'
 import userActions from '../../redux/user/userActions'
 import { useDispatch } from 'react-redux'
 
 export default function RegisterScreen({ navigation }) {
-  // Alert functionality
+  // Alert/pop-up functionality when user app runs into errors
   const displayMessage = (title, message) =>
     Alert.alert(title, message, [
       {
@@ -31,16 +30,6 @@ export default function RegisterScreen({ navigation }) {
       },
       { text: 'OK', onPress: () => console.log('OK Pressed') },
     ])
-
-  const [formValues, setFormValues] = useState({
-    fullname: '',
-    email: '',
-    address: '',
-    password: '',
-    password_confirmation: '',
-  })
-  const [errors, setErrors] = useState({})
-  const [activeField, setActiveField] = useState('')
 
   // button states
   const [signUpBtnColor, setSignUpBtnColor] = useState(theme.colors.primary)
@@ -52,6 +41,7 @@ export default function RegisterScreen({ navigation }) {
   const activeIconColor = theme.colors.primary
   const inactiveIconColor = '#A5A5A5'
 
+  // icons
   const nameIcon = (
     <MaterialIcons
       name="person"
@@ -94,48 +84,117 @@ export default function RegisterScreen({ navigation }) {
     />
   )
 
+  // why is this shit here???
   const formWidth = '100%'
   const formItemHeight = 45
 
+  const [formValues, setFormValues] = useState({
+    fullname: '',
+    email: '',
+    address: '',
+    password: '',
+    password_confirmation: '',
+  })
+  const [errors, setErrors] = useState({})
+  const [activeField, setActiveField] = useState('')
+
+  /**
+   *
+   * @param {*} value - String
+   * @param {*} formField - String
+   */
   const updateFormValue = (value, formField) => {
     setFormValues((prevValues) => ({ ...prevValues, [formField]: value }))
   }
 
+  /**
+   *
+   * @param {*} errorMessage  - String
+   * @param {*} formField  - String
+   */
   const handleError = (errorMessage, formField) => {
     setErrors((prevErrors) => ({ ...prevErrors, [formField]: errorMessage }))
   }
 
-  const dispatch = useDispatch()
   /**
-   * Sends values from form to the server
+   * Performs frontend validation
    */
-  const register = async () => {
+  const handleSubmit = async () => {
     Keyboard.dismiss()
-    let emailInput = formValues.email.toLowerCase()
-    const registerRequest = {
-      fullname: formValues.fullname,
-      email: emailInput,
-      address: formValues.address,
-      password: formValues.password,
-      password_confirmation: formValues.password_confirmation,
+
+    const { fullname, email, address, password, password_confirmation } =
+      formValues
+
+    let validation = true
+
+    // perform frontend validation
+    if (fullname.length == 0) {
+      handleError('Name is required!', 'fullname')
+      validation = false
+    } else if (nameValidator(fullname)) {
+      handleError('Invalid type for name', 'fullname')
+      validation = false
     }
 
-    if (onValidSignup(registerRequest)) {
-      try {
-        const user = await userActions.register(registerRequest, dispatch)
-        if (user.success) {
-          navigation.navigate('HomeTabs')
-        } else {
-          // throw an alert that an error has occurred
-          displayMessage('Error', 'An error occurred')
-        }
-      } catch (error) {
-        // throw an error as alert
-        displayMessage('Something went wrong', 'restart the app')
-        console.warn(error)
+    if (email.length == 0) {
+      handleError('Email is required!', 'email')
+      validation = false
+    } else if (emailValidator(email)) {
+      handleError('Invalid email address', 'email')
+      validation = false
+    }
+
+    if (address.length == 0) {
+      handleError('Address is required!', 'address')
+      validation = false
+    }
+
+    if (password.length == 0) {
+      handleError('Password is required!', 'password')
+      validation = false
+    } else if (passwordValidator(password)) {
+      handleError('Password must be of length 6', 'password')
+      validation = false
+    }
+
+    // check to make sure confirmPassword matches
+    if (password != password_confirmation) {
+      handleError("Passwords don't match!", 'password_confirmation')
+      validation = false
+    }
+
+    if (validation) {
+      const registerRequest = {
+        fullname: fullname,
+        email: email,
+        address: address,
+        password: password,
+        password_confirmation: password_confirmation,
       }
-    } else {
-      displayMessage('Validation failed', 'check form inputs')
+
+      /**
+       * Validates input and sends form values to the server
+       */
+      if (onValidSignup(registerRequest)) {
+        try {
+          const user = await userActions.register(
+            registerRequest,
+            useDispatch()
+          )
+          if (user.success) {
+            navigation.navigate('HomeTabs')
+          } else {
+            // throw an alert that an error has occurred
+            displayMessage('Error', 'An error occurred')
+          }
+        } catch (error) {
+          // throw an error as alert
+          displayMessage('Something went wrong', 'restart the app')
+          console.warn(error)
+        }
+      } else {
+        displayMessage('Validation failed', 'check form inputs')
+      }
     }
   }
 
@@ -218,7 +277,7 @@ export default function RegisterScreen({ navigation }) {
             leftIcon={emailIcon}
             inputFieldStyle={[{ marginBottom: 7 }, styles.inputFieldStyle]}
             text={formValues.email}
-            setText={(text) => updateFormValue(text, 'email')}
+            setText={(text) => updateFormValue(text.trim(), 'email')}
             error={errors.email}
             activeField={activeField}
             setActiveField={setActiveField}
@@ -251,7 +310,7 @@ export default function RegisterScreen({ navigation }) {
             leftIcon={passwordIcon}
             inputFieldStyle={[styles.inputFieldStyle]}
             text={formValues.password}
-            setText={(text) => updateFormValue(text, 'password')}
+            setText={(text) => updateFormValue(text.trim(), 'password')}
             error={errors.password}
             secureTextEntry
             setActiveField={setActiveField}
@@ -268,7 +327,9 @@ export default function RegisterScreen({ navigation }) {
             leftIcon={passwordConfirmIcon}
             inputFieldStyle={[styles.inputFieldStyle]}
             text={formValues.password_confirmation}
-            setText={(text) => updateFormValue(text, 'password_confirmation')}
+            setText={(text) =>
+              updateFormValue(text.trim(), 'password_confirmation')
+            }
             error={errors.password_confirmation}
             secureTextEntry
             setActiveField={setActiveField}
@@ -294,7 +355,7 @@ export default function RegisterScreen({ navigation }) {
             style={styles.signUpBtn}
             textStyle={styles.signUpBtnText}
             textColor={signUpBtnTextColor}
-            onPress={register}
+            onPress={handleSubmit}
             onPressIn={() => {
               setSignUpBtnColor('#fff')
               setSignUpBtnTextColor('#A5A5A5')
