@@ -78,7 +78,6 @@ export default function LoginScreen({ navigation }) {
             setErrors({ ...errors, message: 'An unexpected error has occured' })
           }
         }
-        console.log(errors)
         throw error
       }
     } else {

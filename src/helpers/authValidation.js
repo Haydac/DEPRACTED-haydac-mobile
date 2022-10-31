@@ -1,10 +1,32 @@
 import validator from 'validator'
 
-const onValidLogin = ({ email, password }) => {
-  return emailValidator(email) ** passwordValidator(password)
+/**
+ *
+ * @param {*} formValues  - login form values
+ * @returns true if all the values follow the correct syntax
+ */
+const onValidLogin = (formValues) => {
+  const { email, password } = formValues
+  let isValid = true
+  if (email && emailValidator(email)) isValid = false
+  if (password && passwordValidator(password)) isValid = false
+  return isValid
 }
 
-const onValidSignup = (formValues) => {}
+/**
+ *
+ * @param {*} formValues - register form values
+ * @returns true if all the values follow the correct syntax
+ */
+const onValidSignup = (formValues) => {
+  const { fullname, email, address, password } = formValues
+  let isValid = true
+  if (fullname && !nameValidator(fullname)) isValid = false
+  if (email && !emailValidator(email)) isValid = false
+  if (address && !addressValidator(address)) isValid = false
+  if (password && !passwordValidator(password)) isValid = false
+  return isValid
+}
 
 /*
  * HELPER METHODS

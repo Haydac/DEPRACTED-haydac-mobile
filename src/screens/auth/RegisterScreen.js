@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { StyleSheet, View, Keyboard } from 'react-native'
+import { StyleSheet, View, Keyboard, Alert } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 
 import Screen from '../../components/core/Screen'
@@ -10,15 +10,28 @@ import Separator from '../../components/Separator'
 
 import { theme } from '../../core/theme'
 
-import { signup } from '../../api/AuthProvider'
 import {
   addressValidator,
   nameValidator,
   emailValidator,
   passwordValidator,
+  onValidSignup,
 } from '../../helpers/authValidation'
+import userActions from '../../redux/user/userActions'
+import { useDispatch } from 'react-redux'
 
 export default function RegisterScreen({ navigation }) {
+  // Alert functionality
+  const displayMessage = (title, message) =>
+    Alert.alert(title, message, [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      { text: 'OK', onPress: () => console.log('OK Pressed') },
+    ])
+
   const [formValues, setFormValues] = useState({
     fullname: '',
     email: '',
@@ -92,72 +105,14 @@ export default function RegisterScreen({ navigation }) {
     setErrors((prevErrors) => ({ ...prevErrors, [formField]: errorMessage }))
   }
 
-  const validate = ({
-    fullname,
-    email,
-    address,
-    password,
-    password_confirmation,
-  }) => {
-    let isValid = true
-    let nameError = nameValidator(fullname)
-    let emailError = emailValidator(email)
-    let addressError = addressValidator(address)
-    let passwordError = passwordValidator(password)
-    let passwordConfirmError = passwordValidator(password_confirmation)
-
-    if (nameError) {
-      handleError(nameError, 'fullname')
-      isValid = false
-    } else {
-      handleError(undefined, 'fullname')
-    }
-
-    if (emailError) {
-      handleError(emailError, 'email')
-      isValid = false
-    } else {
-      handleError(undefined, 'email')
-    }
-
-    if (addressError) {
-      handleError(addressError, 'address')
-      isValid = false
-    } else {
-      handleError(undefined, 'address')
-    }
-
-    if (passwordError) {
-      handleError(passwordError, 'password')
-      isValid = false
-    } else {
-      handleError(undefined, 'password')
-    }
-
-    if (passwordConfirmError) {
-      handleError(passwordConfirmError, 'password_confirmation')
-      isValid = false
-    } else {
-      handleError(undefined, 'password_confirmation')
-    }
-
-    if (password !== password_confirmation) {
-      handleError('Password fields should match', 'password_confirmation')
-      isValid = false
-    } else {
-      handleError(undefined, 'password_confirmation')
-    }
-
-    return isValid
-  }
-
+  const dispatch = useDispatch()
   /**
    * Sends values from form to the server
    */
-  const onSignUpPressed = async () => {
+  const register = async () => {
     Keyboard.dismiss()
     let emailInput = formValues.email.toLowerCase()
-    const signUpRequest = {
+    const registerRequest = {
       fullname: formValues.fullname,
       email: emailInput,
       address: formValues.address,
@@ -165,17 +120,22 @@ export default function RegisterScreen({ navigation }) {
       password_confirmation: formValues.password_confirmation,
     }
 
-    if (validate(signUpRequest)) {
+    if (onValidSignup(registerRequest)) {
       try {
-        // passes signUpRequest to api
-        const user = await signup(signUpRequest)
-
+        const user = await userActions.register(registerRequest, dispatch)
         if (user.success) {
-          navigation.navigate('LoginScreen')
+          navigation.navigate('HomeTabs')
+        } else {
+          // throw an alert that an error has occurred
+          displayMessage('Error', 'An error occurred')
         }
       } catch (error) {
+        // throw an error as alert
+        displayMessage('Something went wrong', 'restart the app')
         console.warn(error)
       }
+    } else {
+      displayMessage('Validation failed', 'check form inputs')
     }
   }
 
@@ -334,7 +294,7 @@ export default function RegisterScreen({ navigation }) {
             style={styles.signUpBtn}
             textStyle={styles.signUpBtnText}
             textColor={signUpBtnTextColor}
-            onPress={onSignUpPressed}
+            onPress={register}
             onPressIn={() => {
               setSignUpBtnColor('#fff')
               setSignUpBtnTextColor('#A5A5A5')
