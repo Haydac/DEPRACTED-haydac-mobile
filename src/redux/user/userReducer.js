@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import localstorage from '../../utils/localstorage'
+import localstorage from '../../utils/localStorage'
 import {
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,

@@ -25,10 +25,9 @@ export default function RegisterScreen({ navigation }) {
     Alert.alert(title, message, [
       {
         text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
         style: 'cancel',
       },
-      { text: 'OK', onPress: () => console.log('OK Pressed') },
+      { text: 'OK' },
     ])
 
   // button states
@@ -115,7 +114,7 @@ export default function RegisterScreen({ navigation }) {
   const handleError = (errorMessage, formField) => {
     setErrors((prevErrors) => ({ ...prevErrors, [formField]: errorMessage }))
   }
-
+  const dispatch = useDispatch()
   /**
    * Performs frontend validation
    */
@@ -131,7 +130,7 @@ export default function RegisterScreen({ navigation }) {
     if (fullname.length == 0) {
       handleError('Name is required!', 'fullname')
       validation = false
-    } else if (nameValidator(fullname)) {
+    } else if (!nameValidator(fullname)) {
       handleError('Invalid type for name', 'fullname')
       validation = false
     }
@@ -139,8 +138,8 @@ export default function RegisterScreen({ navigation }) {
     if (email.length == 0) {
       handleError('Email is required!', 'email')
       validation = false
-    } else if (emailValidator(email)) {
-      handleError('Invalid email address', 'email')
+    } else if (!emailValidator(email)) {
+      handleError('Invalid email address!', 'email')
       validation = false
     }
 
@@ -152,12 +151,11 @@ export default function RegisterScreen({ navigation }) {
     if (password.length == 0) {
       handleError('Password is required!', 'password')
       validation = false
-    } else if (passwordValidator(password)) {
-      handleError('Password must be of length 6', 'password')
+    } else if (!passwordValidator(password)) {
+      handleError('Password must be of length 6!', 'password')
       validation = false
     }
 
-    // check to make sure confirmPassword matches
     if (password != password_confirmation) {
       handleError("Passwords don't match!", 'password_confirmation')
       validation = false
@@ -177,10 +175,7 @@ export default function RegisterScreen({ navigation }) {
        */
       if (onValidSignup(registerRequest)) {
         try {
-          const user = await userActions.register(
-            registerRequest,
-            useDispatch()
-          )
+          const user = await userActions.register(registerRequest, dispatch)
           if (user.success) {
             navigation.navigate('HomeTabs')
           } else {
@@ -190,11 +185,13 @@ export default function RegisterScreen({ navigation }) {
         } catch (error) {
           // throw an error as alert
           displayMessage('Something went wrong', 'restart the app')
-          console.warn(error)
+          throw error
         }
       } else {
         displayMessage('Validation failed', 'check form inputs')
       }
+    } else {
+      throw 'frontend validation failed'
     }
   }
 
@@ -277,7 +274,10 @@ export default function RegisterScreen({ navigation }) {
             leftIcon={emailIcon}
             inputFieldStyle={[{ marginBottom: 7 }, styles.inputFieldStyle]}
             text={formValues.email}
-            setText={(text) => updateFormValue(text.trim(), 'email')}
+            autoCapitalize="none"
+            setText={(text) =>
+              updateFormValue(text.toLowerCase().replace(/\s/g, ''), 'email')
+            }
             error={errors.email}
             activeField={activeField}
             setActiveField={setActiveField}

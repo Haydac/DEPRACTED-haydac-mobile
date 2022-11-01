@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { API_URL } from '@env'
+import { API_URL, TEST_API_URL } from '@env'
 import * as SecureStore from 'expo-secure-store' // store user token
 
 /**
@@ -8,11 +8,10 @@ import * as SecureStore from 'expo-secure-store' // store user token
  * @return {message, data} - an object conatining a message as response from the api
  * and data - as stored user data in DB
  */
-const login = async (formValues) => {
-  let data
+const loginApi = async (formValues) => {
   try {
-    data = await axios.post(`http://127.0.0.1:3000/user/login`, formValues)
-    return data
+    const response = await axios.post(`${TEST_API_URL}/user/login`, formValues)
+    return response
   } catch (error) {
     throw error
   }
@@ -26,15 +25,11 @@ const login = async (formValues) => {
  */
 const registerApi = async (formValues) => {
   try {
-    console.log(formValues)
-    const { data } = await axios.post(
-      `http://127.0.0.1:3000/user/signup`,
-      formValues
-    )
-    return data
+    const response = await axios.post(`${TEST_API_URL}/user/signup`, formValues)
+    return response
   } catch (error) {
     throw error
   }
 }
 
-export { login, registerApi }
+export { loginApi, registerApi }

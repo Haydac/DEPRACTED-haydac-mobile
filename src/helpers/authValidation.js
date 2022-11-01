@@ -8,8 +8,8 @@ import validator from 'validator'
 const onValidLogin = (formValues) => {
   const { email, password } = formValues
   let isValid = true
-  if (email && emailValidator(email)) isValid = false
-  if (password && passwordValidator(password)) isValid = false
+  if (email && !emailValidator(email)) isValid = false
+  if (password && !passwordValidator(password)) isValid = false
   return isValid
 }
 
@@ -36,8 +36,9 @@ const onValidSignup = (formValues) => {
  * @param {*} fullname
  * @returns error messsage if fullname is invalid
  */
-const nameValidator = (name) => {
-  return name && validator.isAlpha(name)
+const nameValidator = (value) => {
+  let name = value.replace(/\s/g, '')
+  return name && validator.isAlpha(name.trim())
 }
 
 /**
@@ -45,8 +46,9 @@ const nameValidator = (name) => {
  * @param {*} email
  * @returns error messsage if email is invalid
  */
-const emailValidator = (email) => {
-  return email && validator.isEmail(email)
+const emailValidator = (value) => {
+  const email = value
+  return email && validator.isEmail(email.trim())
 }
 
 /**
@@ -54,8 +56,15 @@ const emailValidator = (email) => {
  * @param {*} password
  * @returns error messsage if passowrd is invalid
  */
-const passwordValidator = (password) => {
+const passwordValidator = (value) => {
+  const password = value.replace(/\s/g, '')
   return password && password.length > 5
 }
 
-export { onValidLogin, onValidSignup }
+export {
+  onValidLogin,
+  onValidSignup,
+  nameValidator,
+  emailValidator,
+  passwordValidator,
+}

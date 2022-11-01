@@ -11,7 +11,13 @@ import Separator from '../../components/Separator'
 import { theme } from '../../core/theme'
 
 import { login } from '../../api/AuthProvider'
-import { onValidLogin } from '../../helpers/authValidation'
+import {
+  onValidLogin,
+  emailValidator,
+  passwordValidator,
+} from '../../helpers/authValidation'
+import userActions from '../../redux/user/userActions'
+import { useDispatch } from 'react-redux'
 
 export default function LoginScreen({ navigation }) {
   const [formValues, setFormValues] = useState({
@@ -52,36 +58,64 @@ export default function LoginScreen({ navigation }) {
 
   const updateFormValue = (value, formField) => {
     setFormValues((prevValues) => ({ ...prevValues, [formField]: value }))
+    setErrors({ ...errors, message: '' })
   }
 
   const handleError = (errorMessage, formField) => {
     setErrors((prevErrors) => ({ ...prevErrors, [formField]: errorMessage }))
   }
 
-  const onLoginPressed = async () => {
+  const dispatch = useDispatch()
+
+  const handleSubmit = async () => {
     Keyboard.dismiss()
-    formValues.email = formValues.email.toLowerCase()
 
-    if (onValidLogin(formValues)) {
-      try {
-        const user = await login(formValues)
-        if (user.success) {
-          navigation.navigate('HomeTabs')
-        }
-      } catch (error) {
-        let errorStatus = error.response.status
+    const { email, password } = formValues
 
-        if (formValues.email && formValues.password) {
-          if (errorStatus === 412 || errorStatus === 403) {
-            setErrors({ ...errors, message: error.response.data.message })
+    let validation = true
+
+    if (email.length == 0) {
+      handleError('Email is required!', 'email')
+      validation = false
+    } else if (!emailValidator(email)) {
+      handleError('Invalid email address', 'email')
+      validation = false
+    }
+
+    if (password.length == 0) {
+      handleError('Password is required!', 'password')
+      validation = false
+    } else if (!passwordValidator(password)) {
+      handleError('Password must be of length 6', 'password')
+      validation = false
+    }
+    if (validation) {
+      if (onValidLogin(formValues)) {
+        try {
+          const user = await userActions.login(formValues, dispatch)
+          if (user.success) {
+            navigation.navigate('HomeTabs')
           } else {
-            setErrors({ ...errors, message: 'An unexpected error has occured' })
+            // TODO: make this italic and change color to red, text should disappear when user begins typing
+            //     setTimeout(() => this.setState({errorMessage:''}), 3000);
+            setErrors({ ...errors, message: 'User does not exist!' })
           }
+        } catch (error) {
+          let errorStatus = error.response.status
+
+          if (formValues.email && formValues.password) {
+            if (errorStatus === 412 || errorStatus === 403) {
+              setErrors({ ...errors, message: error.response.data.message })
+            } else {
+              setErrors({
+                ...errors,
+                message: 'An unexpected error has occured',
+              })
+            }
+          }
+          throw error
         }
-        throw error
       }
-    } else {
-      setErrors({ ...errors, message: 'Invalid login credentials' })
     }
   }
 
@@ -156,9 +190,12 @@ export default function LoginScreen({ navigation }) {
             placeHolder="Email"
             placeholderTextColor="#9E9E9E"
             leftIcon={emailIcon}
+            autoCapitalize="none"
             inputFieldStyle={[{ marginBottom: 40 }, styles.inputFieldStyle]}
             text={formValues.email}
-            setText={(text) => updateFormValue(text, 'email')}
+            setText={(text) =>
+              updateFormValue(text.toLowerCase().replace(/\s/g, ''), 'email')
+            }
             error={errors.email}
             activeField={activeField}
             setActiveField={setActiveField}
@@ -202,7 +239,7 @@ export default function LoginScreen({ navigation }) {
             style={styles.signUpBtn}
             textStyle={styles.signUpBtnText}
             textColor={signUpBtnTextColor}
-            onPress={onLoginPressed}
+            onPress={handleSubmit}
             onPressIn={() => {
               setSignUpBtnColor('#fff')
               setSignUpBtnTextColor('#A5A5A5')
