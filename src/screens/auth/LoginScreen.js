@@ -10,7 +10,7 @@ import Separator from '../../components/Separator'
 
 import { theme } from '../../core/theme'
 
-import { login } from '../../api/AuthProvider'
+import { login, loginApi } from '../../api/AuthProvider'
 import {
   onValidLogin,
   emailValidator,
@@ -20,6 +20,16 @@ import userActions from '../../redux/user/userActions'
 import { useDispatch } from 'react-redux'
 
 export default function LoginScreen({ navigation }) {
+  // Alert/pop-up functionality when user app runs into errors
+  const displayMessage = (title, message) =>
+    Alert.alert(title, message, [
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+      { text: 'OK' },
+    ])
+
   const [formValues, setFormValues] = useState({
     email: '',
     password: '',
@@ -59,6 +69,7 @@ export default function LoginScreen({ navigation }) {
   const updateFormValue = (value, formField) => {
     setFormValues((prevValues) => ({ ...prevValues, [formField]: value }))
     setErrors({ ...errors, message: '' })
+    // handleError('', value)
   }
 
   const handleError = (errorMessage, formField) => {
@@ -89,6 +100,10 @@ export default function LoginScreen({ navigation }) {
       handleError('Password must be of length 6', 'password')
       validation = false
     }
+
+    /**
+     * Validates input and sends form values to the server
+     */
     if (validation) {
       if (onValidLogin(formValues)) {
         try {
@@ -97,25 +112,15 @@ export default function LoginScreen({ navigation }) {
             navigation.navigate('HomeTabs')
           } else {
             // TODO: make this italic and change color to red, text should disappear when user begins typing
-            //     setTimeout(() => this.setState({errorMessage:''}), 3000);
-            setErrors({ ...errors, message: 'User does not exist!' })
+            setErrors({ ...errors, message: user.message })
           }
         } catch (error) {
-          let errorStatus = error.response.status
-
-          if (formValues.email && formValues.password) {
-            if (errorStatus === 412 || errorStatus === 403) {
-              setErrors({ ...errors, message: error.response.data.message })
-            } else {
-              setErrors({
-                ...errors,
-                message: 'An unexpected error has occured',
-              })
-            }
-          }
-          throw error
+          // should be an alert
+          displayMessage('Something went wrong', 'restart the app')
         }
       }
+    } else {
+      throw 'Unable to validate login form input'
     }
   }
 

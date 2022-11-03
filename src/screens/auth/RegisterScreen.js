@@ -161,37 +161,28 @@ export default function RegisterScreen({ navigation }) {
       validation = false
     }
 
+    /**
+     * Validates input and sends form values to the server
+     */
     if (validation) {
-      const registerRequest = {
-        fullname: fullname,
-        email: email,
-        address: address,
-        password: password,
-        password_confirmation: password_confirmation,
-      }
-
-      /**
-       * Validates input and sends form values to the server
-       */
-      if (onValidSignup(registerRequest)) {
+      if (onValidSignup(formValues)) {
         try {
           const user = await userActions.register(registerRequest, dispatch)
           if (user.success) {
             navigation.navigate('HomeTabs')
           } else {
             // throw an alert that an error has occurred
-            displayMessage('Error', 'An error occurred')
+            setErrors({ ...errors, message: user.message })
           }
         } catch (error) {
           // throw an error as alert
           displayMessage('Something went wrong', 'restart the app')
-          throw error
         }
       } else {
         displayMessage('Validation failed', 'check form inputs')
       }
     } else {
-      throw 'frontend validation failed'
+      throw 'Unable to validate register form input'
     }
   }
 

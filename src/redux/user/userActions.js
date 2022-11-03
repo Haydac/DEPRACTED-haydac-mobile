@@ -41,6 +41,7 @@ const register = async (formValues, dispatch) => {
           ? error.response.data.message
           : error.message,
     })
+    return error.response.data
   }
 }
 
@@ -62,6 +63,7 @@ const login = async (formValues, dispatch) => {
           ? error.response.data.message
           : error.message,
     })
+    return error.response.data
   }
 }
 
