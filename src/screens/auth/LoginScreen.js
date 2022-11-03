@@ -69,17 +69,21 @@ export default function LoginScreen({ navigation }) {
   const updateFormValue = (value, formField) => {
     setFormValues((prevValues) => ({ ...prevValues, [formField]: value }))
     setErrors({ ...errors, message: '' })
-    // handleError('', value)
   }
 
   const handleError = (errorMessage, formField) => {
     setErrors((prevErrors) => ({ ...prevErrors, [formField]: errorMessage }))
   }
 
+  const clearError = () => {
+    setErrors({ ...errors, password: '', email: '' })
+  }
+
   const dispatch = useDispatch()
 
   const handleSubmit = async () => {
     Keyboard.dismiss()
+    clearError() // clear all input errors
 
     const { email, password } = formValues
 
@@ -112,7 +116,7 @@ export default function LoginScreen({ navigation }) {
             navigation.navigate('HomeTabs')
           } else {
             // TODO: make this italic and change color to red, text should disappear when user begins typing
-            setErrors({ ...errors, message: user.message })
+            setErrors({ message: user.message })
           }
         } catch (error) {
           // should be an alert
