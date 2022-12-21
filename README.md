@@ -1,11 +1,13 @@
-# Haydac
+# Running the Project Using Yarn
 
-To run the app:
+1. Install Yarn by following the instructions at https://yarnpkg.com/getting-started/install.
+2. Navigate to the root directory of the project.
+3. Run the following command to install the project dependencies:
+   - `yarn`
+4. Run the following command to start the development server:
+   - `yarn start`
 
-- `yarn` to install packages
-- `yarn start`
-
-## Contribution
+# Git Contribution
 
 1. CREATE A NEW BRANCH FOR THE SOLUTION/TASK OFF OF DEVELOP
 2. PUSH CHANGES TO YOUR NEW BRANCH

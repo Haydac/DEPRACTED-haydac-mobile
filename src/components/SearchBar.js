@@ -3,6 +3,7 @@ import { View, StyleSheet } from 'react-native'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 import { Ionicons } from '@expo/vector-icons'
 import { theme } from '../core/theme'
+import { GOOGLE_MAPS_API_KEY } from '@env'
 
 export default function SearchBar({
   width,
@@ -29,7 +30,7 @@ export default function SearchBar({
         returnKeyType={'search'}
         onFail={(error) => console.error(error)}
         query={{
-          key: 'AIzaSyABl1b0Ok2pzddo2jRqlNsZaEJzE_6lW6Y',
+          key: GOOGLE_MAPS_API_KEY,
           language: 'en',
         }}
         styles={{

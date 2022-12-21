@@ -7,7 +7,7 @@ import Header from '../../components/text/Header'
 import Button from '../../components/buttons/Button'
 import InputField from '../../components/forms/InputField'
 import Separator from '../../components/Separator'
-
+import { GOOGLE_MAPS_API_KEY } from '@env'
 import { theme } from '../../core/theme'
 
 import {
@@ -18,6 +18,8 @@ import {
 } from '../../helpers/authValidation'
 import userActions from '../../redux/user/userActions'
 import { useDispatch } from 'react-redux'
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
+import SearchBar from '../../components/SearchBar'
 
 export default function RegisterScreen({ navigation }) {
   // Alert/pop-up functionality when user app runs into errors
@@ -276,7 +278,7 @@ export default function RegisterScreen({ navigation }) {
           />
 
           {/* Address input */}
-          <InputField
+          {/* <InputField
             id="Address"
             width={formWidth}
             height={formItemHeight}
@@ -289,6 +291,47 @@ export default function RegisterScreen({ navigation }) {
             error={errors.address}
             setActiveField={setActiveField}
             blurOnSubmit={false}
+          /> */}
+          <GooglePlacesAutocomplete
+            leftIcon={addressIcon}
+            placeholder={'Address'}
+            nearbyPlacesAPI="GooglePlacesSearch"
+            debounce={400}
+            onPress={(data) => setCity(data.structured_formatting.main_text)}
+            minLength={2}
+            fetchDetails={true}
+            returnKeyType={'search'}
+            onFail={(error) => console.error(error)}
+            query={{
+              key: GOOGLE_MAPS_API_KEY,
+              language: 'en',
+            }}
+            styles={{
+              container: {
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+              },
+              textInput: {
+                marginTop: 4,
+                paddingHorizontal: 25,
+                fontSize: 14,
+                justifyContent: 'center',
+                alignItems: 'center',
+                fontWeight: '700',
+                backgroundColor: 'transparent',
+              },
+              textInputContainer: {
+                width: '100%',
+                height: 53,
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 40,
+              },
+            }}
+            width={formWidth}
+            height={formItemHeight}
+            enablePoweredByContainer={false}
           />
 
           {/* Passowrd input */}
