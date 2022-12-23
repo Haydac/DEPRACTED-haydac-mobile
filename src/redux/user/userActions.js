@@ -8,7 +8,6 @@ import {
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
 } from './userConstants'
-import localStorage from '../../utils/localStorage'
 import { loginApi, registerApi } from '../../api/AuthProvider'
 
 /**
@@ -26,7 +25,7 @@ const register = async (formValues, dispatch) => {
       payload: { message: response.data.message },
     })
 
-    localStorage.setItem('userInfo', response.data)
+    setItem('userInfo', response.data)
 
     dispatch({
       type: USER_LOGIN_SUCCESS,
@@ -53,7 +52,7 @@ const login = async (formValues, dispatch) => {
       type: USER_LOGIN_SUCCESS,
       payload: { data: response.data, token: response.jwt },
     })
-    localStorage.setItem('userInfo', response.data)
+    setItem('userInfo', response.data)
     return response.data
   } catch (error) {
     dispatch({

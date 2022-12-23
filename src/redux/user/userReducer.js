@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import localstorage from '../../utils/localStorage'
+import { getItem } from '../../utils/localstorage'
 import {
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
@@ -10,7 +10,7 @@ import {
   USER_REGISTER_FAIL,
 } from './userConstants'
 
-const userInfo = localstorage.getItem('userInfo')
+const userInfo = getItem('userInfo')
 
 const initialState = userInfo
   ? { isLoggdIn: true, userInfo }
