@@ -1,9 +1,9 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
-import localstorage from '../utils/localStorage'
+import { getItem } from '../utils/localstorage'
 import { rootReducer } from './rootReducer'
 
-const storedUserInfo = localstorage.getItem('userInfo')
+const storedUserInfo = getItem('userInfo')
 const initialState = {
   userLogin: {
     userInfo: storedUserInfo ? storedUserInfo : null,

@@ -8,7 +8,7 @@ import {
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
 } from './userConstants'
-import localStorage from '../../utils/localStorage'
+import { setItem, getItem } from '../../utils/localstorage'
 import { loginApi, registerApi } from '../../api/AuthProvider'
 
 /**
@@ -17,7 +17,7 @@ import { loginApi, registerApi } from '../../api/AuthProvider'
  * @param {*} dispatch
  * @returns
  */
-const register = async (formValues, dispatch) => {
+export const register = async (formValues, dispatch) => {
   dispatch({ type: USER_REGISTER_REQUEST, payload: formValues })
   try {
     const response = await registerApi(formValues)
@@ -26,7 +26,7 @@ const register = async (formValues, dispatch) => {
       payload: { message: response.data.message },
     })
 
-    localStorage.setItem('userInfo', response.data)
+    setItem('userInfo', response.data)
 
     dispatch({
       type: USER_LOGIN_SUCCESS,
@@ -45,7 +45,7 @@ const register = async (formValues, dispatch) => {
   }
 }
 
-const login = async (formValues, dispatch) => {
+export const login = async (formValues, dispatch) => {
   dispatch({ type: USER_LOGIN_REQUEST, payload: formValues })
   try {
     const response = await loginApi(formValues)
@@ -53,7 +53,7 @@ const login = async (formValues, dispatch) => {
       type: USER_LOGIN_SUCCESS,
       payload: { data: response.data, token: response.jwt },
     })
-    localStorage.setItem('userInfo', response.data)
+    setItem('userInfo', response.data)
     return response.data
   } catch (error) {
     dispatch({
@@ -66,5 +66,3 @@ const login = async (formValues, dispatch) => {
     return error.response.data
   }
 }
-
-export default { register, login }
