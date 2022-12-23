@@ -9,6 +9,9 @@ import {
 } from 'react-native'
 import { Ionicons, Entypo, FontAwesome } from '@expo/vector-icons'
 import { theme } from '../../core/theme'
+import Button from '../../components/buttons/Button'
+import BusinessMap from '../../components/BusinessMap'
+import Header from '../../components/text/Header'
 
 export default function BusinessScreen({ route, navigation }) {
   navigation.setOptions({
@@ -37,6 +40,7 @@ export default function BusinessScreen({ route, navigation }) {
   const { image_url, name, distance, rating, isFavourite } = business
   const [isFavourited, setIsFavourited] = useState(business.isFavourite)
   const [showMap, setShowMap] = useState(false)
+  const [intervals, setIntervals] = useState(1)
 
   const toggleFavourite = (f) => {
     business.isFavourite = !f
@@ -44,26 +48,17 @@ export default function BusinessScreen({ route, navigation }) {
     route?.params?.favouriteCallback(business.isFavourite)
   }
 
+  // open directions to business
+  const onTakeMeTherePressed = () => {}
+
   return (
     <View style={styles.container}>
       <View style={styles.mapImageContainer}>
-        {showMap ? (
-          // show map
-          <Text>Map</Text>
-        ) : (
-          <Image source={image_url} style={styles.image} />
-        )}
+        <Image source={image_url} style={styles.image} />
       </View>
       <View style={styles.content}>
         <View style={styles.header}>
           <Text style={styles.title}>{name}</Text>
-          <TouchableOpacity onPress={() => setShowMap((e) => !e)}>
-            <Entypo
-              name="map"
-              size={24}
-              color={`${showMap ? theme.colors.primary : '#000'}`}
-            />
-          </TouchableOpacity>
         </View>
         <View
           style={{
@@ -97,8 +92,67 @@ export default function BusinessScreen({ route, navigation }) {
       </View>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={{ zIndex: 20 }}
-      ></ScrollView>
+        style={styles.businessInfo}
+      >
+        <Header style={{ color: '#000' }}>Popular Products</Header>
+        <ScrollView
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          scrollEventThrottle={200}
+          decelerationRate="fast"
+          pagingEnabled
+        >
+          {/* Items */}
+          <View style={styles.product}>
+            <Text>Product</Text>
+          </View>
+          <View style={styles.product}>
+            <Text>Product</Text>
+          </View>
+          <View style={styles.product}>
+            <Text>Product</Text>
+          </View>
+          <View style={styles.product}>
+            <Text>Product</Text>
+          </View>
+          <View style={styles.product}>
+            <Text>Product</Text>
+          </View>
+          <View style={styles.product}>
+            <Text>Product</Text>
+          </View>
+          <View style={styles.product}>
+            <Text>Product</Text>
+          </View>
+          <View style={styles.product}>
+            <Text>Product</Text>
+          </View>
+          <View style={styles.product}>
+            <Text>Product</Text>
+          </View>
+          <View style={styles.product}>
+            <Text>Product</Text>
+          </View>
+        </ScrollView>
+      </ScrollView>
+      <BusinessMap
+        style={styles.businessMap}
+        coordinates={business.coordinates}
+        title={business.name}
+      ></BusinessMap>
+      <Button
+        text="Take me there"
+        width={'86%'}
+        height={40}
+        borderRadius={50}
+        backgroundColor={theme.colors.primary}
+        style={styles.takeMeThereBtn}
+        textStyle={styles.takeMeThereText}
+        textColor={'#fff'}
+        onPress={onTakeMeTherePressed}
+        onPressIn={() => {}}
+        onPressOut={() => {}}
+      />
     </View>
   )
 }
@@ -106,6 +160,7 @@ export default function BusinessScreen({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    alignItems: 'center',
     position: 'relative',
     backgroundColor: '#fff',
   },
@@ -116,6 +171,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+
   image: {
     width: '100%',
     height: 230,
@@ -126,6 +182,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   content: {
+    width: '100%',
     marginTop: 160,
     paddingHorizontal: 25,
     paddingVertical: 25,
@@ -153,8 +210,6 @@ const styles = StyleSheet.create({
     height: 23,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 50,
-    backgroundColor: '#eee',
   },
   businessRatingText: {
     fontSize: 12,
@@ -170,11 +225,35 @@ const styles = StyleSheet.create({
     paddingVertical: 3,
     alignItems: 'center',
     flexDirection: 'row',
-    backgroundColor: '#fff',
-    borderRadius: 5,
+    backgroundColor: '#eee',
+    borderRadius: 40,
   },
   infoText: {
     marginLeft: 4,
     fontSize: 12,
   },
+  businessInfo: {
+    width: '100%',
+    maxHeight: '40%',
+    padding: 10,
+    zIndex: 20,
+  },
+  businessMap: {
+    maxHeight: 250,
+  },
+  product: {
+    width: 80,
+    height: 80,
+    margin: 10,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#e8e8e8',
+  },
+  takeMeThereBtn: {
+    position: 'absolute',
+    bottom: 10,
+    zIndex: 100,
+  },
+  takeMeThereText: {},
 })

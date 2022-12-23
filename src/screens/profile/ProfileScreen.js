@@ -80,8 +80,6 @@ export default function ProfileScreen({ navigation }) {
 
   return (
     <Screen style={styles.container}>
-      <Header style={styles.headerStyle}>Account</Header>
-
       {accountItemGroups?.map((group, groupIdx) => (
         <View style={styles.cardStyle} key={groupIdx}>
           {group?.map((accountItem, itemIdx) => (
@@ -107,11 +105,6 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     backgroundColor: '#fff',
-  },
-  headerStyle: {
-    width: '100%',
-    textAlign: 'center',
-    color: '#000',
   },
   cardStyle: {
     width: '100%',

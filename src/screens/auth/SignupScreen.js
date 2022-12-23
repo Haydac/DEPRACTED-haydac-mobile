@@ -195,6 +195,8 @@ const SignupScreen = ({ navigation }) => {
     } else {
       throw 'Unable to validate register form input'
     }
+
+    console.log(signUpError)
   }
 
   // Keyboard listener
@@ -223,9 +225,8 @@ const SignupScreen = ({ navigation }) => {
 
   return (
     <Screen
-      imageSource={
-        isKeyboardVisible ? null : require('../../assets/background/signup.png')
-      }
+      style={styles.container}
+      svg={isKeyboardVisible ? null : backgroundSvg('200%', '25%')}
     >
       <View style={styles.content}>
         {/* Login header :  */}
@@ -250,6 +251,7 @@ const SignupScreen = ({ navigation }) => {
             isKeyboardVisible ? { bottom: -20 } : {},
           ]}
         >
+          <Text style={{ color: theme.colors.error }}>{signUpError}</Text>
           {/* Full name input */}
           <InputField
             id="fullname"
@@ -426,6 +428,7 @@ const SignupScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fff',
   },
   content: {
     flex: 1,
@@ -455,7 +458,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   skipBtn: {
-    margin: '4%',
+    margin: '7%',
     position: 'absolute',
     top: 10,
     right: 0,

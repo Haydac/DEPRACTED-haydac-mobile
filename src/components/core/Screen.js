@@ -5,40 +5,33 @@ import {
   StyleSheet,
   ScrollView,
   SafeAreaView,
-  ImageBackground,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
 } from 'react-native'
 import Constants from 'expo-constants'
 
-export default function Screen({ imageSource, style, children }) {
+export default function Screen({ svg, style, children }) {
   return (
-    <ImageBackground
-      source={imageSource}
-      resizeMode="cover"
-      style={styles.background}
-    >
-      <SafeAreaView style={[styles.container, style]}>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <ScrollView
-            keyboardShouldPersistTaps="always"
-            contentContainerStyle={[styles.view]}
-          >
-            <View style={[styles.view, style]}>
-              <KeyboardAvoidingView style={styles.view} behavior="padding">
-                {children}
-              </KeyboardAvoidingView>
-            </View>
-          </ScrollView>
-        </TouchableWithoutFeedback>
-      </SafeAreaView>
-    </ImageBackground>
+    <SafeAreaView style={[styles.container, style]}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <ScrollView
+          keyboardShouldPersistTaps="always"
+          contentContainerStyle={[styles.view]}
+        >
+          <View style={[styles.view, style]}>
+            <KeyboardAvoidingView style={styles.view} behavior="padding">
+              {svg}
+              {children}
+            </KeyboardAvoidingView>
+          </View>
+        </ScrollView>
+      </TouchableWithoutFeedback>
+    </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: Constants.statusBarHeight,
     flex: 1,
   },
   view: {
@@ -47,5 +40,9 @@ const styles = StyleSheet.create({
   background: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  image: {
+    flex: 1,
+    justifyContent: 'center',
   },
 })

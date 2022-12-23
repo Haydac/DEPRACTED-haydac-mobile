@@ -127,7 +127,10 @@ export default function HomeScreen({ navigation }) {
             </TouchableOpacity>
           </View>
           <View style={styles.regionButton}>
-            <TouchableOpacity onPress={onReigonButtonPressed}>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={onReigonButtonPressed}
+            >
               <Fontisto name="earth" size={40} color="#eee" />
             </TouchableOpacity>
           </View>
@@ -225,7 +228,7 @@ const styles = StyleSheet.create({
   header: {
     width: '100%',
     height: 70,
-    zIndex: 100,
+    marginTop: 30,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',

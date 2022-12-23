@@ -30,3 +30,50 @@ const styles = StyleSheet.create({
     height: 150,
   },
 })
+
+export const backgroundSvg = (width, height) => (
+  <Svg
+    style={{ position: 'absolute' }}
+    width={width}
+    height={height}
+    viewBox="0 0 614 397"
+    preserveAspectRatio="none"
+  >
+    <Path
+      d="M96 349C71.1772 369.278 9.5 408.48 -9 391.98V-105H413.5V375C406.5 288.5 305 461 214.5 358C220 371 178.5 281.606 96 349Z"
+      fill="#BB6BD9"
+      stroke="#BB6BD9"
+    />
+  </Svg>
+)
+
+export const getStartedSvg = (width, height) => (
+  <Svg
+    style={{ position: 'absolute' }}
+    width={width}
+    height={height}
+    viewBox="0 0 498 826"
+    fill="none"
+    preserveAspectRatio="none"
+  >
+    <Path
+      d="M0.36255 3.02978C0.0726503 1.51435 1.47712 0.321625 3.02003 0.321625H495.577C496.681 0.321625 497.577 1.21706 497.577 2.32162V815.552C497.577 817.325 495.673 818.461 494.401 817.226C456.422 780.367 91.5598 430.744 145.358 655.879C202.099 893.325 404.828 441.875 175.957 764.107C-48.4888 1080.11 12.7506 67.7874 0.36255 3.02978Z"
+      fill="#E8D2FA"
+    />
+  </Svg>
+)
+
+export const mapMarker = (
+  <Svg
+    width="24"
+    height="30"
+    viewBox="0 0 24 30"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <Path
+      d="M12 0C5.75446 0 0.691406 5.06302 0.691406 11.3086C0.691406 13.3973 1.10023 15.5545 2.27343 17.1094L12 30L21.7266 17.1094C22.7922 15.6971 23.3086 13.2005 23.3086 11.3086C23.3086 5.06302 18.2456 0 12 0ZM12 6.54968C14.6279 6.54968 16.7589 8.6807 16.7589 11.3086C16.7589 13.9365 14.6279 16.0675 12 16.0675C9.37211 16.0675 7.24111 13.9365 7.24111 11.3086C7.24111 8.6807 9.37211 6.54968 12 6.54968Z"
+      fill="#B659FF"
+    />
+  </Svg>
+)

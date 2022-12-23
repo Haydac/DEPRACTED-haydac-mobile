@@ -35,6 +35,7 @@ export default function LoginScreen({ navigation }) {
     password: '',
   })
   const [errors, setErrors] = useState({})
+  const [loginError, setLoginError] = useState('')
   const [activeField, setActiveField] = useState('')
 
   // button states
@@ -152,9 +153,8 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <Screen
-      imageSource={
-        isKeyboardVisible ? null : require('../../assets/background/login.png')
-      }
+      style={styles.container}
+      svg={isKeyboardVisible ? null : backgroundSvg('200%', '45%')}
     >
       <View style={styles.content}>
         {/* Login header :  */}
@@ -191,6 +191,7 @@ export default function LoginScreen({ navigation }) {
             isKeyboardVisible ? { bottom: 70 } : {},
           ]}
         >
+          <Text style={{ color: theme.colors.error }}>{loginError}</Text>
           {/* Email input */}
           <InputField
             width={formWidth}
@@ -307,6 +308,10 @@ export default function LoginScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
   content: {
     flex: 1,
     alignItems: 'center',
@@ -335,7 +340,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   skipBtn: {
-    margin: '4%',
+    margin: '7%',
     position: 'absolute',
     top: 10,
     right: 0,
