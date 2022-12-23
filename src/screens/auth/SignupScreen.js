@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { StyleSheet, View, Keyboard, Alert } from 'react-native'
+import { StyleSheet, View, Keyboard, Alert, Text } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 
 import Screen from '../../components/core/Screen'
@@ -9,7 +9,7 @@ import InputField from '../../components/forms/InputField'
 import Separator from '../../components/Separator'
 import { GOOGLE_MAPS_API_KEY } from '@env'
 import { theme } from '../../core/theme'
-
+import { backgroundSvg } from '../../components/core/Brand'
 import {
   nameValidator,
   passwordValidator,
@@ -195,8 +195,6 @@ const SignupScreen = ({ navigation }) => {
     } else {
       throw 'Unable to validate register form input'
     }
-
-    console.log(signUpError)
   }
 
   // Keyboard listener
@@ -251,7 +249,6 @@ const SignupScreen = ({ navigation }) => {
             isKeyboardVisible ? { bottom: -20 } : {},
           ]}
         >
-          <Text style={{ color: theme.colors.error }}>{signUpError}</Text>
           {/* Full name input */}
           <InputField
             id="fullname"

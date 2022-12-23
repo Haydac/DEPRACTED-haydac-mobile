@@ -18,6 +18,7 @@ import {
 } from '../../helpers/authValidation'
 import userActions from '../../redux/user/userActions'
 import { useDispatch } from 'react-redux'
+import { backgroundSvg } from '../../components/core/Brand'
 
 export default function LoginScreen({ navigation }) {
   // Alert/pop-up functionality when user app runs into errors
