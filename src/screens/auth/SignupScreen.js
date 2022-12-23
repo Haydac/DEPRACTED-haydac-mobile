@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { StyleSheet, View, Keyboard, Alert } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 
@@ -19,9 +19,14 @@ import {
 import userActions from '../../redux/user/userActions'
 import { useDispatch } from 'react-redux'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
-import SearchBar from '../../components/SearchBar'
+import { Dimensions } from 'react-native'
+const screenWidth = Dimensions.get('screen').width
+const screenHeight = Dimensions.get('screen').height
 
-export default function RegisterScreen({ navigation }) {
+const SignupScreen = ({ navigation }) => {
+  const screenWidth = Dimensions.get('screen').width
+  const screenHeight = Dimensions.get('screen').height
+
   // Alert/pop-up functionality when user app runs into errors
   const displayMessage = (title, message) =>
     Alert.alert(title, message, [
@@ -47,7 +52,7 @@ export default function RegisterScreen({ navigation }) {
     <MaterialIcons
       name="person"
       color={activeField == 'Name' ? activeIconColor : inactiveIconColor}
-      size={20}
+      size={17}
     />
   )
 
@@ -63,7 +68,11 @@ export default function RegisterScreen({ navigation }) {
     <MaterialIcons
       name="location-pin"
       color={activeField == 'Address' ? activeIconColor : inactiveIconColor}
-      size={20}
+      size={17}
+      style={{
+        marginTop: screenWidth * 0.025,
+        paddingTop: screenHeight * 0.01,
+      }}
     />
   )
 
@@ -71,7 +80,7 @@ export default function RegisterScreen({ navigation }) {
     <MaterialIcons
       name="lock"
       color={activeField == 'Password' ? activeIconColor : inactiveIconColor}
-      size={20}
+      size={17}
     />
   )
 
@@ -81,7 +90,7 @@ export default function RegisterScreen({ navigation }) {
       color={
         activeField == 'PasswordConfirm' ? activeIconColor : inactiveIconColor
       }
-      size={20}
+      size={17}
     />
   )
 
@@ -243,13 +252,9 @@ export default function RegisterScreen({ navigation }) {
         >
           {/* Full name input */}
           <InputField
-            id="Name"
-            width={formWidth}
-            height={formItemHeight}
+            id="fullname"
             placeHolder="Full name"
-            placeholderTextColor="#9E9E9E"
             leftIcon={nameIcon}
-            inputFieldStyle={[styles.inputFieldStyle]}
             text={formValues.fullname}
             setText={(text) => updateFormValue(text, 'fullname')}
             error={errors.fullname}
@@ -259,13 +264,9 @@ export default function RegisterScreen({ navigation }) {
 
           {/* Email input */}
           <InputField
-            width={formWidth}
-            height={formItemHeight}
-            id="Email"
-            placeHolder="Email"
-            placeholderTextColor="#9E9E9E"
+            id="email"
+            placeHolder="Email Address"
             leftIcon={emailIcon}
-            inputFieldStyle={[{ marginBottom: 7 }, styles.inputFieldStyle]}
             text={formValues.email}
             autoCapitalize="none"
             setText={(text) =>
@@ -278,22 +279,8 @@ export default function RegisterScreen({ navigation }) {
           />
 
           {/* Address input */}
-          {/* <InputField
-            id="Address"
-            width={formWidth}
-            height={formItemHeight}
-            placeHolder="Address"
-            placeholderTextColor="#9E9E9E"
-            leftIcon={addressIcon}
-            inputFieldStyle={[styles.inputFieldStyle]}
-            text={formValues.address}
-            setText={(text) => updateFormValue(text, 'address')}
-            error={errors.address}
-            setActiveField={setActiveField}
-            blurOnSubmit={false}
-          /> */}
           <GooglePlacesAutocomplete
-            leftIcon={addressIcon}
+            renderLeftButton={() => addressIcon}
             placeholder={'Address'}
             nearbyPlacesAPI="GooglePlacesSearch"
             debounce={400}
@@ -311,22 +298,18 @@ export default function RegisterScreen({ navigation }) {
                 flex: 1,
                 justifyContent: 'center',
                 alignItems: 'center',
+                position: 'relative',
+                marginTop: screenHeight * 0.002,
+                // marginVertical: screenWidth * 0.15,
+                borderBottomWidth: screenWidth * 0.002,
+                borderBottomColor: theme.colors.primary,
               },
               textInput: {
-                marginTop: 4,
-                paddingHorizontal: 25,
-                fontSize: 14,
-                justifyContent: 'center',
-                alignItems: 'center',
-                fontWeight: '700',
-                backgroundColor: 'transparent',
-              },
-              textInputContainer: {
-                width: '100%',
-                height: 53,
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: 40,
+                flex: 1,
+                paddingTop: screenHeight * 0.02,
+                paddingLeft: screenWidth * 0.055,
+                fontSize: 18,
+                color: 'red',
               },
             }}
             width={formWidth}
@@ -336,13 +319,10 @@ export default function RegisterScreen({ navigation }) {
 
           {/* Passowrd input */}
           <InputField
-            id="Password"
-            width={formWidth}
-            height={formItemHeight}
+            type="secure"
+            id="password"
             placeHolder="Password"
-            placeholderTextColor="#9E9E9E"
             leftIcon={passwordIcon}
-            inputFieldStyle={[styles.inputFieldStyle]}
             text={formValues.password}
             setText={(text) => updateFormValue(text.trim(), 'password')}
             error={errors.password}
@@ -353,13 +333,10 @@ export default function RegisterScreen({ navigation }) {
 
           {/* Passowrd confirmation input */}
           <InputField
-            id="PasswordConfirm"
-            width={formWidth}
-            height={formItemHeight}
+            type="secure"
+            id="password_confirm"
             placeHolder="Confirm Password"
-            placeholderTextColor="#9E9E9E"
             leftIcon={passwordConfirmIcon}
-            inputFieldStyle={[styles.inputFieldStyle]}
             text={formValues.password_confirmation}
             setText={(text) =>
               updateFormValue(text.trim(), 'password_confirmation')
@@ -487,10 +464,12 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     fontSize: 19,
   },
-  inputFieldStyle: {
-    marginVertical: 10,
+  inputContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     position: 'relative',
-    borderBottomWidth: 1,
+    borderBottomWidth: screenWidth * 0.002,
     borderBottomColor: theme.colors.primary,
   },
   emailPhoneFieldStyle: {
@@ -543,3 +522,5 @@ const styles = StyleSheet.create({
     lineHeight: 26,
   },
 })
+
+export default SignupScreen

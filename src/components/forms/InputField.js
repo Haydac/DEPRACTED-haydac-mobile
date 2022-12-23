@@ -3,8 +3,36 @@ import { View, TextInput, StyleSheet, Text } from 'react-native'
 
 import { Feather } from '@expo/vector-icons'
 import { theme } from '../../core/theme'
+import { Dimensions } from 'react-native'
+const screenWidth = Dimensions.get('screen').width
+const screenHeight = Dimensions.get('screen').height
+import { MaterialIcons } from '@expo/vector-icons'
 
-export default function InputField({
+const SecureInputField = (props) => {
+  const [secureTextEntry, setSecureTextEntry] = useState(true)
+
+  const toggleSecuretextEntry = () => {
+    setSecureTextEntry((prev) => !prev)
+  }
+
+  return (
+    <View>
+      <TextInput
+        placeHolder={props.placeHolder}
+        secureTextEntry={secureTextEntry}
+      />
+      <MaterialIcons
+        name="lock"
+        color={
+          activeField == 'PasswordConfirm' ? activeIconColor : inactiveIconColor
+        }
+        size={17}
+      />
+    </View>
+  )
+}
+
+const InputField = ({
   id,
   placeholderTextColor,
   width,
@@ -19,9 +47,23 @@ export default function InputField({
   secureTextEntry,
   setActiveField,
   blurOnSubmit,
-}) {
+  type = 'none',
+}) => {
   const [hidePassword, setHidpassword] = useState(true)
   const [passwordIconColor, setPasswordIconColor] = useState('#A5A5A5')
+
+  let textInputStyle = {
+    paddingTop: screenHeight * 0.01,
+    marginRight: screenWidth * 0.1,
+    fontSize: 18,
+    flex: 1,
+  }
+  if (type === 'secure') {
+    textInputStyle = {
+      ...textInputStyle,
+      marginRight: screenWidth * 0.008,
+    }
+  }
 
   return (
     <View
@@ -56,7 +98,7 @@ export default function InputField({
             ? 'number-pad'
             : 'default'
         }
-        style={[styles.textInputStyle]}
+        style={textInputStyle}
         selectionColor="#B659FF50"
         blurOnSubmit={blurOnSubmit}
         onBlur={() => {
@@ -84,23 +126,18 @@ export default function InputField({
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
-    height: 30,
     flexDirection: 'row',
+    flex: 1,
     justifyContent: 'center',
-    marginVertical: 0,
-    paddingHorizontal: 10,
+    alignItems: 'center',
+    position: 'relative',
+    borderBottomWidth: screenWidth * 0.002,
+    borderBottomColor: theme.colors.primary,
   },
   icon: {
-    width: 30,
-    height: 30,
-    alignSelf: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  textInputStyle: {
-    paddingHorizontal: 10,
     flex: 1,
+    paddingTop: screenHeight * 0.01,
+    marginRight: -(screenWidth * 0.5),
   },
   errorMessage: {
     position: 'absolute',
@@ -112,3 +149,5 @@ const styles = StyleSheet.create({
     lineHeight: 15,
   },
 })
+
+export default InputField

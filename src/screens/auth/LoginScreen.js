@@ -283,7 +283,7 @@ export default function LoginScreen({ navigation }) {
             style={styles.loginBtn}
             textStyle={styles.loginBtnText}
             textColor={loginBtnTextColor}
-            onPress={() => navigation.navigate('RegisterScreen')}
+            onPress={() => navigation.navigate('SignupScreen')}
             onPressIn={() => {
               setLoginBtnColor(theme.colors.primary)
               setLoginBtnTextColor('#fff')
