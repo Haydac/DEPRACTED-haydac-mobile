@@ -8,7 +8,6 @@ import { useAuthContext } from '../contexts/AuthContext'
 import { StartScreen } from '../screens/intro'
 import {
   LoginScreen,
-  RegisterScreen,
   ResetPasswordScreen,
   VerificationScreen,
   NewPasswordScreen,
@@ -43,7 +42,6 @@ export default function RootNavigator() {
         <>
           <Stack.Screen name="StartScreen" component={StartScreen} />
           <Stack.Screen name="LoginScreen" component={LoginScreen} />
-          {/* <Stack.Screen name="RegisterScreen" component={RegisterScreen} /> */}
           <Stack.Screen name="SignupScreen" component={SignupScreen} />
 
           <Stack.Screen
