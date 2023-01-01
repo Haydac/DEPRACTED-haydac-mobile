@@ -1,17 +1,33 @@
-import React, { useRef, useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { ScrollView, Alert, ActivityIndicator, StyleSheet } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
 
 import Screen from '../../components/core/Screen'
 import SearchBar from '../../components/SearchBar'
 import BusinessItem from '../../components/BusinessItem'
+import Item from '../../components/business/item'
 import BusinessAd from '../../components/BusinessAd'
-import { demoStores } from '../../data/demoStores'
+import { demoStores, testBusinesses } from '../../data/demoStores'
 import { theme } from '../../core/theme'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  fetchBusinesses,
+  fetchBusinessesbyCategory,
+} from '../../redux/business/businessActions'
 
 export default function GroceryStoresScreen({ navigation }) {
-  const [businessData, setBusinessData] = useState(demoStores)
+  const [businessData, setBusinessData] = useState(testBusinesses)
   const [isLoading, setLoading] = useState(false)
+
+  // why isnt it working: trying to reteive businesses stored in Actions
+  const dispatch = useDispatch()
+  // const { businesses, loading, error } = useSelector(
+  //   (state) => state.businesses
+  // )
+
+  dispatch(fetchBusinessesbyCategory('6310f43df6a262ad457f181c'))
+  // console.log('here')
+  // console.log(businesses)
 
   return (
     <Screen style={styles.container}>
@@ -30,6 +46,7 @@ export default function GroceryStoresScreen({ navigation }) {
         style={styles.scrollView}
         showsVerticalScrollIndicator={false}
       >
+        {/* Businesses are displayed here */}
         {isLoading && (
           <ActivityIndicator
             size="large"
@@ -37,7 +54,8 @@ export default function GroceryStoresScreen({ navigation }) {
             style={styles.activityIndicator}
           />
         )}
-        <BusinessItem businessData={businessData} navigation={navigation} />
+        {/* <BusinessItem businessData={businessData} navigation={navigation} /> */}
+        <Item businessData={businessData} navigation={navigation} />
       </ScrollView>
     </Screen>
   )
