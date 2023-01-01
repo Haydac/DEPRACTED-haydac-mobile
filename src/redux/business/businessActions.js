@@ -5,7 +5,7 @@ import {
   FETCH_BUSINESSES_REQUEST,
 } from './businessConstants'
 import { useSelector } from 'react-redux'
-import { API_URL } from '@env'
+import { API_URL, TEST_API_URL } from '@env'
 
 // based of the businesses gotten, check favourites database.
 // retrieve the businesses under the userID in favourites Schema
@@ -17,12 +17,11 @@ import { API_URL } from '@env'
  * @returns an array of all registered businesses
  */
 export const fetchBusinesses = () => async (dispatch) => {
-  console.log('fetchBusinesses action reached')
   dispatch({ type: FETCH_BUSINESSES_REQUEST })
 
   try {
     // get the response object from the API
-    const response = await axios.get(`${API_URL}/business/businesses`)
+    const response = await axios.get(`${API_URL}/business/*`)
 
     // convert retrieved object of businesses to an array of objects
     const businesses = Object.entries(response.data).map(([id, data]) => ({
@@ -48,26 +47,22 @@ export const fetchBusinesses = () => async (dispatch) => {
  * @returns a list of businesses belonging to the category(categoryID)
  */
 export const fetchBusinessesbyCategory = (categoryId) => async (dispatch) => {
-  console.log('fetchBusinessesbyCategory action reached')
-
   // Retrive the list of businesses
-  const businesses = useSelector((state) => {
-    // console.log(JSON.stringify(state.businesses.businessArray))
+  let foundBusinesses = useSelector((state) => {
     state.businesses.businessArray
   })
 
   // handle edge case
-  if (!businesses || businesses.length == 0) {
-    console.log('handling edge case')
+  if (!foundBusinesses || foundBusinesses.length == 0) {
     dispatch({ type: FETCH_BUSINESSES_REQUEST })
     // Filter the businesses by country
     try {
-      console.log('try block reached')
+      let url = `${API_URL}/business/category/${categoryId}`.trim()
       // get the response object from the API
-      const response = await axios.get(`${API_URL}/business/:${categoryId}`)
-      console.log(response)
+      let response = await axios.get(url)
+      response = response.data
       // convert retrieved object of businesses to an array of objects
-      const businesses = Object.entries(response.data).map(([id, data]) => ({
+      let businesses = Object.entries(response.data).map(([id, data]) => ({
         id,
         ...data,
       }))
@@ -77,9 +72,9 @@ export const fetchBusinessesbyCategory = (categoryId) => async (dispatch) => {
         ...business,
         isFavourite: false,
       }))
-      console.log('outputting')
       console.log(updatedBusinesses)
       dispatch({ type: FETCH_BUSINESSES_SUCCESS, payload: updatedBusinesses })
+      //   console.log('reachable')
     } catch (error) {
       // handle errors
       dispatch({ type: FETCH_BUSINESSES_ERROR, payload: error.message })

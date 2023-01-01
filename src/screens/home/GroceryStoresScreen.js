@@ -16,18 +16,17 @@ import {
 } from '../../redux/business/businessActions'
 
 export default function GroceryStoresScreen({ navigation }) {
+  const businessCategoryID = '630dd0b69e51f2d1809fe19b'
   const [businessData, setBusinessData] = useState(testBusinesses)
   const [isLoading, setLoading] = useState(false)
-
-  // why isnt it working: trying to reteive businesses stored in Actions
   const dispatch = useDispatch()
-  // const { businesses, loading, error } = useSelector(
-  //   (state) => state.businesses
-  // )
+  dispatch(fetchBusinessesbyCategory(businessCategoryID))
 
-  dispatch(fetchBusinessesbyCategory('6310f43df6a262ad457f181c'))
-  // console.log('here')
-  // console.log(businesses)
+  // retrieve the list of businesses after dispatching action, look into fetchBusinessesbyCategory function to fix error. printing null
+  let listBusinesses = useSelector((state) => {
+    state.businesses.businessArray
+  })
+  console.log(listBusinesses)
 
   return (
     <Screen style={styles.container}>
