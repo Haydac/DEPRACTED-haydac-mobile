@@ -12,9 +12,30 @@ import {
 
 const userInfo = getItem('userInfo')
 
-const initialState = userInfo
-  ? { isLoggdIn: true, userInfo }
-  : { isLoggdIn: false, userInfo: null }
+const initialState = {
+  email: null,
+  password: null,
+  isLoggedIn: false,
+}
+
+const userReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case SET_CREDENTIALS:
+      return {
+        ...state,
+        email: action.email,
+        password: action.password,
+        isLoggedIn: true,
+      }
+    case SET_LOGGED_IN:
+      return {
+        ...state,
+        isLoggedIn: action.isLoggedIn,
+      }
+    default:
+      return state
+  }
+}
 
 const login = (state = initialState, action) => {
   switch (action.type) {

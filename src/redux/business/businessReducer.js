@@ -22,7 +22,7 @@ const fetchBusinesses = (state = initialState, action) => {
     case FETCH_BUSINESS_SUCCESS:
       return { ...state, business: action.payload, loading: false }
     case FETCH_BUSINESSES_SUCCESS:
-      return { ...state, businesses: action.payload, loading: false }
+      return { ...state, businessArray: action.payload, loading: false }
     case FETCH_BUSINESSES_ERROR:
     case FETCH_BUSINESS_ERROR:
       return { ...state, loading: false, error: action.payload }

@@ -9,24 +9,40 @@ import Item from '../../components/business/item'
 import BusinessAd from '../../components/BusinessAd'
 import { demoStores, testBusinesses } from '../../data/demoStores'
 import { theme } from '../../core/theme'
-import { useDispatch, useSelector } from 'react-redux'
-import {
-  fetchBusinesses,
-  fetchBusinessesbyCategory,
-} from '../../redux/business/businessActions'
+import { useDispatch, useSelector, connect } from 'react-redux'
+import { fetchBusinessesbyCategory } from '../../redux/business/businessActions'
+
+// const mapStateToProps = (state) => {
+//   console.log('from mapStateToProps function')
+//   console.log(state)
+//   return { businesses: state.businesses.businessArray }
+// }
 
 export default function GroceryStoresScreen({ navigation }) {
+  const dispatch = useDispatch()
   const businessCategoryID = '630dd0b69e51f2d1809fe19b'
   const [businessData, setBusinessData] = useState(testBusinesses)
   const [isLoading, setLoading] = useState(false)
-  const dispatch = useDispatch()
-  dispatch(fetchBusinessesbyCategory(businessCategoryID))
 
-  // retrieve the list of businesses after dispatching action, look into fetchBusinessesbyCategory function to fix error. printing null
-  let listBusinesses = useSelector((state) => {
+  const [data, setData] = useState(null)
+
+  useEffect(async () => {
+    async function fetchData() {
+      console.log('calling action now')
+      dispatch(await fetchBusinessesbyCategory(businessCategoryID))
+    }
+    fetchData()
+  }, [])
+
+  // might give an infinite call to the api
+  const updatedData = useSelector((state) => {
+    //console.log(state.businesses.businessArray)
     state.businesses.businessArray
   })
-  console.log(listBusinesses)
+
+  useEffect(() => {
+    setData(updatedData)
+  }, [updatedData])
 
   return (
     <Screen style={styles.container}>
@@ -78,3 +94,5 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
 })
+
+// export default connect(mapStateToProps)(GroceryStoresScreen)

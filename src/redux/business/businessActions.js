@@ -21,7 +21,7 @@ export const fetchBusinesses = () => async (dispatch) => {
 
   try {
     // get the response object from the API
-    const response = await axios.get(`${API_URL}/business/*`)
+    const response = await axios.get(`${API_URL}/business`)
 
     // convert retrieved object of businesses to an array of objects
     const businesses = Object.entries(response.data).map(([id, data]) => ({
@@ -47,45 +47,8 @@ export const fetchBusinesses = () => async (dispatch) => {
  * @returns a list of businesses belonging to the category(categoryID)
  */
 export const fetchBusinessesbyCategory = (categoryId) => async (dispatch) => {
-  // Retrive the list of businesses
-  let foundBusinesses = useSelector((state) => {
-    state.businesses.businessArray
-  })
-
-  // handle edge case
-  if (!foundBusinesses || foundBusinesses.length == 0) {
-    dispatch({ type: FETCH_BUSINESSES_REQUEST })
-    // Filter the businesses by country
-    try {
-      let url = `${API_URL}/business/category/${categoryId}`.trim()
-      // get the response object from the API
-      let response = await axios.get(url)
-      response = response.data
-      // convert retrieved object of businesses to an array of objects
-      let businesses = Object.entries(response.data).map(([id, data]) => ({
-        id,
-        ...data,
-      }))
-
-      // TODO: this is where the favourites should be checked
-      const updatedBusinesses = businesses.map((business) => ({
-        ...business,
-        isFavourite: false,
-      }))
-      console.log(updatedBusinesses)
-      dispatch({ type: FETCH_BUSINESSES_SUCCESS, payload: updatedBusinesses })
-      //   console.log('reachable')
-    } catch (error) {
-      // handle errors
-      dispatch({ type: FETCH_BUSINESSES_ERROR, payload: error.message })
-    }
-  } else {
-    // Filter the businesses by category
-    const businessesByCategory = businesses.filter(
-      (business) => business.category === categoryId
-    )
-    dispatch({ type: FETCH_BUSINESSES_SUCCESS, payload: businessesByCountry })
-  }
+  // retrieve the fetched businesses from the state and dispatch
+  // otherwise run the function to fetch all businesses again
 }
 
 export const fetchBusinessesbyCountry = (countryId) => (dispatch) => {

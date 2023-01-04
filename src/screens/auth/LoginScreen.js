@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { StyleSheet, View, Keyboard, Text } from 'react-native'
+import { StyleSheet, View, Keyboard, Text, Alert } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 
 import Screen from '../../components/core/Screen'
@@ -7,7 +7,7 @@ import Header from '../../components/text/Header'
 import Button from '../../components/buttons/Button'
 import InputField from '../../components/forms/InputField'
 import Separator from '../../components/Separator'
-
+import store from '../../redux/store'
 import { theme } from '../../core/theme'
 
 import { login, loginApi } from '../../api/AuthProvider'
@@ -19,6 +19,9 @@ import {
 import userActions from '../../redux/user/userActions'
 import { useDispatch } from 'react-redux'
 import { backgroundSvg } from '../../components/core/Brand'
+import { fetchBusinesses } from '../../redux/business/businessActions'
+import authReducers from '../../redux/auth/authReducers'
+import { loginAction, registerAction } from '../../redux/auth/authActions'
 
 export default function LoginScreen({ navigation }) {
   // Alert/pop-up functionality when user app runs into errors
@@ -113,13 +116,11 @@ export default function LoginScreen({ navigation }) {
     if (validation) {
       if (onValidLogin(formValues)) {
         try {
-          const user = await userActions.login(formValues, dispatch)
-          if (user.success) {
-            navigation.navigate('HomeTabs')
-          } else {
-            // TODO: make this italic and change color to red, text should disappear when user begins typing
-            setErrors({ message: user.message })
-          }
+          // using redux to handle login
+          store.dispatch(loginAction(formValues))
+
+          // navigate user to home screen
+          navigation.navigate('HomeTabs')
         } catch (error) {
           // should be an alert
           displayMessage('Something went wrong', 'restart the app')

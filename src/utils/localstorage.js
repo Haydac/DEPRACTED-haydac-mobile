@@ -7,7 +7,7 @@ import AsyncStorageLib from '@react-native-async-storage/async-storage'
  */
 export const getItem = async (itemName) => {
   try {
-    const info = JSON.parse(await AsyncStorageLib.getItem(itemName))
+    const info = await AsyncStorageLib.getItem(itemName)
     return info
   } catch (error) {
     throw error
