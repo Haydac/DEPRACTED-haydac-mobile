@@ -16,10 +16,12 @@ import {
   emailValidator,
   onValidSignup,
 } from '../../helpers/authValidation'
-import userActions from '../../redux/user/userActions'
 import { useDispatch } from 'react-redux'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 import { Dimensions } from 'react-native'
+import store from '../../redux/store'
+import { registerAction } from '../../redux/auth/authActions'
+
 const screenWidth = Dimensions.get('screen').width
 const screenHeight = Dimensions.get('screen').height
 
@@ -176,15 +178,14 @@ const SignupScreen = ({ navigation }) => {
      * Validates input and sends form values to the server
      */
     if (validation) {
+      console.log('before')
       if (onValidSignup(formValues)) {
         try {
-          const user = await userActions.register(registerRequest, dispatch)
-          if (user.success) {
-            navigation.navigate('HomeTabs')
-          } else {
-            // throw an alert that an error has occurred
-            setErrors({ ...errors, message: user.message })
-          }
+          console.log('reached')
+          // using redux to handle login
+          store.dispatch(registerAction(formValues))
+          // navigate user to home screen
+          navigation.navigate('HomeTabs')
         } catch (error) {
           // throw an error as alert
           displayMessage('Something went wrong', 'restart the app')

@@ -1,4 +1,3 @@
-import { USER_UPDATE_PROFILE_FAIL } from '../user/userConstants'
 import {
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
@@ -8,6 +7,8 @@ import {
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
   USER_UPDATE_PROFILE_SUCCESS,
+  USER_UPDATE_PROFILE_FAIL,
+  USER_UPDATE_PROFILE_REQUEST,
 } from './actionTypes'
 
 const initialState = {
@@ -25,11 +26,14 @@ const initialState = {
 
 /**
  * Updates the store when user is authenticated(login, signup)
+ * and
+ * Handles updating and displaying information to the user
+ *
  * @param {*} state - current state of user
  * @param {*} action - login/signup request
  * @returns
  */
-const authReducer = (state = initialState, action) => {
+const userAuthReducer = (state = initialState, action) => {
   // store token in asyncStorage
   switch (action.type) {
     case USER_REGISTER_REQUEST:
@@ -47,26 +51,15 @@ const authReducer = (state = initialState, action) => {
         profile: { fullname: '', address: '', phone: '', favourites: [] },
         isLoggedIn: false,
       }
-    default:
-      return state
-  }
-}
-
-/**
- * Handles updating and displaying information to the user
- * @param {} state - current state of user
- * @param {*} action - update request
- * @returns
- */
-const userReducer = (state = initialState, action) => {
-  switch (action.type) {
     case USER_UPDATE_PROFILE_REQUEST:
       return { ...initialState, loading: true }
     case USER_UPDATE_PROFILE_SUCCESS:
       return { ...initialState, profile: action.payload, loading: false }
     case USER_UPDATE_PROFILE_FAIL:
       return { ...initialState, loading: false, error: action.payload }
+    default:
+      return state
   }
 }
 
-export default { authReducer, userReducer }
+export default { userAuthReducer }

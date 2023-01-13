@@ -112,8 +112,20 @@ export default function HomeScreen({ navigation }) {
     handlePresentModalPress()
   }
 
-  // const businessesData = useSelector((state) => state.businesses.businessArray)
-  // console.log(businessesData)
+  // TODO: maybe unecessary? delete
+  useEffect(() => {
+    async function check() {
+      const data = await AsyncStorage.getItem('token')
+
+      if (data == null) {
+        //crash app
+        Alert.alert('App crash', 'Unable to log you in', [{ text: 'OK' }])
+        throw new Error('App crash')
+      }
+    }
+
+    check()
+  }, [])
 
   return (
     <Screen style={styles.container}>

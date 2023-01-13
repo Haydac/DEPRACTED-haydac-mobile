@@ -1,9 +1,8 @@
 import { combineReducers } from 'redux'
-import userReducer from './user/userReducer'
+import authReducers from './auth/authReducers'
 import businessReducer from './business/businessReducer'
 
 export const rootReducer = combineReducers({
-  userRegister: userReducer.register,
-  userLogin: userReducer.login,
+  user: authReducers.userAuthReducer,
   businesses: businessReducer.fetchBusinesses,
 })

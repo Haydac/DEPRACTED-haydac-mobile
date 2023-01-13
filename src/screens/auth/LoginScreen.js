@@ -9,19 +9,14 @@ import InputField from '../../components/forms/InputField'
 import Separator from '../../components/Separator'
 import store from '../../redux/store'
 import { theme } from '../../core/theme'
-
-import { login, loginApi } from '../../api/AuthProvider'
 import {
   onValidLogin,
   emailValidator,
   passwordValidator,
 } from '../../helpers/authValidation'
-import userActions from '../../redux/user/userActions'
 import { useDispatch } from 'react-redux'
 import { backgroundSvg } from '../../components/core/Brand'
-import { fetchBusinesses } from '../../redux/business/businessActions'
-import authReducers from '../../redux/auth/authReducers'
-import { loginAction, registerAction } from '../../redux/auth/authActions'
+import { loginAction } from '../../redux/auth/authActions'
 
 export default function LoginScreen({ navigation }) {
   // Alert/pop-up functionality when user app runs into errors
@@ -118,7 +113,6 @@ export default function LoginScreen({ navigation }) {
         try {
           // using redux to handle login
           store.dispatch(loginAction(formValues))
-
           // navigate user to home screen
           navigation.navigate('HomeTabs')
         } catch (error) {
