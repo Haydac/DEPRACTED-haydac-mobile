@@ -5,7 +5,7 @@ import {
   FETCH_BUSINESSES_REQUEST,
 } from './businessConstants'
 import { useSelector } from 'react-redux'
-import { API_URL, TEST_API_URL } from '@env'
+import { API_URL } from '@env'
 
 // based of the businesses gotten, check favourites database.
 // retrieve the businesses under the userID in favourites Schema
