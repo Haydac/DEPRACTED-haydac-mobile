@@ -150,7 +150,8 @@ const SignupScreen = ({ navigation }) => {
     if (email.length == 0) {
       handleError('Email is required!', 'email')
       validation = false
-    } else if (!emailValidator(email)) {
+    }
+    if (email.length != 0 && !emailValidator(email)) {
       handleError('Invalid email address!', 'email')
       validation = false
     }

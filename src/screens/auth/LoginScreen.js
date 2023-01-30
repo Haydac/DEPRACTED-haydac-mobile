@@ -93,7 +93,8 @@ export default function LoginScreen({ navigation }) {
     if (email.length == 0) {
       handleError('Email is required!', 'email')
       validation = false
-    } else if (!emailValidator(email)) {
+    }
+    if (!emailValidator(email)) {
       handleError('Invalid email address', 'email')
       validation = false
     }
@@ -101,7 +102,8 @@ export default function LoginScreen({ navigation }) {
     if (password.length == 0) {
       handleError('Password is required!', 'password')
       validation = false
-    } else if (!passwordValidator(password)) {
+    }
+    if (!passwordValidator(password)) {
       handleError('Password must be of length 6', 'password')
       validation = false
     }
