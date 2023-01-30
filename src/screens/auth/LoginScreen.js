@@ -89,6 +89,7 @@ export default function LoginScreen({ navigation }) {
 
     let validation = true
 
+    // this helps with the frontend validation and displays errors to the users
     if (email.length == 0) {
       handleError('Email is required!', 'email')
       validation = false
@@ -109,16 +110,18 @@ export default function LoginScreen({ navigation }) {
      * Validates input and sends form values to the server
      */
     if (validation) {
-      if (onValidLogin(formValues)) {
-        try {
-          // using redux to handle login
-          store.dispatch(loginAction(formValues))
-          // navigate user to home screen
+      // console.log(formValues)
+      try {
+        await store.dispatch(loginAction(formValues))
+        // navigate user to home screen on success
+        const state = store.getState()
+        if (state.user.isLoggedIn) {
           navigation.navigate('HomeTabs')
-        } catch (error) {
-          // should be an alert
-          displayMessage('Something went wrong', 'restart the app')
+        } else {
+          displayMessage(state.user.error)
         }
+      } catch (error) {
+        displayMessage('Something went wrong', 'restart the app')
       }
     } else {
       throw 'Unable to validate login form input'

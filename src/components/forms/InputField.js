@@ -127,12 +127,12 @@ const InputField = ({
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
     borderBottomWidth: screenWidth * 0.002,
     borderBottomColor: theme.colors.primary,
+    marginBottom: screenHeight * 0.06,
   },
   icon: {
     flex: 1,

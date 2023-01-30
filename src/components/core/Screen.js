@@ -14,14 +14,12 @@ import Constants from 'expo-constants'
 export default function Screen({ svg, style, children }) {
   return (
     <SafeAreaView style={[styles.container, style]}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={[styles.view, style]}>
-          <KeyboardAvoidingView style={styles.view} behavior="padding">
-            {svg}
-            {children}
-          </KeyboardAvoidingView>
-        </View>
-      </TouchableWithoutFeedback>
+      <View style={[styles.view, style]}>
+        <KeyboardAvoidingView style={styles.view} behavior="padding">
+          {svg}
+          {children}
+        </KeyboardAvoidingView>
+      </View>
     </SafeAreaView>
   )
 }

@@ -7,7 +7,6 @@ import Header from '../../components/text/Header'
 import Button from '../../components/buttons/Button'
 import InputField from '../../components/forms/InputField'
 import Separator from '../../components/Separator'
-import { GOOGLE_MAPS_API_KEY } from '@env'
 import { theme } from '../../core/theme'
 import { backgroundSvg } from '../../components/core/Brand'
 import {
@@ -276,45 +275,6 @@ const SignupScreen = ({ navigation }) => {
             activeField={activeField}
             setActiveField={setActiveField}
             blurOnSubmit={true}
-          />
-
-          {/* Address input */}
-          <GooglePlacesAutocomplete
-            renderLeftButton={() => addressIcon}
-            placeholder={'Address'}
-            nearbyPlacesAPI="GooglePlacesSearch"
-            debounce={400}
-            onPress={(data) => setCity(data.structured_formatting.main_text)}
-            minLength={2}
-            fetchDetails={true}
-            returnKeyType={'search'}
-            onFail={(error) => console.error(error)}
-            query={{
-              key: GOOGLE_MAPS_API_KEY,
-              language: 'en',
-            }}
-            styles={{
-              container: {
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-                position: 'relative',
-                marginTop: screenHeight * 0.002,
-                // marginVertical: screenWidth * 0.15,
-                borderBottomWidth: screenWidth * 0.002,
-                borderBottomColor: theme.colors.primary,
-              },
-              textInput: {
-                flex: 1,
-                paddingTop: screenHeight * 0.02,
-                paddingLeft: screenWidth * 0.055,
-                fontSize: 18,
-                color: 'red',
-              },
-            }}
-            width={formWidth}
-            height={formItemHeight}
-            enablePoweredByContainer={false}
           />
 
           {/* Passowrd input */}
