@@ -3,7 +3,7 @@ import {
   FETCH_BUSINESSES_ERROR,
   FETCH_BUSINESSES_SUCCESS,
   FETCH_BUSINESSES_REQUEST,
-} from './businessConstants'
+} from './dataConstants'
 import { useSelector } from 'react-redux'
 import { API_URL } from '@env'
 
@@ -17,6 +17,7 @@ import { API_URL } from '@env'
  * @returns an array of all registered businesses
  */
 export const fetchBusinesses = () => async (dispatch) => {
+  console.log("function to fetch all businesses called")
   dispatch({ type: FETCH_BUSINESSES_REQUEST })
 
   try {
@@ -47,8 +48,14 @@ export const fetchBusinesses = () => async (dispatch) => {
  * @returns a list of businesses belonging to the category(categoryID)
  */
 export const fetchBusinessesbyCategory = (categoryId) => async (dispatch) => {
-  // retrieve the fetched businesses from the state and dispatch
-  // otherwise run the function to fetch all businesses again
+  console.log('fetchBusinessesbyCategory reached')
+  dispatch({type: FETCH_BUSINESS_BY_CATEGORY_REQUEST})
+
+  try {
+    const response = await axios.get(`${API_URL}/business/category/${categoryId}`);
+
+    dispatch({ type: FETCH_BUSINESSES_SUCCESS, payload: updatedBusinesses })
+  }
 }
 
 export const fetchBusinessesbyCountry = (countryId) => (dispatch) => {

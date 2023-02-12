@@ -6,6 +6,7 @@ import {
   View,
   Text,
   TouchableOpacity,
+  Alert,
 } from 'react-native'
 import {
   BottomSheetModalProvider,
@@ -118,7 +119,7 @@ export default function HomeScreen({ navigation }) {
       const data = await AsyncStorage.getItem('token')
 
       if (data == null) {
-        //crash app
+        //crash app if unable to get token
         Alert.alert('App crash', 'Unable to log you in', [{ text: 'OK' }])
         throw new Error('App crash')
       }

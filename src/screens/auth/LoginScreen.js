@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { StyleSheet, View, Keyboard, Text, Alert } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
-
 import Screen from '../../components/core/Screen'
 import Header from '../../components/text/Header'
 import Button from '../../components/buttons/Button'

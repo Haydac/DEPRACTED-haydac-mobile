@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { ScrollView, Alert, ActivityIndicator, StyleSheet } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
-
+import { BUSINESS_CATEGORY_ID } from '@env'
 import Screen from '../../components/core/Screen'
 import SearchBar from '../../components/SearchBar'
 import BusinessItem from '../../components/BusinessItem'
@@ -12,27 +12,24 @@ import { theme } from '../../core/theme'
 import { useDispatch, useSelector, connect } from 'react-redux'
 import { fetchBusinessesbyCategory } from '../../redux/business/businessActions'
 
-// const mapStateToProps = (state) => {
-//   console.log('from mapStateToProps function')
-//   console.log(state)
-//   return { businesses: state.businesses.businessArray }
-// }
-
 export default function GroceryStoresScreen({ navigation }) {
   const dispatch = useDispatch()
-  const businessCategoryID = '630dd0b69e51f2d1809fe19b'
+  const businessCategoryID = `${BUSINESS_CATEGORY_ID}`
   const [businessData, setBusinessData] = useState(testBusinesses)
   const [isLoading, setLoading] = useState(false)
 
   const [data, setData] = useState(null)
 
   useEffect(async () => {
-    async function fetchData() {
-      console.log('calling action now')
+    const fetchData = async () => {
       dispatch(await fetchBusinessesbyCategory(businessCategoryID))
     }
+
     fetchData()
-  }, [])
+
+    // clean up function
+    return () => {}
+  }, [businessCategoryID])
 
   // might give an infinite call to the api
   const updatedData = useSelector((state) => {
