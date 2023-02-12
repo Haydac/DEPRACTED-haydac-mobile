@@ -44,10 +44,10 @@ export const fetchBusinesses = () => async (dispatch) => {
 
 /**
  *
- * @param {*} categoryId - id of the category
+ * @param {*} categoryName - name of category
  * @returns a list of businesses belonging to the category(categoryID)
  */
-export const fetchBusinessesbyCategory = (categoryId) => async (dispatch) => {
+export const fetchBusinessesbyCategory = (categoryName) => async (dispatch) => {
   console.log('fetchBusinessesbyCategory reached')
   dispatch({type: FETCH_BUSINESS_BY_CATEGORY_REQUEST})
 
