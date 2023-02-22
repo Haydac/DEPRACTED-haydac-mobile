@@ -1,24 +1,21 @@
 import { useState, useEffect } from 'react'
-import { StyleSheet, View, Keyboard, Text } from 'react-native'
+import { StyleSheet, View, Keyboard, Text, Alert } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
-
 import Screen from '../../components/core/Screen'
 import Header from '../../components/text/Header'
 import Button from '../../components/buttons/Button'
 import InputField from '../../components/forms/InputField'
 import Separator from '../../components/Separator'
-
+import store from '../../redux/store'
 import { theme } from '../../core/theme'
-
-import { login, loginApi } from '../../api/AuthProvider'
 import {
   onValidLogin,
   emailValidator,
   passwordValidator,
 } from '../../helpers/authValidation'
-import userActions from '../../redux/user/userActions'
 import { useDispatch } from 'react-redux'
 import { backgroundSvg } from '../../components/core/Brand'
+import { loginAction } from '../../redux/auth/authActions'
 
 export default function LoginScreen({ navigation }) {
   // Alert/pop-up functionality when user app runs into errors
@@ -91,10 +88,12 @@ export default function LoginScreen({ navigation }) {
 
     let validation = true
 
+    // this helps with the frontend validation and displays errors to the users
     if (email.length == 0) {
       handleError('Email is required!', 'email')
       validation = false
-    } else if (!emailValidator(email)) {
+    }
+    if (!emailValidator(email)) {
       handleError('Invalid email address', 'email')
       validation = false
     }
@@ -102,7 +101,8 @@ export default function LoginScreen({ navigation }) {
     if (password.length == 0) {
       handleError('Password is required!', 'password')
       validation = false
-    } else if (!passwordValidator(password)) {
+    }
+    if (!passwordValidator(password)) {
       handleError('Password must be of length 6', 'password')
       validation = false
     }
@@ -111,19 +111,18 @@ export default function LoginScreen({ navigation }) {
      * Validates input and sends form values to the server
      */
     if (validation) {
-      if (onValidLogin(formValues)) {
-        try {
-          const user = await userActions.login(formValues, dispatch)
-          if (user.success) {
-            navigation.navigate('HomeTabs')
-          } else {
-            // TODO: make this italic and change color to red, text should disappear when user begins typing
-            setErrors({ message: user.message })
-          }
-        } catch (error) {
-          // should be an alert
-          displayMessage('Something went wrong', 'restart the app')
+      // console.log(formValues)
+      try {
+        await store.dispatch(loginAction(formValues))
+        // navigate user to home screen on success
+        const state = store.getState()
+        if (state.user.isLoggedIn) {
+          navigation.navigate('HomeTabs')
+        } else {
+          displayMessage(state.user.error)
         }
+      } catch (error) {
+        displayMessage('Something went wrong', 'restart the app')
       }
     } else {
       throw 'Unable to validate login form input'

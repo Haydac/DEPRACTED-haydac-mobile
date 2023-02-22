@@ -7,7 +7,6 @@ import Header from '../../components/text/Header'
 import Button from '../../components/buttons/Button'
 import InputField from '../../components/forms/InputField'
 import Separator from '../../components/Separator'
-import { GOOGLE_MAPS_API_KEY } from '@env'
 import { theme } from '../../core/theme'
 import { backgroundSvg } from '../../components/core/Brand'
 import {
@@ -16,10 +15,12 @@ import {
   emailValidator,
   onValidSignup,
 } from '../../helpers/authValidation'
-import userActions from '../../redux/user/userActions'
 import { useDispatch } from 'react-redux'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 import { Dimensions } from 'react-native'
+import store from '../../redux/store'
+import { registerAction } from '../../redux/auth/authActions'
+
 const screenWidth = Dimensions.get('screen').width
 const screenHeight = Dimensions.get('screen').height
 
@@ -149,7 +150,8 @@ const SignupScreen = ({ navigation }) => {
     if (email.length == 0) {
       handleError('Email is required!', 'email')
       validation = false
-    } else if (!emailValidator(email)) {
+    }
+    if (email.length != 0 && !emailValidator(email)) {
       handleError('Invalid email address!', 'email')
       validation = false
     }
@@ -176,15 +178,14 @@ const SignupScreen = ({ navigation }) => {
      * Validates input and sends form values to the server
      */
     if (validation) {
+      console.log('before')
       if (onValidSignup(formValues)) {
         try {
-          const user = await userActions.register(registerRequest, dispatch)
-          if (user.success) {
-            navigation.navigate('HomeTabs')
-          } else {
-            // throw an alert that an error has occurred
-            setErrors({ ...errors, message: user.message })
-          }
+          console.log('reached')
+          // using redux to handle login
+          store.dispatch(registerAction(formValues))
+          // navigate user to home screen
+          navigation.navigate('HomeTabs')
         } catch (error) {
           // throw an error as alert
           displayMessage('Something went wrong', 'restart the app')
@@ -275,45 +276,6 @@ const SignupScreen = ({ navigation }) => {
             activeField={activeField}
             setActiveField={setActiveField}
             blurOnSubmit={true}
-          />
-
-          {/* Address input */}
-          <GooglePlacesAutocomplete
-            renderLeftButton={() => addressIcon}
-            placeholder={'Address'}
-            nearbyPlacesAPI="GooglePlacesSearch"
-            debounce={400}
-            onPress={(data) => setCity(data.structured_formatting.main_text)}
-            minLength={2}
-            fetchDetails={true}
-            returnKeyType={'search'}
-            onFail={(error) => console.error(error)}
-            query={{
-              key: GOOGLE_MAPS_API_KEY,
-              language: 'en',
-            }}
-            styles={{
-              container: {
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-                position: 'relative',
-                marginTop: screenHeight * 0.002,
-                // marginVertical: screenWidth * 0.15,
-                borderBottomWidth: screenWidth * 0.002,
-                borderBottomColor: theme.colors.primary,
-              },
-              textInput: {
-                flex: 1,
-                paddingTop: screenHeight * 0.02,
-                paddingLeft: screenWidth * 0.055,
-                fontSize: 18,
-                color: 'red',
-              },
-            }}
-            width={formWidth}
-            height={formItemHeight}
-            enablePoweredByContainer={false}
           />
 
           {/* Passowrd input */}

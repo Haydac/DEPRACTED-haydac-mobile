@@ -6,6 +6,7 @@ import AuthContextProvider from './src/contexts/AuthContext'
 import RootNavigator from './src/navigation'
 import { Provider } from 'react-redux'
 import store from './src/redux/store'
+// import 'react-native-dotenv/config'
 
 export default function App() {
   return (

@@ -7,25 +7,19 @@ import {
   SafeAreaView,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
+  FlatList,
 } from 'react-native'
 import Constants from 'expo-constants'
 
 export default function Screen({ svg, style, children }) {
   return (
     <SafeAreaView style={[styles.container, style]}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <ScrollView
-          keyboardShouldPersistTaps="always"
-          contentContainerStyle={[styles.view]}
-        >
-          <View style={[styles.view, style]}>
-            <KeyboardAvoidingView style={styles.view} behavior="padding">
-              {svg}
-              {children}
-            </KeyboardAvoidingView>
-          </View>
-        </ScrollView>
-      </TouchableWithoutFeedback>
+      <View style={[styles.view, style]}>
+        <KeyboardAvoidingView style={styles.view} behavior="padding">
+          {svg}
+          {children}
+        </KeyboardAvoidingView>
+      </View>
     </SafeAreaView>
   )
 }

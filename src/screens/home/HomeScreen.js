@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useMemo } from 'react'
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import {
   ScrollView,
   ActivityIndicator,
@@ -6,6 +6,7 @@ import {
   View,
   Text,
   TouchableOpacity,
+  Alert,
 } from 'react-native'
 import {
   BottomSheetModalProvider,
@@ -29,6 +30,8 @@ import { demoRestaurants } from '../../data/demoRestaurants'
 import { demoServices } from '../../data/demoServices'
 
 import { Fontisto, AntDesign, FontAwesome } from '@expo/vector-icons'
+import { useSelector } from 'react-redux'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export const demoBusinesses = [
   ...demoStores,
@@ -93,6 +96,9 @@ export default function HomeScreen({ navigation }) {
     },
   ]
 
+  // put this in a getToken function and use it to keep users logged in by invoking this in App.js
+  // delete this token if user logs out
+
   // section header
   const SectionHeader = ({ title }) => (
     <View style={styles.sectionHeaderContainer}>
@@ -106,6 +112,22 @@ export default function HomeScreen({ navigation }) {
   const onReigonButtonPressed = () => {
     handlePresentModalPress()
   }
+
+  // TODO: maybe unecessary? delete
+  useEffect(() => {
+    async function check() {
+      const data = await AsyncStorage.getItem('token')
+
+      //TODO: uncomment this
+      // if (data == null) {
+      //   //crash app if unable to get token
+      //   Alert.alert('App crash', 'Unable to log you in', [{ text: 'OK' }])
+      //   throw new Error('App crash')
+      // }
+    }
+
+    check()
+  }, [])
 
   return (
     <Screen style={styles.container}>

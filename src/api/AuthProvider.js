@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { API_URL, TEST_API_URL } from '@env'
+import { API_URL } from '@env'
 import * as SecureStore from 'expo-secure-store' // store user token
 
 /**
@@ -10,8 +10,8 @@ import * as SecureStore from 'expo-secure-store' // store user token
  */
 const loginApi = async (formValues) => {
   try {
-    const response = await axios.post(`${TEST_API_URL}/user/login`, formValues)
-    return response
+    const response = await axios.post(`${API_URL}/user/login`, formValues)
+    return response.data
   } catch (error) {
     throw error
   }

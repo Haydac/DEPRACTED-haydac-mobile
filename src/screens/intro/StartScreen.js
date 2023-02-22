@@ -2,13 +2,17 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { FontAwesome5 } from '@expo/vector-icons'
 import Button from '../../components/buttons/Button'
-import Brand, { getStartedSvg } from '../../components/core/Brand'
+import Brand, {
+  getStartedSvg,
+  outerBackground,
+} from '../../components/core/Brand'
 import Screen from '../../components/core/Screen'
 
 export default function StartScreen({ navigation }) {
   return (
     <Screen
-      svg={getStartedSvg('100%', '86%')}
+      // svg={getStartedSvg('100%', '86%')}
+      // svg={outerBackground('100%', '86%')}
       style={{ backgroundColor: '#E6E6FA' }}
     >
       <View style={styles.container}>

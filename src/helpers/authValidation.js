@@ -1,7 +1,7 @@
 import validator from 'validator'
 
 /**
- *
+ * Depracated - Validation is now handled on the login form itself
  * @param {*} formValues  - login form values
  * @returns true if all the values follow the correct syntax
  */
