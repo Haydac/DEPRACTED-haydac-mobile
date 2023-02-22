@@ -28,7 +28,7 @@ const initialState = {
 }
 
 // this handles fetching of a single business or multiple businesses
-const dataReducer = (state = initialState, action) => {
+const businessReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_BUSINESSES_REQUEST:
     case FETCH_BUSINESSES_REQUEST:
@@ -86,4 +86,4 @@ const handleError = (state, error) => {
   }
 }
 
-export default { dataReducer }
+export default { businessReducer }

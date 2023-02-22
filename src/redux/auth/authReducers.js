@@ -33,7 +33,7 @@ const initialState = {
  * @param {*} action - login/signup request
  * @returns
  */
-const userAuthReducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action) => {
   // store token in asyncStorage
   switch (action.type) {
     case USER_REGISTER_REQUEST:
@@ -62,4 +62,4 @@ const userAuthReducer = (state = initialState, action) => {
   }
 }
 
-export default { userAuthReducer }
+export default { authReducer }

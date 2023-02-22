@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { ScrollView, Alert, ActivityIndicator, StyleSheet } from 'react-native'
+import {
+  ScrollView,
+  Alert,
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  Button,
+} from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
-import { BUSINESS_CATEGORY_ID } from '@env'
+import { GROCERY_ID } from '@env'
 import Screen from '../../components/core/Screen'
 import SearchBar from '../../components/SearchBar'
 import BusinessItem from '../../components/BusinessItem'
@@ -11,39 +18,43 @@ import { demoStores, testBusinesses } from '../../data/demoStores'
 import { theme } from '../../core/theme'
 import { useDispatch, useSelector, connect } from 'react-redux'
 import { fetchBusinessesbyCategory } from '../../redux/business/businessActions'
+import { View } from 'react-native'
 
 export default function GroceryStoresScreen({ navigation }) {
   const dispatch = useDispatch()
-  const businessCategoryID = `${BUSINESS_CATEGORY_ID}`
-  const [businessData, setBusinessData] = useState(testBusinesses)
-  const [isLoading, setLoading] = useState(false)
+  const businessCategoryID = `${GROCERY_ID}`
+  const [lastRefreshTime, setLastRefreshTime] = useState(Date.now())
 
-  const [data, setData] = useState(null)
+  // refresh logic
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setLastRefreshTime(Date.now())
+    }, 1000 * 60 * 5) // refresh every 5 minutes
 
+    return () => clearInterval(intervalId) // clear the interval when the component unmounts
+  }, []) // run the effect only once, when the component mounts
+
+  /**
+   * Dispatch action to fetch the businesses from server
+   */
   useEffect(async () => {
     const fetchData = async () => {
       dispatch(await fetchBusinessesbyCategory(businessCategoryID))
     }
-
     fetchData()
+  }, [])
 
-    // clean up function
-    return () => {}
-  }, [businessCategoryID])
-
-  // might give an infinite call to the api
-  const updatedData = useSelector((state) => {
-    //console.log(state.businesses.businessArray)
-    state.businesses.businessArray
-  })
-
-  useEffect(() => {
-    setData(updatedData)
-  }, [updatedData])
+  /**
+   * Connects to the redux store to retrieve state
+   * called whenver component is rendered and an action is dispatched
+   */
+  const groceryStores = useSelector((state) => state.business.groceryStores)
 
   return (
     <Screen style={styles.container}>
       {/* Header: menuButton  ---- search ---- filterButton */}
+
+      {/* Search bar */}
       <SearchBar
         width="87%"
         placeHolder="Search stores"
@@ -54,21 +65,28 @@ export default function GroceryStoresScreen({ navigation }) {
         renderIconLeft={false}
         renderIconRight={true}
       />
-      <ScrollView
-        style={styles.scrollView}
-        showsVerticalScrollIndicator={false}
-      >
-        {/* Businesses are displayed here */}
-        {isLoading && (
-          <ActivityIndicator
-            size="large"
-            color={theme.colors.primary}
-            style={styles.activityIndicator}
-          />
-        )}
-        {/* <BusinessItem businessData={businessData} navigation={navigation} /> */}
-        <Item businessData={businessData} navigation={navigation} />
-      </ScrollView>
+
+      <View>
+        <Text>Last refresh: {new Date(lastRefreshTime).toLocaleString()}</Text>
+        <Button
+          title="Refresh now"
+          onPress={() => setLastRefreshTime(Date.now())}
+        />
+        {/* issue here */}
+        {/* {groceryStores && Object.keys(groceryStores).length > 0 ? (
+          <Text>First grocery store: {Object.keys(groceryStores)[0]}</Text>
+        ) : (
+          <Text>Loading grocery stores...</Text>
+        )} */}
+        {groceryStores &&
+          Object.keys(groceryStores).map((id) => (
+            <View key={id} style={{ paddingBottom: 20 }}>
+              <Text>{id}</Text>
+              <Text>{groceryStores[id].name}</Text>
+              <Text>{groceryStores[id].description}</Text>
+            </View>
+          ))}
+      </View>
     </Screen>
   )
 }

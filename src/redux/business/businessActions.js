@@ -3,6 +3,10 @@ import {
   FETCH_BUSINESSES_ERROR,
   FETCH_BUSINESSES_SUCCESS,
   FETCH_BUSINESSES_REQUEST,
+  FETCH_BUSINESS_ERROR,
+  FETCH_GROCERY_STORES_REQUEST,
+  FETCH_GROCERY_STORES_SUCCESS,
+  FETCH_GROCERY_STORES_ERROR,
 } from './dataConstants'
 import { useSelector } from 'react-redux'
 import { API_URL } from '@env'
@@ -17,7 +21,7 @@ import { API_URL } from '@env'
  * @returns an array of all registered businesses
  */
 export const fetchBusinesses = () => async (dispatch) => {
-  console.log("function to fetch all businesses called")
+  console.log('function to fetch all businesses called')
   dispatch({ type: FETCH_BUSINESSES_REQUEST })
 
   try {
@@ -38,7 +42,10 @@ export const fetchBusinesses = () => async (dispatch) => {
 
     dispatch({ type: FETCH_BUSINESSES_SUCCESS, payload: updatedBusinesses })
   } catch (error) {
-    dispatch({ type: FETCH_BUSINESSES_ERROR, payload: error.message })
+    dispatch({
+      type: FETCH_BUSINESSES_ERROR,
+      payload: `From fetchBusinesses in businessActions.js: ${error.message}}`,
+    })
   }
 }
 
@@ -48,13 +55,21 @@ export const fetchBusinesses = () => async (dispatch) => {
  * @returns a list of businesses belonging to the category(categoryID)
  */
 export const fetchBusinessesbyCategory = (categoryName) => async (dispatch) => {
-  console.log('fetchBusinessesbyCategory reached')
-  dispatch({type: FETCH_BUSINESS_BY_CATEGORY_REQUEST})
+  dispatch({ type: FETCH_GROCERY_STORES_REQUEST })
 
   try {
-    const response = await axios.get(`${API_URL}/business/category/${categoryId}`);
+    const response = await axios.get(`${API_URL}/business?category=restaurant`)
+    const serverResponse = response.data
+    const groceryStores = serverResponse.data
+    // console.log('groceryStores from api')
+    // console.log(JSON.stringify(groceryStores, '', 2))
 
-    dispatch({ type: FETCH_BUSINESSES_SUCCESS, payload: updatedBusinesses })
+    dispatch({ type: FETCH_GROCERY_STORES_SUCCESS, payload: groceryStores })
+  } catch (error) {
+    dispatch({
+      type: FETCH_GROCERY_STORES_ERROR,
+      payload: `From fetchBusinessesbyCategory in businessActions.js: ${error.message}`,
+    })
   }
 }
 

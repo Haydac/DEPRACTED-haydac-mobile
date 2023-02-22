@@ -3,10 +3,18 @@ import { Image, Text, TouchableOpacity, View, StyleSheet } from 'react-native'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { theme } from '../../core/theme'
 
-export default function Item({ businessData, navigation }) {
+/**
+ * This should take in an object of businesses
+ * @param {} param0
+ * @returns
+ */
+export default function Item(prop) {
+  const { businessData, navigation } = prop
   //   console.log('come here start')
   //   console.log(businessData)
-  //   console.log('come here end')
+  console.log('from item file')
+  console.log(prop)
+
   return (
     <View>
       {/* you're iterating in a wrong way */}

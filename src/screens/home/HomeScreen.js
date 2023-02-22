@@ -118,11 +118,12 @@ export default function HomeScreen({ navigation }) {
     async function check() {
       const data = await AsyncStorage.getItem('token')
 
-      if (data == null) {
-        //crash app if unable to get token
-        Alert.alert('App crash', 'Unable to log you in', [{ text: 'OK' }])
-        throw new Error('App crash')
-      }
+      //TODO: uncomment this
+      // if (data == null) {
+      //   //crash app if unable to get token
+      //   Alert.alert('App crash', 'Unable to log you in', [{ text: 'OK' }])
+      //   throw new Error('App crash')
+      // }
     }
 
     check()

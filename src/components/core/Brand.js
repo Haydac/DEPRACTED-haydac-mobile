@@ -47,6 +47,37 @@ export const backgroundSvg = (width, height) => (
   </Svg>
 )
 
+export const outerBackground = (width, height) => (
+  <Svg
+    width={width}
+    height={height}
+    viewBox="0 0 494 824"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <Path
+      d="M5.85207 -33.5796C5.93981 -34.7024 6.88866 -34.8998 8.00836 -34.7784L502.216 18.7913C503.231 18.9014 504 19.7585 504 20.7797V780.23C504 782.004 502.097 783.139 500.824 781.904C462.845 745.045 97.9829 395.422 151.781 620.557C208.522 858.004 408.652 412.285 165.38 709.785C-72.6642 1000.89 2.51111 9.17866 5.85207 -33.5796Z"
+      fill="#E8D2FA"
+    />
+  </Svg>
+)
+
+export const innerBackroung = (width, height) => (
+  <Svg
+    width={width}
+    height={height}
+    viewBox="0 0 414 641"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <Path
+      d="M43.2067 2.00473C43.4125 1.09709 44.2052 0.518066 45.1359 0.518066H484.871C485.975 0.518066 486.871 1.4135 486.871 2.51807V594.146C486.871 594.837 486.613 595.418 486.022 595.776C473.3 603.479 321.277 692.965 281.271 595.257C239.509 493.257 151.7 723.149 43.5462 595.257C-61.0504 471.571 36.6652 30.8636 43.2067 2.00473Z"
+      fill="#E8D2FA"
+      fill-opacity="0.58"
+    />
+  </Svg>
+)
+
 export const getStartedSvg = (width, height) => (
   <Svg
     style={{ position: 'absolute' }}
