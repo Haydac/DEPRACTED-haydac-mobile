@@ -10,6 +10,12 @@ import {
 } from './dataConstants'
 import { useSelector } from 'react-redux'
 import { API_URL } from '@env'
+import { FETCH_RESTAURANTS_REQUEST } from './dataConstants'
+import { FETCH_SERIVCES_REQUEST } from './dataConstants'
+import { FETCH_RESTAURANTS_SUCCESS } from './dataConstants'
+import { FETCH_SERIVCES_SUCCESS } from './dataConstants'
+import { FETCH_RESTAURANTS_ERROR } from './dataConstants'
+import { FETCH_SERIVCES_ERROR } from './dataConstants'
 
 // based of the businesses gotten, check favourites database.
 // retrieve the businesses under the userID in favourites Schema
@@ -50,26 +56,53 @@ export const fetchBusinesses = () => async (dispatch) => {
 }
 
 /**
- *
+ * Fetch business by category method
  * @param {*} categoryName - name of category
  * @returns a list of businesses belonging to the category(categoryID)
  */
 export const fetchBusinessesbyCategory = (categoryName) => async (dispatch) => {
-  dispatch({ type: FETCH_GROCERY_STORES_REQUEST })
+  if (categoryName === 'grocery') {
+    dispatch({ type: FETCH_GROCERY_STORES_REQUEST })
+  } else if (categoryName === 'restaurant') {
+    dispatch({ type: FETCH_RESTAURANTS_REQUEST })
+  } else {
+    console.log('reached')
+    dispatch({ type: FETCH_SERIVCES_REQUEST })
+  }
 
   try {
-    const response = await axios.get(`${API_URL}/business?category=restaurant`)
+    const response = await axios.get(
+      `${API_URL}/business?category=${categoryName}`
+    )
     const serverResponse = response.data
-    const groceryStores = serverResponse.data
-    // console.log('groceryStores from api')
-    // console.log(JSON.stringify(groceryStores, '', 2))
+    const data = serverResponse.data
+    // console.log('data from api')
+    // console.log(JSON.stringify(data, '', 2))
 
-    dispatch({ type: FETCH_GROCERY_STORES_SUCCESS, payload: groceryStores })
+    if (categoryName === 'grocery') {
+      dispatch({ type: FETCH_GROCERY_STORES_SUCCESS, payload: data })
+    } else if (categoryName === 'restaurant') {
+      dispatch({ type: FETCH_RESTAURANTS_SUCCESS, payload: data })
+    } else {
+      dispatch({ type: FETCH_SERIVCES_SUCCESS, payload: data })
+    }
   } catch (error) {
-    dispatch({
-      type: FETCH_GROCERY_STORES_ERROR,
-      payload: `From fetchBusinessesbyCategory in businessActions.js: ${error.message}`,
-    })
+    if (categoryName === 'grocery') {
+      dispatch({
+        type: FETCH_GROCERY_STORES_ERROR,
+        payload: `From fetchBusinessesbyCategory in businessActions.js: ${error.message}`,
+      })
+    } else if (categoryName === 'restaurant') {
+      dispatch({
+        type: FETCH_RESTAURANTS_ERROR,
+        payload: `From fetchBusinessesbyCategory in businessActions.js: ${error.message}`,
+      })
+    } else {
+      dispatch({
+        type: FETCH_SERIVCES_ERROR,
+        payload: `From fetchBusinessesbyCategory in businessActions.js: ${error.message}`,
+      })
+    }
   }
 }
 

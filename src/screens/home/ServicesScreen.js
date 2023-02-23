@@ -13,6 +13,22 @@ export default function ServicesScreen({ navigation }) {
   const [businessData, setBusinessData] = useState(demoServices)
   const [isLoading, setLoading] = useState(false)
 
+  /**
+   * Dispatch action to fetch the businesses from server
+   */
+  useEffect(async () => {
+    const fetchData = async () => {
+      dispatch(await fetchBusinessesbyCategory('service'))
+    }
+    fetchData()
+  }, [])
+
+  /**
+   * Retrive restaurant state from the redux store
+   * TODO: render returned data
+   */
+  const services = useSelector((state) => state.business.restaurants)
+
   return (
     <Screen style={styles.container}>
       {/* Header: ---- search ---- filterButton */}
