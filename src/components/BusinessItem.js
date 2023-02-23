@@ -6,13 +6,14 @@ import { theme } from '../core/theme'
 export default function BusinessItem({ businessData, navigation }) {
   return (
     <View>
-      {businessData?.map((business, index) => (
-        <BusinessItemCard
-          key={index}
-          business={business}
-          navigation={navigation}
-        />
-      ))}
+      {businessData &&
+        Object.keys(businessData)?.map((id) => (
+          <BusinessItemCard
+            key={businessData[id]}
+            business={businessData[id]}
+            navigation={navigation}
+          />
+        ))}
     </View>
   )
 }

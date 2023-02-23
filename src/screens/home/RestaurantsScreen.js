@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { ScrollView, Alert, ActivityIndicator, StyleSheet } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
 
@@ -8,10 +8,28 @@ import BusinessItem from '../../components/BusinessItem'
 import BusinessAd from '../../components/BusinessAd'
 import { demoRestaurants } from '../../data/demoRestaurants'
 import { theme } from '../../core/theme'
+import { useDispatch, useSelector } from 'react-redux'
+
+import { fetchBusinessesbyCategory } from '../../redux/business/businessActions'
 
 export default function RestaurantsScreen({ navigation }) {
-  const [businessData, setBusinessData] = useState(demoRestaurants)
+  const dispatch = useDispatch()
   const [isLoading, setLoading] = useState(false)
+
+  /**
+   * Dispatch action to fetch the businesses from server
+   */
+  useEffect(async () => {
+    const fetchData = async () => {
+      dispatch(await fetchBusinessesbyCategory('restaurant'))
+    }
+    fetchData()
+  }, [])
+
+  /**
+   * Retrive restaurant state from the redux store
+   */
+  const restaurants = useSelector((state) => state.business.restaurants)
 
   return (
     <Screen style={styles.container}>
@@ -37,7 +55,7 @@ export default function RestaurantsScreen({ navigation }) {
             style={styles.activityIndicator}
           />
         )}
-        <BusinessItem businessData={businessData} navigation={navigation} />
+        <BusinessItem businessData={restaurants} navigation={navigation} />
       </ScrollView>
     </Screen>
   )
@@ -52,6 +70,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#eee',
   },
   searchBarOuterStyle: {
+    marrginTop: 10,
     marginBottom: theme.constants.verticalCardMargin,
     alignSelf: 'center',
   },
