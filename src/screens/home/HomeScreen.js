@@ -115,6 +115,8 @@ export default function HomeScreen({ navigation }) {
 
   // TODO: maybe unecessary? delete
   useEffect(() => {
+    // console.log('Home screen is rendered, printing state now')
+    // console.log(JSON.stringify(state, '', 2))
     async function check() {
       const data = await AsyncStorage.getItem('token')
 
@@ -128,6 +130,9 @@ export default function HomeScreen({ navigation }) {
 
     check()
   }, [])
+
+  // TODO: debugging
+  const state = useSelector((state) => state)
 
   return (
     <Screen style={styles.container}>
@@ -191,6 +196,7 @@ export default function HomeScreen({ navigation }) {
           )}
           <BusinessItem businessData={businessData} navigation={navigation} />
         </ScrollView>
+
         {/* Location sheet modal */}
         <BottomSheetModal
           ref={bottomSheetModalRef}

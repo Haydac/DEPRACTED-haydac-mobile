@@ -12,8 +12,8 @@ export default function Item(prop) {
   const { businessData, navigation } = prop
   //   console.log('come here start')
   //   console.log(businessData)
-  console.log('from item file')
-  console.log(prop)
+  // console.log('from item file')
+  // console.log(prop)
 
   return (
     <View>

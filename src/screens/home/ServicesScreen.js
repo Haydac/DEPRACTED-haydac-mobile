@@ -1,7 +1,7 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { ScrollView, Alert, ActivityIndicator, StyleSheet } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
-
+import { useDispatch, useSelector } from 'react-redux'
 import Screen from '../../components/core/Screen'
 import SearchBar from '../../components/SearchBar'
 import BusinessItem from '../../components/BusinessItem'

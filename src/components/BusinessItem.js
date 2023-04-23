@@ -40,7 +40,15 @@ const BusinessItemCard = ({ business, navigation }) => {
       onPress={() => handlePress(business)}
     >
       {/* Use uri, data will be remote <Image source={{ uri: business.image_url }} /> */}
-      <Image source={business.image_url} style={styles.image} />
+      {business.image && business.image.featuredImage ? (
+        <Image
+          source={{ uri: business.image.featuredImage }}
+          accessibilityLabel={`${business.name} featured image`}
+        />
+      ) : (
+        <Text>No featured image available</Text>
+      )}
+
       <TouchableOpacity
         style={styles.favouriteIcon}
         onPress={() => toggleFavourite(isFavourite)}

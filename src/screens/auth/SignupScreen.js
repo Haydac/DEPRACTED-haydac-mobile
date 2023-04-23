@@ -178,10 +178,10 @@ const SignupScreen = ({ navigation }) => {
      * Validates input and sends form values to the server
      */
     if (validation) {
-      console.log('before')
+      // console.log('before')
       if (onValidSignup(formValues)) {
         try {
-          console.log('reached')
+          // console.log('reached')
           // using redux to handle login
           store.dispatch(registerAction(formValues))
           // navigate user to home screen

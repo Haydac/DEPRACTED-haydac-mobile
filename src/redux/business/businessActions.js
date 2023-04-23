@@ -7,15 +7,14 @@ import {
   FETCH_GROCERY_STORES_REQUEST,
   FETCH_GROCERY_STORES_SUCCESS,
   FETCH_GROCERY_STORES_ERROR,
-} from './dataConstants'
-import { useSelector } from 'react-redux'
+} from './businessConstants'
 import { API_URL } from '@env'
-import { FETCH_RESTAURANTS_REQUEST } from './dataConstants'
-import { FETCH_SERIVCES_REQUEST } from './dataConstants'
-import { FETCH_RESTAURANTS_SUCCESS } from './dataConstants'
-import { FETCH_SERIVCES_SUCCESS } from './dataConstants'
-import { FETCH_RESTAURANTS_ERROR } from './dataConstants'
-import { FETCH_SERIVCES_ERROR } from './dataConstants'
+import { FETCH_RESTAURANTS_REQUEST } from './businessConstants'
+import { FETCH_SERIVCES_REQUEST } from './businessConstants'
+import { FETCH_RESTAURANTS_SUCCESS } from './businessConstants'
+import { FETCH_SERIVCES_SUCCESS } from './businessConstants'
+import { FETCH_RESTAURANTS_ERROR } from './businessConstants'
+import { FETCH_SERIVCES_ERROR } from './businessConstants'
 
 // based of the businesses gotten, check favourites database.
 // retrieve the businesses under the userID in favourites Schema
@@ -66,7 +65,7 @@ export const fetchBusinessesbyCategory = (categoryName) => async (dispatch) => {
   } else if (categoryName === 'restaurant') {
     dispatch({ type: FETCH_RESTAURANTS_REQUEST })
   } else {
-    console.log('reached')
+    // console.log('reached')
     dispatch({ type: FETCH_SERIVCES_REQUEST })
   }
 
@@ -104,18 +103,4 @@ export const fetchBusinessesbyCategory = (categoryName) => async (dispatch) => {
       })
     }
   }
-}
-
-export const fetchBusinessesbyCountry = (countryId) => (dispatch) => {
-  dispatch({ type: FETCH_BUSINESSES_REQUEST })
-
-  // Retrive the list of businesses
-  const businesses = useSelector((state) => state.businesses.businessArray)
-
-  // Filter the businesses by country
-  const businessesByCountry = businesses.filter(
-    (business) => business.country === countryId
-  )
-
-  dispatch({ type: FETCH_BUSINESSES_SUCCESS, payload: businessesByCountry })
 }

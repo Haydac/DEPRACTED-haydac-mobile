@@ -14,7 +14,7 @@ import {
   FETCH_SERIVCES_ERROR,
   FETCH_SERIVCES_REQUEST,
   FETCH_SERIVCES_SUCCESS,
-} from './dataConstants'
+} from './businessConstants'
 
 const initialState = {
   selectedBusiness: null,
