@@ -16,19 +16,22 @@ export default function ServicesScreen({ navigation }) {
   /**
    * Dispatch action to fetch the businesses from server
    */
-  useEffect(async () => {
-    const fetchData = async () => {
-      dispatch(await fetchBusinessesbyCategory('service'))
-    }
-    fetchData()
-  }, [])
+  // useEffect(async () => {
+  //   const fetchData = async () => {
+  //     dispatch(await fetchBusinessesbyCategory('service'))
+  //   }
+  //   fetchData()
+  // }, [])
 
   /**
    * Retrive restaurant state from the redux store
    * TODO: render returned data
    */
-  const services = useSelector((state) => state.business.restaurants)
-
+  const services = useSelector((state) =>
+    state.business.allBusinesses.business.filter((object) =>
+      object.name.toLowerCase().includes('restaurant')
+    )
+  )
   return (
     <Screen style={styles.container}>
       {/* Header: ---- search ---- filterButton */}
@@ -53,7 +56,7 @@ export default function ServicesScreen({ navigation }) {
             style={styles.activityIndicator}
           />
         )}
-        <BusinessItem businessData={businessData} navigation={navigation} />
+        <BusinessItem businessData={services} navigation={navigation} />
       </ScrollView>
     </Screen>
   )

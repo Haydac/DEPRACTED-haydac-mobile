@@ -19,17 +19,21 @@ export default function RestaurantsScreen({ navigation }) {
   /**
    * Dispatch action to fetch the businesses from server
    */
-  useEffect(async () => {
-    const fetchData = async () => {
-      dispatch(await fetchBusinessesbyCategory('restaurant'))
-    }
-    fetchData()
-  }, [])
+  // useEffect(async () => {
+  //   const fetchData = async () => {
+  //     dispatch(await fetchBusinessesbyCategory('restaurant'))
+  //   }
+  //   fetchData()
+  // }, [])
 
   /**
    * Retrive restaurant state from the redux store
    */
-  const restaurants = useSelector((state) => state.business.restaurants)
+  const restaurants = useSelector((state) =>
+    state.business.allBusinesses.business.filter((object) =>
+      object.name.toLowerCase().includes('restaurant')
+    )
+  )
 
   return (
     <Screen style={styles.container}>
