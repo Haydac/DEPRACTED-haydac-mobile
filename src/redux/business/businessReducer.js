@@ -18,7 +18,7 @@ import {
 
 const initialState = {
   selectedBusiness: null,
-  allBusinesses: [],
+  allBusinesses: {},
   groceryStores: [],
   restaurants: [],
   services: [],

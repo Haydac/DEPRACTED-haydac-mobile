@@ -25,7 +25,7 @@ export default function GroceryStoresScreen({ navigation }) {
    */
   useEffect(async () => {
     const fetchData = async () => {
-      dispatch(await fetchBusinessesbyCategory('grocery'))
+      //dispatch(await fetchBusinessesbyCategory('grocery'))
     }
     fetchData()
   }, [])
@@ -34,7 +34,11 @@ export default function GroceryStoresScreen({ navigation }) {
    * Connects to the redux store to retrieve state
    * called whenver component is rendered and an action is dispatched
    */
-  const groceryStores = useSelector((state) => state.business.groceryStores)
+  const groceryStores = useSelector((state) =>
+    state.business.allBusinesses.business.filter((object) =>
+      object.name.toLowerCase().includes('grocery')
+    )
+  )
 
   return (
     <Screen style={styles.container}>

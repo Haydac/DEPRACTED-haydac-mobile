@@ -31,21 +31,25 @@ export const fetchBusinesses = () => async (dispatch) => {
 
   try {
     // get the response object from the API
-    const response = await axios.get(`${API_URL}/business`)
+    const response = await axios.get(`${API_URL}/business/all`)
+
+    // get the data object from the response object
+    // console.log('response from api')
+    // console.log(JSON.stringify(response.data, '', 2))
 
     // convert retrieved object of businesses to an array of objects
-    const businesses = Object.entries(response.data).map(([id, data]) => ({
-      id,
-      ...data,
-    }))
+    // const businesses = Object.entries(response.data).map(([id, data]) => ({
+    //   id,
+    //   ...data,
+    // }))
 
     // TODO: this is where the favourites are checked
-    const updatedBusinesses = businesses.map((business) => ({
-      ...business,
-      isFavourite: false,
-    }))
+    // const updatedBusinesses = businesses.map((business) => ({
+    //   ...business,
+    //   isFavourite: false,
+    // }))
 
-    dispatch({ type: FETCH_BUSINESSES_SUCCESS, payload: updatedBusinesses })
+    dispatch({ type: FETCH_BUSINESSES_SUCCESS, payload: response.data })
   } catch (error) {
     dispatch({
       type: FETCH_BUSINESSES_ERROR,
@@ -65,7 +69,6 @@ export const fetchBusinessesbyCategory = (categoryName) => async (dispatch) => {
   } else if (categoryName === 'restaurant') {
     dispatch({ type: FETCH_RESTAURANTS_REQUEST })
   } else {
-    // console.log('reached')
     dispatch({ type: FETCH_SERIVCES_REQUEST })
   }
 
@@ -75,8 +78,6 @@ export const fetchBusinessesbyCategory = (categoryName) => async (dispatch) => {
     )
     const serverResponse = response.data
     const data = serverResponse.data
-    // console.log('data from api')
-    // console.log(JSON.stringify(data, '', 2))
 
     if (categoryName === 'grocery') {
       dispatch({ type: FETCH_GROCERY_STORES_SUCCESS, payload: data })
